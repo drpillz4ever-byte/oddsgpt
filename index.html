@@ -109,4 +109,39 @@ let h=PaystackPop.setup({key:PAYSTACK_PUBLIC_KEY,email,amount:selected.price*100
 async function doAuth(){const email=document.getElementById('email').value,password=document.getElementById('pass').value;const url=authMode==='login'?'/api/auth-login':'/api/auth-register';try{const r=await fetch(BACKEND+url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});const j=await r.json();document.getElementById('authMsg').textContent=JSON.stringify(j).slice(0,400);if(j.ok||j.token){setTimeout(closeLogin,800);}}catch(e){document.getElementById('authMsg').textContent='Auth error';}}
 try{const d=new Date();document.getElementById('todayDate').textContent=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' WAT';}catch(e){}
 loadToday();
-</script></body></html>
+</script>
+<!-- OddsGPT V76 FIX - PASTE THIS JUST BEFORE </body> IN index.html -->
+<script>
+/* V76: 1) FREE = 2 games only, rest locked. 2) No register/login = no Paystack, no free, no paid */
+(function(){
+  function isLoggedIn(){ try{ return !!(localStorage.getItem('access_token')||localStorage.getItem('token')||localStorage.getItem('oddsgpt_token')||sessionStorage.getItem('access_token')); }catch(e){ return false; } }
+  function goRegister(){ alert('Register / Login first to access FREE and Paid games.'); var r=document.querySelector('[data-open-register], #registerBtn, #openRegister, a[href*="register"]'); if(r){ r.click(); return; } var m=document.getElementById('registerModal')||document.getElementById('authModal')||document.getElementById('loginModal'); if(m){ m.style.display='flex'; m.classList.add('open'); } else { window.scrollTo({top:0,behavior:'smooth'}); } }
+  // BLOCK all pay buttons if not logged in - capture phase, before Paystack
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('button, a');
+    if(!b) return;
+    var t=(b.textContent||'').toLowerCase() + ' ' + (b.getAttribute('data-plan')||'').toLowerCase() + ' ' + (b.className||'').toLowerCase();
+    var isPay = /pay|banger|quick win|daily hustle|try am|sharp guy|baba nla|subscribe|buy|checkout|paystack/.test(t);
+    if(isPay && !isLoggedIn()){ e.preventDefault(); e.stopPropagation(); goRegister(); }
+  }, true);
+  // FREE LIST: keep only first 2 game rows, lock the rest
+  function trimFree(){
+    var sections=[...document.querySelectorAll('*')].filter(function(el){ return /Today's FREE Games/i.test(el.textContent||'') && el.children.length<6; });
+    sections.forEach(function(sec){
+      var container=sec.parentElement||sec;
+      var rows=container.querySelectorAll('[data-game], .game-row, .fixture, li, tr');
+      // fallback: rows inside container that look like "X vs Y"
+      if(rows.length>2){
+        for(var i=2;i<rows.length;i++){
+          var r=rows[i];
+          if(/vs/i.test(r.textContent||'')){ r.style.filter='blur(4px)'; r.style.pointerEvents='none'; r.style.opacity='0.45'; if(!r.querySelector('.lock-tag')){ var s=document.createElement('span'); s.className='lock-tag'; s.textContent=' 🔒 Locked - Register + Pay to unlock'; s.style.filter='none'; r.appendChild(s); } }
+        }
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(trimFree, 800); setTimeout(trimFree, 2500); });
+  setTimeout(trimFree, 3000);
+})();
+</script>
+
+</body></html>
