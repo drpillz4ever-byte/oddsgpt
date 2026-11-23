@@ -235,4 +235,96 @@ loadToday();
   setTimeout(clean, 800); setTimeout(clean, 2500); setInterval(clean, 4000);
 })();
 </script>
+
+
+<!-- OddsGPT V79 PRO AUTH + COUNTDOWN - PASTE JUST BEFORE </body>, AFTER V78 -->
+<script>
+/* V79 PRO: 18+ checkbox + Confirm Password + Plan Countdown + FREE fallback */
+(function(){
+  function addAuthFields(){
+    // Find Create Account form area - look for password input
+    var pwInputs = [...document.querySelectorAll('input[type="password"]')];
+    if(pwInputs.length===0) return;
+    // 1) Confirm Password - add after first password if not exists
+    var hasConfirm = [...document.querySelectorAll('input')].some(function(i){ return /confirm/i.test(i.placeholder||'') || /confirm/i.test(i.name||'') || /confirm/i.test(i.id||''); });
+    if(!hasConfirm){
+      var firstPw = pwInputs[0];
+      var wrap = document.createElement('div');
+      wrap.innerHTML = '<label style="display:block;margin:12px 0 6px;opacity:.85">Confirm Password</label><input id="confirmPassword" type="password" placeholder="Confirm password" style="width:100%;padding:12px;border-radius:12px;border:1px solid #22c55e;background:#000;color:#fff" />';
+      firstPw.parentNode.insertBefore(wrap, firstPw.nextSibling);
+      // Live match check
+      function checkMatch(){
+        var c=document.getElementById('confirmPassword'); if(!c) return;
+        var msg=document.getElementById('pwMatchMsg'); if(!msg){ msg=document.createElement('div'); msg.id='pwMatchMsg'; msg.style.cssText='margin-top:6px;font-size:13px'; c.parentNode.appendChild(msg); }
+        if(!c.value) msg.textContent='';
+        else if(c.value===firstPw.value){ msg.textContent='✅ Passwords match'; msg.style.color='#22c55e'; }
+        else { msg.textContent='❌ Passwords do not match'; msg.style.color='#ef4444'; }
+      }
+      firstPw.addEventListener('input', checkMatch);
+      var cEl=document.getElementById('confirmPassword'); if(cEl) cEl.addEventListener('input', checkMatch);
+    }
+    // 2) 18+ checkbox - add before Create Account button if not exists
+    var has18 = [...document.querySelectorAll('input[type="checkbox"]')].some(function(c){ return /18/.test(c.parentNode.textContent||''); });
+    if(!has18){
+      var btns=[...document.querySelectorAll('button, a')].filter(function(b){ return /create account/i.test(b.textContent||''); });
+      if(btns.length){
+        var box=document.createElement('label');
+        box.style.cssText='display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-size:14px;cursor:pointer';
+        box.innerHTML='<input id="age18" type="checkbox" style="width:18px;height:18px;accent-color:#22c55e;margin-top:2px" /> <span>I confirm I am <b>18+</b> and I understand betting involves risk. Play responsibly.</span>';
+        btns[0].parentNode.insertBefore(box, btns[0]);
+      }
+    }
+    // 3) Block Create Account if 18+ not ticked or passwords no match
+    [...document.querySelectorAll('button, a')].forEach(function(b){
+      if(/create account/i.test(b.textContent||'') && !b.dataset.v79){
+        b.dataset.v79='1';
+        b.addEventListener('click', function(e){
+          var age=document.getElementById('age18');
+          var pw=document.querySelector('input[type="password"]');
+          var cf=document.getElementById('confirmPassword');
+          if(age && !age.checked){ e.preventDefault(); e.stopPropagation(); alert('Please tick 18+ to create account. You must be 18+.'); return false; }
+          if(pw && cf && pw.value && cf.value && pw.value!==cf.value){ e.preventDefault(); e.stopPropagation(); alert('Passwords do not match - check Password and Confirm Password.'); return false; }
+          if(pw && pw.value && pw.value.length<6){ e.preventDefault(); e.stopPropagation(); alert('Password must be at least 6 characters.'); return false; }
+        }, true);
+      }
+    });
+    // 4) Send age18 + confirmPassword to backend via fetch wrapper
+    if(!window.__v79fetch){
+      window.__v79fetch=1;
+      var _f=window.fetch;
+      window.fetch=function(url, opts){
+        try{
+          var u=String(url||'');
+          if(u.indexOf('auth-register')>-1 && opts && opts.body){
+            var bdy=JSON.parse(opts.body);
+            var age=document.getElementById('age18'); var cf=document.getElementById('confirmPassword');
+            if(age) bdy.ageCheck=age.checked; if(age) bdy.age18=age.checked; if(cf) bdy.confirmPassword=cf.value;
+            opts.body=JSON.stringify(bdy);
+          }
+        }catch(e){}
+        return _f.apply(this, arguments);
+      };
+    }
+  }
+  // Countdown bar
+  function showCountdown(){
+    var email=''; try{ email=JSON.parse(localStorage.getItem('oddsgpt_user')||'{}').email || localStorage.getItem('oddsgpt_email') || ''; }catch(e){}
+    if(!email) return;
+    fetch('https://oddsgpt-backend.vercel.app/api/plan-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})}).then(function(r){return r.json();}).then(function(j){
+      var bar=document.getElementById('planCountdownBar');
+      if(!bar){ bar=document.createElement('div'); bar.id='planCountdownBar'; bar.style.cssText='margin:12px 0;padding:12px;border-radius:12px;background:#06130b;border:1px solid #22c55e;text-align:center;font-weight:700'; var top=document.querySelector('header')||document.body; top.parentNode.insertBefore(bar, top.nextSibling); }
+      if(j.isFree){ bar.innerHTML='🆓 FREE MODE — 2 FREE games daily. <a href="#plans" style="color:#22c55e">Pay to unlock more</a>'; bar.style.display='block'; }
+      else {
+        var s=j.remainingSecs||0; var h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
+        var hh=String(h).padStart(2,'0'), mm=String(m).padStart(2,'0'), ss=String(sec).padStart(2,'0');
+        bar.innerHTML='🔥 '+j.planLabel+' — Time left: '+hh+':'+mm+':'+ss+' — Uses left: '+(j.usesLeft>=99?'Unlimited':j.usesLeft)+' — When e finish, you go back to FREE. Old slips stay for history, new picks need pay again.';
+      }
+    }).catch(function(){});
+  }
+  document.addEventListener('DOMContentLoaded', function(){ addAuthFields(); showCountdown(); });
+  setTimeout(addAuthFields, 1000); setTimeout(addAuthFields, 3000); setTimeout(showCountdown, 1500);
+  setInterval(showCountdown, 1000); // live countdown tick
+  setInterval(addAuthFields, 4000);
+})();
+</script>
 </body></html>
