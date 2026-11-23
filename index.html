@@ -193,4 +193,46 @@ loadToday();
   setInterval(function(){ if(!isLoggedIn()){ var el=document.getElementById(FIX_ID); if(el && el.textContent.indexOf('Today\'s Games Are Locked')===-1 && el.textContent.indexOf('Loading')===-1){ lockAll(); } } }, 3000);
 })();
 </script>
+
+
+<!-- OddsGPT V78 PRO CLEANUP - PASTE JUST BEFORE </body>, AFTER V77 -->
+<script>
+/* V78: Remove duplicates + fake claims, as honest customer see am */
+(function(){
+  function clean(){
+    // 1) DUPLICATE Register button: Keep only the one INSIDE lock box, hide the 2nd one below it
+    var btns = [...document.querySelectorAll('button, a')].filter(function(b){ return (b.textContent||'').trim() === 'Register - Get FREE Today'; });
+    if(btns.length > 1){
+      // Keep first (inside lock box), hide rest
+      for(var i=1;i<btns.length;i++){ btns[i].style.display='none'; }
+    }
+    // 2) DUPLICATE text: "Register / Login first..." appears twice (subtitle + inside box) - keep inside box only, fade subtitle
+    // Do not delete subtitle completely (SEO), just shorten it to avoid repetition
+    // 3) FAKE CLAIM: "2 draws tomorrow" - hide unless backend proves it. Customer go ask "where draws?"
+    [...document.querySelectorAll('*')].forEach(function(el){
+      if(el.children.length===0 && (el.textContent||'').trim()==='2 draws tomorrow'){ var chip=el.closest('button, a, span, div'); if(chip) chip.style.display='none'; }
+    });
+    // 4) Generate Slip before login = trap. If not logged in, change to "Register to Generate Slip"
+    try{
+      var logged = !!(localStorage.getItem('oddsgpt_logged_in')||localStorage.getItem('access_token')||localStorage.getItem('oddsgpt_user'));
+      [...document.querySelectorAll('button, a')].forEach(function(b){
+        var t=(b.textContent||'').trim();
+        if(t==='Generate Slip' && !logged){ b.textContent='Register to Generate Slip'; b.style.opacity='0.9'; }
+      });
+    }catch(e){}
+    // 5) Plans confusing line: "merchant pays fee" - customer no care, hide it
+    [...document.querySelectorAll('p, div, span')].forEach(function(el){
+      if((el.textContent||'').indexOf('merchant pays fee')>-1 && el.children.length<3){ el.style.display='none'; }
+    });
+    // 6) Fix confusing "full 10" - FREE is 2 picks, 10 is fixtures count. Make it honest:
+    [...document.querySelectorAll('p, div')].forEach(function(el){
+      if(el.children.length===0 && (el.textContent||'').indexOf('Paid plans unlock the full 10')>-1){
+        el.textContent='Paid plans unlock more picks + BANGER.';
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', clean);
+  setTimeout(clean, 800); setTimeout(clean, 2500); setInterval(clean, 4000);
+})();
+</script>
 </body></html>
