@@ -110,38 +110,87 @@ async function doAuth(){const email=document.getElementById('email').value,passw
 try{const d=new Date();document.getElementById('todayDate').textContent=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' WAT';}catch(e){}
 loadToday();
 </script>
-<!-- OddsGPT V76 FIX - PASTE THIS JUST BEFORE </body> IN index.html -->
-<script>
-/* V76: 1) FREE = 2 games only, rest locked. 2) No register/login = no Paystack, no free, no paid */
-(function(){
-  function isLoggedIn(){ try{ return !!(localStorage.getItem('access_token')||localStorage.getItem('token')||localStorage.getItem('oddsgpt_token')||sessionStorage.getItem('access_token')); }catch(e){ return false; } }
-  function goRegister(){ alert('Register / Login first to access FREE and Paid games.'); var r=document.querySelector('[data-open-register], #registerBtn, #openRegister, a[href*="register"]'); if(r){ r.click(); return; } var m=document.getElementById('registerModal')||document.getElementById('authModal')||document.getElementById('loginModal'); if(m){ m.style.display='flex'; m.classList.add('open'); } else { window.scrollTo({top:0,behavior:'smooth'}); } }
-  // BLOCK all pay buttons if not logged in - capture phase, before Paystack
-  document.addEventListener('click', function(e){
-    var b=e.target.closest('button, a');
-    if(!b) return;
-    var t=(b.textContent||'').toLowerCase() + ' ' + (b.getAttribute('data-plan')||'').toLowerCase() + ' ' + (b.className||'').toLowerCase();
-    var isPay = /pay|banger|quick win|daily hustle|try am|sharp guy|baba nla|subscribe|buy|checkout|paystack/.test(t);
-    if(isPay && !isLoggedIn()){ e.preventDefault(); e.stopPropagation(); goRegister(); }
-  }, true);
-  // FREE LIST: keep only first 2 game rows, lock the rest
-  function trimFree(){
-    var sections=[...document.querySelectorAll('*')].filter(function(el){ return /Today's FREE Games/i.test(el.textContent||'') && el.children.length<6; });
-    sections.forEach(function(sec){
-      var container=sec.parentElement||sec;
-      var rows=container.querySelectorAll('[data-game], .game-row, .fixture, li, tr');
-      // fallback: rows inside container that look like "X vs Y"
-      if(rows.length>2){
-        for(var i=2;i<rows.length;i++){
-          var r=rows[i];
-          if(/vs/i.test(r.textContent||'')){ r.style.filter='blur(4px)'; r.style.pointerEvents='none'; r.style.opacity='0.45'; if(!r.querySelector('.lock-tag')){ var s=document.createElement('span'); s.className='lock-tag'; s.textContent=' 🔒 Locked - Register + Pay to unlock'; s.style.filter='none'; r.appendChild(s); } }
-        }
-      }
-    });
-  }
-  document.addEventListener('DOMContentLoaded', function(){ setTimeout(trimFree, 800); setTimeout(trimFree, 2500); });
-  setTimeout(trimFree, 3000);
-})();
 </script>
 
+<!-- OddsGPT V77 PRO GATE - PASTE THIS JUST BEFORE </body>, REMOVE OLD V76 PATCH IF YOU SEE IT -->
+<script>
+/* V77 PRO: No login = ZERO games shown. Login = FREE 2 with odds + options, rest locked. Paid = all unlock */
+(function(){
+  var FIX_ID = 'fixtures';
+  function isLoggedIn(){
+    try{
+      // Check every way frontend fit store login
+      if (window.currentUser || window.user || window.__ODDSGPT_USER__) return true;
+      for (var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); var v=(localStorage.getItem(k)||'').toLowerCase(); if(/token|access|session|auth/.test(k) && v && v!=='null' && v!=='undefined') return true; if(k==='oddsgpt_logged_in' && v==='1') return true; if((k==='user'||k==='oddsgpt_user'||k==='currentUser') && v && v!=='null') return true; }
+      for (var j=0;j<sessionStorage.length;j++){ var k2=sessionStorage.key(j); var v2=(sessionStorage.getItem(k2)||''); if(/token|user|auth/.test(k2) && v2 && v2!=='null') return true; }
+      if (document.cookie && /token|session|auth/i.test(document.cookie)) return true;
+    }catch(e){}
+    return false;
+  }
+  function lockAll(){
+    var el = document.getElementById(FIX_ID);
+    if(!el) return;
+    // Hide the whole list - no game names, no odds for strangers
+    el.innerHTML = '<div style="border:1px solid #22c55e;border-radius:14px;padding:18px;background:#06130b;text-align:center">'
+      + '<div style="font-size:28px">🔒</div>'
+      + '<div style="font-weight:800;font-size:18px;margin:6px 0">Today\'s Games Are Locked</div>'
+      + '<div style="opacity:.85">Register / Login first to see today\'s FREE 2 games with odds + options.</div>'
+      + '<div style="opacity:.85;margin-top:4px">Paid plans unlock the full 10.</div>'
+      + '<button onclick="document.querySelector(\'[data-open-register], #registerBtn\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})" style="margin-top:14px;background:#22c55e;color:#000;border:0;border-radius:999px;padding:12px 22px;font-weight:800;cursor:pointer">Register - Get FREE Today</button>'
+      + '</div>';
+  }
+  function unlockFreeWithOdds(){
+    // After login, frontend's own loadToday() go run and show games. We just make sure locked rows stay locked for paid.
+    // Add odds placeholder + option if backend no give odds: we show market label so user see option
+    var el = document.getElementById(FIX_ID);
+    if(!el) return;
+    // If el still shows V77 lock, clear am make loadToday refill am
+    if(el.innerHTML.indexOf('Today\'s Games Are Locked')>-1){ el.innerHTML='Loading... check connection'; }
+  }
+  // 1) On load: if not logged in, hide ALL 10 - do not fetch/show names
+  function applyGate(){
+    if(!isLoggedIn()){ lockAll(); }
+    else { unlockFreeWithOdds(); }
+  }
+  // 2) Stop the old loadToday from showing games to strangers: wrap fetch for football-today
+  var _fetch = window.fetch;
+  window.fetch = function(url, opts){
+    var u = String(url||'');
+    if(u.indexOf('football-today')>-1 && !isLoggedIn()){
+      // Return locked empty, so old code no fit render 10 names
+      return Promise.resolve(new Response(JSON.stringify({ok:true,fixtures:[],source:'locked-need-login'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return _fetch.apply(this, arguments);
+  };
+  // 3) When login/register succeeds, mark logged in + reload games
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('button, a'); if(!b) return;
+    var t = (b.textContent||'').toLowerCase();
+    if(/login|create account|register/.test(t)){
+      setTimeout(function(){ if(isLoggedIn()){ unlockFreeWithOdds(); location.reload(); } }, 1200);
+    }
+  }, true);
+  // Also watch for auth success responses
+  var _origFetch2 = window.fetch;
+  // Re-wrap to catch auth-login / auth-register success and set flag
+  window.fetch = function(url, opts){
+    var u = String(url||'');
+    if((u.indexOf('auth-login')>-1 || u.indexOf('auth-register')>-1)){
+      return _fetch.call(this, url, opts).then(function(res){
+        try{ res.clone().json().then(function(j){ if(j && j.ok){ try{ localStorage.setItem('oddsgpt_logged_in','1'); if(j.user) localStorage.setItem('oddsgpt_user', JSON.stringify(j.user)); if(j.access_token) localStorage.setItem('access_token', j.access_token); }catch(e){} } }); }catch(e){}
+        return res;
+      });
+    }
+    if(u.indexOf('football-today')>-1 && !isLoggedIn()){
+      return Promise.resolve(new Response(JSON.stringify({ok:true,fixtures:[],source:'locked-need-login'}), {status:200, headers:{'Content-Type':'application/json'}}));
+    }
+    return _fetch.apply(this, arguments);
+  };
+  document.addEventListener('DOMContentLoaded', applyGate);
+  setTimeout(applyGate, 600);
+  setTimeout(applyGate, 2000);
+  // Re-check every 3s in case old code re-renders 10 names - re-lock if not logged in
+  setInterval(function(){ if(!isLoggedIn()){ var el=document.getElementById(FIX_ID); if(el && el.textContent.indexOf('Today\'s Games Are Locked')===-1 && el.textContent.indexOf('Loading')===-1){ lockAll(); } } }, 3000);
+})();
+</script>
 </body></html>
