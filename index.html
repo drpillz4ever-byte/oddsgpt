@@ -80,6 +80,8 @@ h1{font-size:28px;line-height:1.2}
 <div class="field"><label>Email</label><input class="input" placeholder="you@email.com"></div>
 <div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="lpw" type="password" placeholder="Password"><button class="eyeBtn" onclick="toggle('lpw')">👁️</button></div></div>
 <button class="createBtn2 active" onclick="alert('Logged in — FREE unlocked')">Login</button>
+<p style="text-align:center;margin-top:10px"><a href="#" style="color:#22e06a" onclick="forgotPass();return false">Forgot Password?</a></p>
+<script>function forgotPass(){let e=prompt('Type your email to reset password'); if(!e) return; fetch('https://oddsgpt-backend.vercel.app/api/forgot-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e})}).then(r=>r.json()).then(j=>alert(j.message||'Check your Gmail for reset link')).catch(()=>alert('Check your Gmail for reset link — if no mail, check Spam'))}</script>
 <p style="text-align:center;color:#aaa">No account? <a href="#" style="color:#22e06a" onclick="openModal('create');return false">Create Account</a></p></div></div>
 
 <script>
