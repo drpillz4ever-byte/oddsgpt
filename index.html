@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OddsGPT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OddsGPT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script><style>
 body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0}
 .top{display:flex;align-items:center;gap:10px;padding:14px 16px;position:sticky;top:0;background:#000;z-index:5}
 .logo-eye{width:44px;height:44px;background:#22e06a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#000;flex-shrink:0}
@@ -76,7 +76,7 @@ async function register(){
  if(pw.length<4){alert('Password min 4');return;} if(pw!==cpw){alert('Passwords no match');return;}
  if(!supabaseClient){alert('Supabase keys never set — paste your Project URL + Anon Key for top of file, then try again');return;}
  let {data,error}=await supabaseClient.auth.signUp({email,password:pw});
- if(error){alert(error.message);return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login');
+ if(error){alert('Supabase error: '+error.message+' | Status: '+error.status);return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login');
 }
 async function doLogin(){
  let email=document.getElementById('loginEmail').value.trim(); let pw=document.getElementById('lpw').value;
