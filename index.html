@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OddsGPT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script><style>
-body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0;overflow-x:hidden}*{box-sizing:border-box}
+body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0;overflow-x:hidden}html{overflow-x:hidden;width:100%}*{box-sizing:border-box}
 .top{display:flex;align-items:center;gap:8px;padding:12px 12px;position:sticky;top:0;background:#000;z-index:5;flex-wrap:nowrap;overflow:hidden;width:100%}
 .logo-eye{width:38px;height:38px;flex-shrink:0;background:#22e06a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#000;flex-shrink:0}
 .logo{font-size:22px;font-weight:900;white-space:nowrap;flex-shrink:0}.logo span{color:#22e06a}
@@ -26,12 +26,12 @@ body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0;overflow-x:
 .check{margin-top:14px;color:#eee}.check a{color:#22e06a}
 .createBtn2{background:#1a7a3f;color:#000;border:0;border-radius:14px;padding:16px;width:100%;font-weight:900;font-size:17px;margin-top:18px;cursor:pointer}.createBtn2.active{background:#22e06a}
 .link{color:#22e06a;text-align:center;display:block;margin-top:10px;cursor:pointer}
-</style></head><body>
+</style></head><body><!-- autofill trap --><div style="height:0;overflow:hidden;position:absolute"><input type="email" name="trap_email" autocomplete="username" tabindex="-1"><input type="password" name="trap_pass" autocomplete="current-password" tabindex="-1"></div>
 <div class="top"><div class="logo-eye">👁️</div><div class="logo">Odds<span>GPT</span></div><button class="loginBtn" onclick="openModal('login')">Login</button><button class="createBtn" onclick="openModal('create')">Create Account</button></div>
 <div class="wrap">
 <p id="todayLine" style="color:#22e06a;font-weight:700">Today — Tue 25 Nov 2026 — New games by 12am</p>
 <h1>Type What You Want,<br>Get Real Booking Code</h1><p class="sub">Tell AI your odds. E go build am for you — Football + NBA.</p>
-<input class="input" id="wish" type="search" name="wish" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 2 odds, don't mix, 2nd half over 0.5">
+<textarea class="input" id="wish" name="wish_input_no_autofill" rows="1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 2 odds, don't mix, 2nd half over 0.5" style="resize:none;min-height:52px;white-space:nowrap;overflow:hidden"></textarea>
 <div><span class="chip">Football</span><span class="chip">NBA</span><span class="chip">Mix</span></div>
 <div><span class="chip">Safe 2 odds</span><span class="chip">Over 1.5 x5</span><span class="chip">BTTS</span><span class="chip">🔥 BANGER</span></div>
 <button class="gen" onclick="generateSlip()">Generate Slip →</button>
@@ -109,7 +109,7 @@ function generateSlip(){
 }
 function pay(p){alert('Paystack for '+p+' — after pay, Your Plan + countdown + games + code go show');}
 // Date/time/day live
-window.addEventListener('load',function(){var w=document.getElementById('wish'); if(w && w.value.indexOf('@')!==-1) w.value='';});
+window.addEventListener('load',function(){var w=document.getElementById('wish'); if(w){w.value=''; setInterval(function(){if(w.value.indexOf('@')!==-1) w.value='';},800);}});
 function tick(){let d=new Date(); let opts={weekday:'short',day:'2-digit',month:'short',year:'numeric'}; let date=d.toLocaleDateString('en-GB',opts); let time=d.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',hour12:true}); let el=document.getElementById('todayLine'); if(el) el.textContent='Today — '+date+' — '+time+' WAT — New games by 12am'; setInterval(()=>{let n=new Date(); if(n.getHours()===0&&n.getMinutes()===0){location.reload();}},30000);}
 tick();
 </script></body></html>
