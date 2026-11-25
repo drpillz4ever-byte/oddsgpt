@@ -1,12 +1,68 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin — OddsGPT</title><style>body{background:#000;color:#fff;font-family:Arial;margin:0;padding:16px} .top{display:flex;align-items:center;gap:10px} .eye{width:40px;height:40px;background:#22e06a;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-size:22px} .card{background:#0a0a0a;border:1px solid #222;border-radius:18px;padding:16px;margin-top:14px} .btn{background:#22e06a;color:#000;border:0;border-radius:10px;padding:12px 14px;font-weight:800;width:100%} .input{background:#000;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;width:100%;box-sizing:border-box} .hide{display:none}</style></head><body>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin — OddsGPT</title><style>body{background:#000;color:#fff;font-family:Arial;margin:0;padding:16px} .top{display:flex;align-items:center;gap:10px} .eye{width:40px;height:40px;background:#22e06a;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-size:22px} .card{background:#0a0a0a;border:1px solid #222;border-radius:18px;padding:16px;margin-top:14px} .btn{background:#22e06a;color:#000;border:0;border-radius:10px;padding:12px 14px;font-weight:800;width:100%} .input{background:#000;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;width:100%;box-sizing:border-box} table{width:100%;border-collapse:collapse;margin-top:10px} th,td{border-bottom:1px solid #222;padding:8px;text-align:left;font-size:13px} .hide{display:none}</style></head><body>
 <div class="top"><div class="eye">👁️</div><b>DR — Admin Log</b><span id="adminTime" style="margin-left:auto;color:#22e06a;font-weight:700"></span></div>
+
 <div id="loginBox" class="card"><h3 style="margin:0">Enter Admin Log</h3><p style="color:#aaa" id="adminDateLine">Secure access</p>
-<input class="input" id="email" placeholder="Email"><div style="position:relative;margin-top:10px"><input class="input" id="pw" type="password" placeholder="Password" style="padding-right:44px"><button type="button" onclick="let e=document.getElementById('pw'); e.type=e.type==='password'?'text':'password'" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:#aaa;font-size:20px;cursor:pointer">👁️</button></div><button class="btn" style="margin-top:14px" onclick="login()">Enter Log</button><p id="msg" style="color:#f55"></p></div>
-<div id="dash" class="hide"><div class="card"><b>Dashboard</b><p>Users: <b id="uCount">0</b> | Subs: <b id="sCount">0</b></p></div><div class="card"><b>Manual Grant</b><input class="input" id="gEmail" placeholder="User email"><input class="input" id="gPlan" placeholder="Plan" style="margin-top:8px"><input class="input" id="gId" placeholder="Payment ID" style="margin-top:8px"><button class="btn" style="margin-top:10px" onclick="grant()">Grant</button></div></div>
+<input class="input" id="email" placeholder="Email"><input class="input" id="pw" type="password" placeholder="Password" style="margin-top:10px"><button class="btn" style="margin-top:14px" onclick="login()">Enter Log</button><p style="text-align:center;margin-top:10px"><a href="#" style="color:#22e06a" onclick="let e=prompt('Type admin email'); if(e) alert('Check Gmail for reset link'); return false">Forgot Password?</a></p><p id="msg" style="color:#f55"></p></div>
+
+<div id="dash" class="hide">
+<div class="card"><b>Dashboard</b><div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><div class="card" style="flex:1">Users: <b id="uCount">0</b></div><div class="card" style="flex:1">Subs: <b id="sCount">0</b></div><div class="card" style="flex:1">Today: <b id="tCount">0</b></div><div class="card" style="flex:1">Revenue: ₦<b id="rCount">0</b></div></div></div>
+<div class="card"><b>Manual Grant — Own ID</b><input class="input" id="gEmail" placeholder="User email"><input class="input" id="gPlan" placeholder="Plan" style="margin-top:8px"><input class="input" id="gId" placeholder="Payment ID e.g. MAN-001" style="margin-top:8px"><button class="btn" style="margin-top:10px" onclick="grant()">Grant Plan</button><p id="gMsg" style="color:#22e06a"></p></div>
+<div class="card"><b>Users</b><div style="overflow:auto"><table id="usersTab"><tr><th>Email</th><th>Plan</th><th>Expires</th><th>Action</th></tr></table></div><button class="btn" style="margin-top:10px" onclick="loadUsers()">Reload</button></div>
+<div class="card"><b>Results Board</b><textarea class="input" id="resultBoard" rows="4" placeholder="Type result"></textarea><button class="btn" style="margin-top:8px" onclick="postResult()">Post</button></div>
+<div class="card"><b>Wipe / Block</b><input class="input" id="wipeEmail" placeholder="Email"><button class="btn" style="margin-top:8px;background:#f33;color:#fff" onclick="wipe()">Wipe</button></div>
+</div>
+
 <script>
 const API='https://oddsgpt-backend.vercel.app';
-function tick(){let d=new Date(); let opts={weekday:'short',day:'2-digit',month:'short',year:'numeric'}; let date=d.toLocaleDateString('en-GB',opts); let time=d.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',hour12:true}); document.getElementById('adminTime').textContent=date+' — '+time+' WAT'; document.getElementById('adminDateLine').textContent='Secure access — '+date+' — '+time+' WAT — DR';}
+function tick(){let d=new Date(); let opts={weekday:'short',day:'2-digit',month:'short',year:'numeric'}; let date=d.toLocaleDateString('en-GB',opts); let time=d.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',hour12:true}); let el=document.getElementById('adminTime'); if(el) el.textContent=date+' — '+time+' WAT'; let el2=document.getElementById('adminDateLine'); if(el2) el2.textContent='Secure access — '+date+' — '+time+' WAT — DR';}
 setInterval(tick,1000); tick();
-async function login(){let email=document.getElementById('email').value.trim(); let pw=document.getElementById('pw').value; if(email.toLowerCase()!=='drpillz4ever@gmail.com'){document.getElementById('msg').textContent='Access denied'; return;} try{let r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){document.getElementById('msg').textContent=j.error||'Login failed'; return;} localStorage.setItem('admin_token',j.token); document.getElementById('loginBox').classList.add('hide'); document.getElementById('dash').classList.remove('hide');}catch(e){document.getElementById('msg').textContent='Network error';}}
-async function grant(){let token=localStorage.getItem('admin_token'); let r=await fetch(API+'/api/admin/grant',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({email:document.getElementById('gEmail').value,plan:document.getElementById('gPlan').value,payment_id:document.getElementById('gId').value})}); let j=await r.json(); alert(j.message||j.error);}
+async function login(){
+ let email=document.getElementById('email').value.trim();
+ let pw=document.getElementById('pw').value;
+ if(email.toLowerCase()!=='drpillz4ever@gmail.com'){document.getElementById('msg').textContent='Access denied'; return;}
+ try{
+  let r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})});
+  let j=await r.json();
+  if(!r.ok){document.getElementById('msg').textContent=j.error||'Login failed'; return;}
+  localStorage.setItem('admin_token',j.token);
+  document.getElementById('loginBox').classList.add('hide');
+  document.getElementById('dash').classList.remove('hide');
+  loadUsers();
+ }catch(e){document.getElementById('msg').textContent='Network error';}
+}
+async function loadUsers(){
+ let token=localStorage.getItem('admin_token');
+ let r=await fetch(API+'/api/admin/users',{headers:{'Authorization':'Bearer '+token}});
+ let j=await r.json();
+ let tab=document.getElementById('usersTab');
+ tab.innerHTML='<tr><th>Email</th><th>Plan</th><th>Expires</th><th>Action</th></tr>';
+ (j.users||[]).forEach(u=>{
+  let tr=document.createElement('tr');
+  tr.innerHTML=`<td>${u.email}</td><td>${u.plan||'FREE'}</td><td>${u.expires_at||'-'}</td><td><button onclick="wipeOne('${u.email}')">Block</button></td>`;
+  tab.appendChild(tr);
+ });
+ document.getElementById('uCount').textContent=(j.users||[]).length;
+}
+async function grant(){
+ let token=localStorage.getItem('admin_token');
+ let email=document.getElementById('gEmail').value;
+ let plan=document.getElementById('gPlan').value;
+ let pid=document.getElementById('gId').value;
+ let r=await fetch(API+'/api/admin/grant',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({email,plan,payment_id:pid})});
+ let j=await r.json();
+ document.getElementById('gMsg').textContent=j.message||j.error;
+}
+async function wipeOne(email){ document.getElementById('wipeEmail').value=email; wipe(); }
+async function wipe(){
+ let token=localStorage.getItem('admin_token');
+ let email=document.getElementById('wipeEmail').value;
+ let r=await fetch(API+'/api/admin/wipe',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({email})});
+ let j=await r.json(); alert(j.message||j.error); loadUsers();
+}
+async function postResult(){
+ let token=localStorage.getItem('admin_token');
+ let text=document.getElementById('resultBoard').value;
+ let r=await fetch(API+'/api/admin/result',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({text})});
+ let j=await r.json(); alert(j.message||j.error);
+}
 </script></body></html>
