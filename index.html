@@ -44,9 +44,9 @@ body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0}
 </div>
 
 <div class="modal" id="createModal"><div class="modalBox"><div style="display:flex;justify-content:space-between"><h2 style="margin:0">Create Account</h2><button onclick="closeModal()" style="background:none;border:0;color:#fff;font-size:26px">×</button></div><p style="color:#aaa">Free plan unlocks after you register.</p>
-<div class="field"><label>Email</label><input class="input" id="regEmail" placeholder="you@email.com"></div>
-<div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="pw" type="password" placeholder="Min 4 characters"><button class="eyeBtn" onclick="toggle('pw')">👁️</button></div></div>
-<div class="field"><label>Confirm Password</label><div class="eyeWrap"><input class="input" id="cpw" type="password" placeholder="Repeat password"><button class="eyeBtn" onclick="toggle('cpw')">👁️</button></div></div>
+<div class="field"><label>Email</label><input class="input" id="regEmail" placeholder="you@email.com" autocomplete="off"></div>
+<div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="pw" type="password" placeholder="Min 4 characters" autocomplete="new-password" name="new-password"><button class="eyeBtn" onclick="toggle('pw')">👁️</button></div></div>
+<div class="field"><label>Confirm Password</label><div class="eyeWrap"><input class="input" id="cpw" type="password" placeholder="Repeat password" autocomplete="new-password" name="new-password-confirm"><button class="eyeBtn" onclick="toggle('cpw')">👁️</button></div></div>
 <div class="check"><label><input type="checkbox" id="age" onchange="check()"> I am 18+ years old</label></div>
 <div class="check"><label><input type="checkbox" id="terms" onchange="check()"> I agree to the <a href="#" onclick="alert('Terms: 18+, predictions not guarantees, no refund after access.');return false">Terms</a></label></div>
 <button class="createBtn2" id="createBtn2" onclick="register()">Create Account</button>
@@ -54,19 +54,19 @@ body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0}
 
 <div class="modal" id="loginModal"><div class="modalBox"><div style="display:flex;justify-content:space-between"><h2 style="margin:0">Login</h2><button onclick="closeModal()" style="background:none;border:0;color:#fff;font-size:26px">×</button></div><p style="color:#aaa">Welcome back.</p>
 <div class="field"><label>Email</label><input class="input" id="loginEmail" placeholder="you@email.com"></div>
-<div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="lpw" type="password" placeholder="Password"><button class="eyeBtn" onclick="toggle('lpw')">👁️</button></div></div>
+<div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="lpw" type="password" placeholder="Password" autocomplete="current-password"><button class="eyeBtn" onclick="toggle('lpw')">👁️</button></div></div>
 <button class="createBtn2 active" onclick="doLogin()">Login</button>
 <a class="link" onclick="forgotPass()">Forgot Password?</a>
 <p style="text-align:center;color:#aaa">No account? <a href="#" style="color:#22e06a" onclick="openModal('create');return false">Create Account</a></p><p id="loginMsg" style="color:#f55;text-align:center"></p></div></div>
 
 <script>
 // === PASTE YOUR SUPABASE KEYS HERE - from Supabase Settings > API ===
-const SUPABASE_URL = "https://hssbqkvrvdjpexgsqgsh.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_f7FMboSQ_y-7JxvmuIqwVQ_Y9sBBLLp";
+const SUPABASE_URL = "https://hsbqkvrvdjpexgsqgsh.supabase.co";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE__sb_publishable_...";
 let supabaseClient = null;
 try{ if(SUPABASE_URL.indexOf('PASTE')===-1) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }catch(e){}
 function toggle(id){let e=document.getElementById(id); e.type=e.type==='password'?'text':'password';}
-function openModal(t){closeModal(); document.getElementById(t==='create'?'createModal':'loginModal').style.display='flex';}
+function openModal(t){closeModal(); if(t==='create'){document.getElementById('regEmail').value='';document.getElementById('pw').value='';document.getElementById('cpw').value='';document.getElementById('age').checked=false;document.getElementById('terms').checked=false;document.getElementById('createBtn2').classList.remove('active');} document.getElementById(t==='create'?'createModal':'loginModal').style.display='flex';}
 function closeModal(){document.getElementById('createModal').style.display='none';document.getElementById('loginModal').style.display='none';}
 function check(){let b=document.getElementById('createBtn2'); let ok=document.getElementById('age').checked&&document.getElementById('terms').checked; b.classList.toggle('active',ok);}
 async function register(){
