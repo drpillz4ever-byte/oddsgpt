@@ -33,33 +33,34 @@ h1{font-size:28px;line-height:1.2}
 <body>
 <div class="top"><div class="logo-eye">👁️</div><div class="logo">Odds<span>GPT</span></div><button class="loginBtn" onclick="openModal('login')">Login</button><button class="createBtn" onclick="openModal('create')">Create Account</button></div>
 <div class="wrap">
-<h1>Type What You Want,<br>Get Real Booking Code</h1><p class="sub">Tell AI your odds. E go build am for you — Football + NBA.</p>
+<h1>Type What You Want,<br>Get Real Booking Code</h1><p style="color:#aaa" id="todayLine">Today — Tue 25 Nov 2026 — New games by 12am</p><p class="sub">Tell AI your odds. E go build am for you — Football + NBA.</p>
 <input class="input" id="wish" placeholder="e.g. 2 odds, don't mix, 2nd half over 0.5">
 <div><span class="chip">Football</span><span class="chip">NBA</span><span class="chip">Mix</span></div>
 <div><span class="chip">Safe 2 odds</span><span class="chip">Over 1.5 x5</span><span class="chip">BTTS</span><span class="chip">🔥 BANGER</span></div>
-<button class="gen" onclick="alert('Login to see FREE games')">Generate Slip →</button>
+<button class="gen" onclick="document.getElementById('slipResult').style.display='block';document.getElementById('slipResult').scrollIntoView()">Generate Slip →</button>
 <p style="text-align:center;color:#aaa">Create Account — Get FREE Today</p>
+<div id="slipResult" style="display:none" class="card"><h3>Your Slip</h3><div id="slipGames">Man City vs Arsenal — 2nd Half Over 0.5 — 1.20<br>Barcelona vs Sevilla — 2nd Half Over 0.5 — 1.20<br>Total: 2.07 odds</div><p style="margin-top:12px">SportyBet Code: <b id="slipCode">5Z2LZK</b> <button onclick="navigator.clipboard.writeText(document.getElementById('slipCode').textContent)">Copy</button></p><button onclick="navigator.clipboard.writeText(document.getElementById('slipGames').innerText)">Copy games for 1xBet</button></div>
 
 <!-- FREE -->
-<div class="card"><h3>FREE <span class="badge">LOGIN REQUIRED</span></h3><div class="price">₦0 <small>/ plan</small></div><div class="desc">1.50 – 2 odds<br>Max 3 games<br>Login to see games</div><button class="pay" onclick="openModal('create')">Create Account — Get FREE</button></div>
+<div class="card"><h3>FREE <span class="badge">LOGIN REQUIRED</span></h3><div class="price">₦0 <small>/ plan</small></div><div class="desc"><b style="font-size:18px;color:#fff">1 USE PER DAY — FREE</b><br>1.50 – 2 odds<br>Max 3 games<br>Login to see games</div><button class="pay" onclick="openModal('create')">Create Account — Get FREE</button></div>
 
 <!-- BANGER -->
-<div class="card"><h3>BANGER <span class="badge">🔥 1 USE</span></h3><div class="price">₦100 <small>/ plan</small></div><div class="desc">1 mega slip<br>Up to 1000 odds · 20 legs<br>24hrs · 1 use</div><button class="pay" onclick="pay('BANGER')">Pay — ₦100</button></div>
+<div class="card"><h3>BANGER <span class="badge">🔥 1 USE</span></h3><div class="price">₦100 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 USE ONLY</b><br>1 SLIP — 1 mega slip<br>Up to 1000 odds · 20 legs<br>24hrs</div><button class="pay" onclick="pay('BANGER')">Pay — ₦100</button></div>
 
 <!-- QUICK WIN -->
-<div class="card"><h3>QUICK WIN</h3><div class="price">₦200 <small>/ plan</small></div><div class="desc">Safe 2–3 + BANGER<br>+ custom<br>24hrs · 1 use</div><button class="pay" onclick="pay('QUICK WIN')">Pay — ₦200</button></div>
+<div class="card"><h3>QUICK WIN</h3><div class="price">₦200 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 USE = 2 SLIPS</b><br>1× Safe 2–3 + 1× BANGER<br>24hrs</div><button class="pay" onclick="pay('QUICK WIN')">Pay — ₦200</button></div>
 
 <!-- DAILY -->
-<div class="card"><h3>DAILY HUSTLE</h3><div class="price">₦300 <small>/ plan</small></div><div class="desc">Safe 2–3 + BANGER<br>+ custom<br>24hrs · Ask AI —</div><button class="pay" onclick="pay('DAILY HUSTLE')">Pay — ₦300</button></div>
+<div class="card"><h3>DAILY HUSTLE</h3><div class="price">₦300 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 DAY — 3 SLIPS</b><br>1× Safe 2–3 + 1× BANGER + 1× custom<br>24hrs · Use all 3 today</div><button class="pay" onclick="pay('DAILY HUSTLE')">Pay — ₦300</button></div>
 
 <!-- TRY AM -->
-<div class="card"><h3>TRY AM</h3><div class="price">₦500 <small>/ plan</small></div><div class="desc">Safe 2–3 + BANGER<br>+ custom<br>3 days · Ask AI 2/day</div><button class="pay" onclick="pay('TRY AM')">Pay — ₦500</button></div>
+<div class="card"><h3>TRY AM</h3><div class="price">₦500 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">3 DAYS — 3 SLIPS / DAY = 9 SLIPS</b><br>Safe 2–3 + BANGER + custom<br>Ask AI 2/day</div><button class="pay" onclick="pay('TRY AM')">Pay — ₦500</button></div>
 
 <!-- SHARP GUY -->
-<div class="card"><h3>SHARP GUY <span class="badge">7 DAYS</span></h3><div class="price">₦2,000 <small>/ plan</small></div><div class="desc">Safe 2–3 + BANGER<br>+ custom<br>7 days · Ask AI 5/day</div><button class="pay" onclick="pay('SHARP GUY')">Pay — ₦2,000</button></div>
+<div class="card"><h3>SHARP GUY <span class="badge">7 DAYS</span></h3><div class="price">₦2,000 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">7 DAYS — 5 SLIPS / DAY = 35 SLIPS</b><br>Safe 2–3 + BANGER + custom<br>Ask AI 5/day</div><button class="pay" onclick="pay('SHARP GUY')">Pay — ₦2,000</button></div>
 
 <!-- BABA NLA -->
-<div class="card"><h3>BABA NLA <span class="badge">👑 KING</span></h3><div class="price">₦5,000 <small>/ plan</small></div><div class="desc">Safe 2–3 + BANGER<br>+ custom<br>30 days · Ask AI unlimited</div><button class="pay" onclick="pay('BABA NLA')">Pay — ₦5,000</button></div>
+<div class="card"><h3>BABA NLA <span class="badge">👑 KING</span></h3><div class="price">₦5,000 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">30 DAYS — 10 SLIPS / DAY = 300 SLIPS</b><br>Safe 2–3 + BANGER + custom<br>Ask AI unlimited</div><button class="pay" onclick="pay('BABA NLA')">Pay — ₦5,000</button></div>
 
 <div class="dashed"><div style="color:#22e06a;font-size:22px">✦</div><p><b>No long talk</b></p>Safe slips for steady win. BANGER for when you want to scatter am. You choose.<br><br>18+ · Play responsibly</div>
 </div>
@@ -87,5 +88,8 @@ function openModal(t){closeModal(); document.getElementById(t==='create'?'create
 function closeModal(){document.getElementById('createModal').style.display='none';document.getElementById('loginModal').style.display='none';}
 function check(){let b=document.getElementById('createBtn2'); let ok=document.getElementById('age').checked&&document.getElementById('terms').checked; b.classList.toggle('active',ok);}
 function register(){if(!document.getElementById('age').checked||!document.getElementById('terms').checked){alert('Tick 18+ and Terms to continue');return;} alert('Registered — FREE unlocked'); closeModal();}
+function todayStr(){let d=new Date(); return d.toDateString();}
+function codeForToday(){let d=new Date(); let s=''+d.getFullYear()+d.getMonth()+d.getDate(); let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))%100000; return 'ODD'+h.toString(36).toUpperCase();}
+document.addEventListener('DOMContentLoaded',()=>{let c=document.getElementById('slipCode'); if(c) c.textContent=codeForToday(); let t=document.getElementById('todayLine'); if(t) t.textContent='Today — '+new Date().toDateString()+' — New games by 12am'; setInterval(()=>{let n=new Date(); if(n.getHours()===0&&n.getMinutes()===0&&n.getSeconds()<2){document.getElementById('slipResult').style.display='none'; let cc=document.getElementById('slipCode'); if(cc) cc.textContent=codeForToday();}},1000);});
 function pay(p){alert('Paystack for '+p+' — after pay, Your Plan + countdown + games + code go show');}
 </script></body></html>
