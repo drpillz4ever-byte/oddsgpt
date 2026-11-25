@@ -1,73 +1,50 @@
-<!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OddsGPT</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2322e06a'/><ellipse cx='50' cy='50' rx='28' ry='18' fill='none' stroke='black' stroke-width='6'/><circle cx='50' cy='50' r='8' fill='black'/></svg>">
-<style>
-body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;padding:0}
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OddsGPT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0}
 .top{display:flex;align-items:center;gap:10px;padding:14px 16px;position:sticky;top:0;background:#000;z-index:5}
-.logo-eye{width:44px;height:44px;background:#22e06a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#000}
+.logo-eye{width:44px;height:44px;background:#22e06a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#000;flex-shrink:0}
 .logo{font-size:26px;font-weight:900}.logo span{color:#22e06a}
-.loginBtn{border:1px solid #333;background:#000;color:#fff;border-radius:999px;padding:10px 18px;font-weight:700;margin-left:auto}
-.createBtn{background:#22e06a;color:#000;border:0;border-radius:999px;padding:11px 18px;font-weight:800}
-.wrap{padding:0 16px 30px}
-h1{font-size:28px;line-height:1.2}
-.sub{color:#aaa}
+.loginBtn{border:1px solid #333;background:#000;color:#fff;border-radius:999px;padding:10px 18px;font-weight:700;margin-left:auto;cursor:pointer}
+.createBtn{background:#22e06a;color:#000;border:0;border-radius:999px;padding:11px 18px;font-weight:800;cursor:pointer}
+.wrap{padding:0 16px 30px} h1{font-size:28px;line-height:1.2} .sub{color:#aaa}
 .input{width:100%;background:#000;border:1px solid #333;border-radius:14px;padding:14px;color:#fff;box-sizing:border-box;margin-top:10px}
 .chip{border:1px solid #333;border-radius:999px;padding:8px 14px;display:inline-block;margin:6px 6px 0 0}
-.gen{background:#22e06a;color:#000;border:0;border-radius:999px;padding:14px;width:100%;font-weight:900;margin-top:14px;font-size:16px}
+.gen{background:#22e06a;color:#000;border:0;border-radius:999px;padding:14px;width:100%;font-weight:900;margin-top:14px;font-size:16px;cursor:pointer}
 .card{background:#0a0a0a;border:1px solid #222;border-radius:22px;padding:20px;margin-top:16px}
 .card h3{margin:0;font-size:16px;letter-spacing:1px}.badge{float:right;color:#aaa;font-size:12px}
 .price{font-size:42px;font-weight:900;margin:14px 0 8px}.price small{font-size:16px;color:#aaa;font-weight:400}
 .desc{color:#aaa;line-height:1.6}
-.pay{background:#22e06a;color:#000;border:0;border-radius:14px;padding:16px;width:100%;font-weight:900;font-size:17px;margin-top:18px}
-.dashed{border:1px dashed #333;border-radius:20px;padding:20px;margin-top:16px;color:#aaa;line-height:1.6}
-.dashed b{color:#fff}
+.pay{background:#22e06a;color:#000;border:0;border-radius:14px;padding:16px;width:100%;font-weight:900;font-size:17px;margin-top:18px;cursor:pointer}
+.dashed{border:1px dashed #333;border-radius:20px;padding:20px;margin-top:16px;color:#aaa;line-height:1.6}.dashed b{color:#fff}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:20}
 .modalBox{background:#121212;border-radius:24px 24px 0 0;padding:22px;width:100%;max-width:480px;box-sizing:border-box}
 .field{margin-top:16px}.field label{color:#ccc}
-.eyeWrap{position:relative}.eyeWrap input{padding-right:44px}.eyeBtn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:#aaa;font-size:20px}
+.eyeWrap{position:relative}.eyeWrap input{padding-right:44px}.eyeBtn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:#aaa;font-size:20px;cursor:pointer}
 .check{margin-top:14px;color:#eee}.check a{color:#22e06a}
-.createBtn2{background:#1a7a3f;color:#000;border:0;border-radius:14px;padding:16px;width:100%;font-weight:900;font-size:17px;margin-top:18px}
-.createBtn2.active{background:#22e06a}
-</style></head>
-<body>
+.createBtn2{background:#1a7a3f;color:#000;border:0;border-radius:14px;padding:16px;width:100%;font-weight:900;font-size:17px;margin-top:18px;cursor:pointer}.createBtn2.active{background:#22e06a}
+.link{color:#22e06a;text-align:center;display:block;margin-top:10px;cursor:pointer}
+</style></head><body>
 <div class="top"><div class="logo-eye">👁️</div><div class="logo">Odds<span>GPT</span></div><button class="loginBtn" onclick="openModal('login')">Login</button><button class="createBtn" onclick="openModal('create')">Create Account</button></div>
 <div class="wrap">
-<h1>Type What You Want,<br>Get Real Booking Code</h1><p style="color:#aaa" id="todayLine">Today — Tue 25 Nov 2026 — New games by 12am</p><p class="sub">Tell AI your odds. E go build am for you — Football + NBA.</p>
+<p id="todayLine" style="color:#22e06a;font-weight:700">Today — Tue 25 Nov 2026 — New games by 12am</p>
+<h1>Type What You Want,<br>Get Real Booking Code</h1><p class="sub">Tell AI your odds. E go build am for you — Football + NBA.</p>
 <input class="input" id="wish" placeholder="e.g. 2 odds, don't mix, 2nd half over 0.5">
 <div><span class="chip">Football</span><span class="chip">NBA</span><span class="chip">Mix</span></div>
 <div><span class="chip">Safe 2 odds</span><span class="chip">Over 1.5 x5</span><span class="chip">BTTS</span><span class="chip">🔥 BANGER</span></div>
-<button class="gen" onclick="document.getElementById('slipResult').style.display='block';document.getElementById('slipResult').scrollIntoView()">Generate Slip →</button>
+<button class="gen" onclick="generateSlip()">Generate Slip →</button>
+<div id="slipResult" style="display:none" class="card"><h3>Your Slip</h3><div id="slipGames"></div><p>Booking Code: <b id="slipCode"></b> <button onclick="navigator.clipboard.writeText(document.getElementById('slipCode').textContent);alert('Copied')">Copy</button></p><button class="pay" onclick="navigator.clipboard.writeText(document.getElementById('slipGames').innerText);alert('Games copied for 1xBet')">Copy games for 1xBet</button></div>
 <p style="text-align:center;color:#aaa">Create Account — Get FREE Today</p>
-<div id="slipResult" style="display:none" class="card"><h3>Your Slip</h3><div id="slipGames">Man City vs Arsenal — 2nd Half Over 0.5 — 1.20<br>Barcelona vs Sevilla — 2nd Half Over 0.5 — 1.20<br>Total: 2.07 odds</div><p style="margin-top:12px">SportyBet Code: <b id="slipCode">5Z2LZK</b> <button onclick="navigator.clipboard.writeText(document.getElementById('slipCode').textContent)">Copy</button></p><button onclick="navigator.clipboard.writeText(document.getElementById('slipGames').innerText)">Copy games for 1xBet</button></div>
-
-<!-- FREE -->
-<div class="card"><h3>FREE <span class="badge">LOGIN REQUIRED</span></h3><div class="price">₦0 <small>/ plan</small></div><div class="desc"><b style="font-size:18px;color:#fff">1 USE PER DAY — FREE</b><br>1.50 – 2 odds<br>Max 3 games<br>Login to see games</div><button class="pay" onclick="openModal('create')">Create Account — Get FREE</button></div>
-
-<!-- BANGER -->
-<div class="card"><h3>BANGER <span class="badge">🔥 1 USE</span></h3><div class="price">₦100 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 USE ONLY</b><br>1 SLIP — 1 mega slip<br>Up to 1000 odds · 20 legs<br>24hrs</div><button class="pay" onclick="pay('BANGER')">Pay — ₦100</button></div>
-
-<!-- QUICK WIN -->
-<div class="card"><h3>QUICK WIN</h3><div class="price">₦200 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 USE = 2 SLIPS</b><br>1× Safe 2–3 + 1× BANGER<br>24hrs</div><button class="pay" onclick="pay('QUICK WIN')">Pay — ₦200</button></div>
-
-<!-- DAILY -->
-<div class="card"><h3>DAILY HUSTLE</h3><div class="price">₦300 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 DAY — 3 SLIPS</b><br>1× Safe 2–3 + 1× BANGER + 1× custom<br>24hrs · Use all 3 today</div><button class="pay" onclick="pay('DAILY HUSTLE')">Pay — ₦300</button></div>
-
-<!-- TRY AM -->
+<div class="card"><h3>FREE <span class="badge">LOGIN REQUIRED</span></h3><div class="price">₦0 <small>/ plan</small></div><div class="desc"><b style="font-size:18px;color:#fff">1 USE PER DAY — FREE — SAME FOR ALL</b><br>1.50 – 2 odds<br>Max 3 games<br>Login to see games</div><button class="pay" onclick="openModal('create')">Create Account — Get FREE</button></div>
+<div class="card"><h3>BANGER <span class="badge">🔥 1 USE</span></h3><div class="price">₦100 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 USE ONLY = 1 SLIP</b><br>1 mega slip<br>Up to 1000 odds · 20 legs<br>24hrs</div><button class="pay" onclick="pay('BANGER')">Pay — ₦100</button></div>
+<div class="card"><h3>QUICK WIN</h3><div class="price">₦200 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 USE = 2 SLIPS</b><br>1× Safe 2–3 + 1× BANGER<br>Up to 1000 odds · 20 legs<br>24hrs</div><button class="pay" onclick="pay('QUICK WIN')">Pay — ₦200</button></div>
+<div class="card"><h3>DAILY HUSTLE</h3><div class="price">₦300 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">1 DAY — 3 SLIPS</b><br>1× Safe 2–3 + 1× BANGER + 1× custom<br>Up to 1000 odds<br>24hrs</div><button class="pay" onclick="pay('DAILY HUSTLE')">Pay — ₦300</button></div>
 <div class="card"><h3>TRY AM</h3><div class="price">₦500 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">3 DAYS — 3 SLIPS / DAY = 9 SLIPS</b><br>Safe 2–3 + BANGER + custom<br>Ask AI 2/day</div><button class="pay" onclick="pay('TRY AM')">Pay — ₦500</button></div>
-
-<!-- SHARP GUY -->
 <div class="card"><h3>SHARP GUY <span class="badge">7 DAYS</span></h3><div class="price">₦2,000 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">7 DAYS — 5 SLIPS / DAY = 35 SLIPS</b><br>Safe 2–3 + BANGER + custom<br>Ask AI 5/day</div><button class="pay" onclick="pay('SHARP GUY')">Pay — ₦2,000</button></div>
-
-<!-- BABA NLA -->
 <div class="card"><h3>BABA NLA <span class="badge">👑 KING</span></h3><div class="price">₦5,000 <small>/ plan</small></div><div class="desc"><b style="font-size:20px;color:#22e06a">30 DAYS — 10 SLIPS / DAY = 300 SLIPS</b><br>Safe 2–3 + BANGER + custom<br>Ask AI unlimited</div><button class="pay" onclick="pay('BABA NLA')">Pay — ₦5,000</button></div>
-
 <div class="dashed"><div style="color:#22e06a;font-size:22px">✦</div><p><b>No long talk</b></p>Safe slips for steady win. BANGER for when you want to scatter am. You choose.<br><br>18+ · Play responsibly</div>
 </div>
 
-<!-- CREATE MODAL -->
 <div class="modal" id="createModal"><div class="modalBox"><div style="display:flex;justify-content:space-between"><h2 style="margin:0">Create Account</h2><button onclick="closeModal()" style="background:none;border:0;color:#fff;font-size:26px">×</button></div><p style="color:#aaa">Free plan unlocks after you register.</p>
-<div class="field"><label>Email</label><input class="input" placeholder="you@email.com"></div>
+<div class="field"><label>Email</label><input class="input" id="regEmail" placeholder="you@email.com"></div>
 <div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="pw" type="password" placeholder="Min 4 characters"><button class="eyeBtn" onclick="toggle('pw')">👁️</button></div></div>
 <div class="field"><label>Confirm Password</label><div class="eyeWrap"><input class="input" id="cpw" type="password" placeholder="Repeat password"><button class="eyeBtn" onclick="toggle('cpw')">👁️</button></div></div>
 <div class="check"><label><input type="checkbox" id="age" onchange="check()"> I am 18+ years old</label></div>
@@ -75,23 +52,57 @@ h1{font-size:28px;line-height:1.2}
 <button class="createBtn2" id="createBtn2" onclick="register()">Create Account</button>
 <p style="text-align:center;color:#aaa">Already have account? <a href="#" style="color:#22e06a" onclick="openModal('login');return false">Login</a></p></div></div>
 
-<!-- LOGIN MODAL -->
 <div class="modal" id="loginModal"><div class="modalBox"><div style="display:flex;justify-content:space-between"><h2 style="margin:0">Login</h2><button onclick="closeModal()" style="background:none;border:0;color:#fff;font-size:26px">×</button></div><p style="color:#aaa">Welcome back.</p>
-<div class="field"><label>Email</label><input class="input" placeholder="you@email.com"></div>
+<div class="field"><label>Email</label><input class="input" id="loginEmail" placeholder="you@email.com"></div>
 <div class="field"><label>Password</label><div class="eyeWrap"><input class="input" id="lpw" type="password" placeholder="Password"><button class="eyeBtn" onclick="toggle('lpw')">👁️</button></div></div>
-<button class="createBtn2 active" onclick="alert('Logged in — FREE unlocked')">Login</button>
-<p style="text-align:center;margin-top:10px"><a href="#" style="color:#22e06a" onclick="forgotPass();return false">Forgot Password?</a></p>
-<script>function forgotPass(){let e=prompt('Type your email to reset password'); if(!e) return; fetch('https://oddsgpt-backend.vercel.app/api/forgot-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e})}).then(r=>r.json()).then(j=>alert(j.message||'Check your Gmail for reset link')).catch(()=>alert('Check your Gmail for reset link — if no mail, check Spam'))}</script>
-<p style="text-align:center;color:#aaa">No account? <a href="#" style="color:#22e06a" onclick="openModal('create');return false">Create Account</a></p></div></div>
+<button class="createBtn2 active" onclick="doLogin()">Login</button>
+<a class="link" onclick="forgotPass()">Forgot Password?</a>
+<p style="text-align:center;color:#aaa">No account? <a href="#" style="color:#22e06a" onclick="openModal('create');return false">Create Account</a></p><p id="loginMsg" style="color:#f55;text-align:center"></p></div></div>
 
 <script>
+// === PASTE YOUR SUPABASE KEYS HERE - from Supabase Settings > API ===
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_URL_HERE";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_KEY_HERE";
+let supabaseClient = null;
+try{ if(SUPABASE_URL.indexOf('PASTE')===-1) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }catch(e){}
 function toggle(id){let e=document.getElementById(id); e.type=e.type==='password'?'text':'password';}
 function openModal(t){closeModal(); document.getElementById(t==='create'?'createModal':'loginModal').style.display='flex';}
 function closeModal(){document.getElementById('createModal').style.display='none';document.getElementById('loginModal').style.display='none';}
 function check(){let b=document.getElementById('createBtn2'); let ok=document.getElementById('age').checked&&document.getElementById('terms').checked; b.classList.toggle('active',ok);}
-function register(){if(!document.getElementById('age').checked||!document.getElementById('terms').checked){alert('Tick 18+ and Terms to continue');return;} alert('Registered — FREE unlocked'); closeModal();}
-function todayStr(){let d=new Date(); return d.toDateString();}
+async function register(){
+ let email=document.getElementById('regEmail').value.trim();
+ let pw=document.getElementById('pw').value; let cpw=document.getElementById('cpw').value;
+ if(!document.getElementById('age').checked||!document.getElementById('terms').checked){alert('Tick 18+ and Terms');return;}
+ if(pw.length<4){alert('Password min 4');return;} if(pw!==cpw){alert('Passwords no match');return;}
+ if(!supabaseClient){alert('Supabase keys never set — paste your Project URL + Anon Key for top of file, then try again');return;}
+ let {data,error}=await supabaseClient.auth.signUp({email,password:pw});
+ if(error){alert(error.message);return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login');
+}
+async function doLogin(){
+ let email=document.getElementById('loginEmail').value.trim(); let pw=document.getElementById('lpw').value;
+ if(!supabaseClient){document.getElementById('loginMsg').textContent='Supabase keys never set — paste Project URL + Anon Key'; return;}
+ let {data,error}=await supabaseClient.auth.signInWithPassword({email,password:pw});
+ if(error){document.getElementById('loginMsg').textContent=error.message; return;}
+ document.getElementById('loginMsg').textContent=''; alert('Logged in — FREE unlocked, same FREE for all'); closeModal(); location.reload();
+}
+async function forgotPass(){
+ let email=prompt('Type your email to reset password');
+ if(!email) return;
+ if(!supabaseClient){alert('Supabase keys never set — go Supabase > Settings > API, copy Project URL + Anon Key, paste for top of index.html, Commit, then try Forgot again'); return;}
+ let {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:'https://oddsgpt.com.ng'});
+ if(error) alert(error.message); else alert('Check Gmail (Inbox + Spam) for real reset link — e go go to oddsgpt.com.ng, no more localhost');
+}
 function codeForToday(){let d=new Date(); let s=''+d.getFullYear()+d.getMonth()+d.getDate(); let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))%100000; return 'ODD'+h.toString(36).toUpperCase();}
-document.addEventListener('DOMContentLoaded',()=>{let c=document.getElementById('slipCode'); if(c) c.textContent=codeForToday(); let t=document.getElementById('todayLine'); if(t) t.textContent='Today — '+new Date().toDateString()+' — New games by 12am'; setInterval(()=>{let n=new Date(); if(n.getHours()===0&&n.getMinutes()===0&&n.getSeconds()<2){document.getElementById('slipResult').style.display='none'; let cc=document.getElementById('slipCode'); if(cc) cc.textContent=codeForToday();}},1000);});
+function generateSlip(){
+ // FREE SAME FOR ALL: seed = date only. PAID: seed = user + date (handled by backend). Here demo shows same FREE for all.
+ let wish=document.getElementById('wish').value||'2 odds';
+ document.getElementById('slipResult').style.display='block';
+ document.getElementById('slipGames').innerHTML='Man City vs Arsenal — 2nd Half Over 0.5 — 1.20<br>Barcelona vs Sevilla — 2nd Half Over 0.5 — 1.20<br>Total: '+wish+' — 2.07 odds';
+ document.getElementById('slipCode').textContent=codeForToday();
+ document.getElementById('slipResult').scrollIntoView();
+}
 function pay(p){alert('Paystack for '+p+' — after pay, Your Plan + countdown + games + code go show');}
+// Date/time/day live
+function tick(){let d=new Date(); let opts={weekday:'short',day:'2-digit',month:'short',year:'numeric'}; let date=d.toLocaleDateString('en-GB',opts); let time=d.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',hour12:true}); let el=document.getElementById('todayLine'); if(el) el.textContent='Today — '+date+' — '+time+' WAT — New games by 12am'; setInterval(()=>{let n=new Date(); if(n.getHours()===0&&n.getMinutes()===0){location.reload();}},30000);}
+tick();
 </script></body></html>
