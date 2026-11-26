@@ -72,6 +72,19 @@ let supabaseClient = null;
 try{ if(SUPABASE_URL.indexOf('PASTE')===-1) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }catch(e){}
 function fixScroll(){document.querySelectorAll('.input').forEach(function(el){el.addEventListener('focus',function(){setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'center'});},300);});});}
 fixScroll();
+function applyLoginState(){
+  let user = localStorage.getItem('oddsgpt_user');
+  let loginBtn = document.querySelector('.loginBtn');
+  let createBtn = document.querySelector('.createBtn');
+  let freeBtns = document.querySelectorAll('.pay');
+  if(user){
+    if(loginBtn){ loginBtn.textContent='Sign Out'; loginBtn.onclick=function(){ localStorage.removeItem('oddsgpt_user'); localStorage.removeItem('oddsgpt_token'); location.reload(); }; }
+    if(createBtn) createBtn.style.display='none';
+    // Unlock FREE: change FREE button text
+    document.querySelectorAll('.card').forEach(function(c){ if(c.innerHTML.includes('FREE')){ let b=c.querySelector('.pay'); if(b) b.textContent='FREE Unlocked — Generate Slip'; }});
+  }
+}
+window.addEventListener('load', function(){ applyLoginState(); });
 function toggle(id){let e=document.getElementById(id); e.type=e.type==='password'?'text':'password';}
 function openModal(t){closeModal(); if(t==='create'){document.getElementById('regEmail').value='';document.getElementById('pw').value='';document.getElementById('cpw').value='';document.getElementById('age').checked=false;document.getElementById('terms').checked=false;document.getElementById('createBtn2').classList.remove('active');} document.getElementById(t==='create'?'createModal':'loginModal').style.display='flex';}
 function closeModal(){document.getElementById('createModal').style.display='none';document.getElementById('loginModal').style.display='none';}
@@ -85,7 +98,7 @@ async function register(){
 }
 async function doLogin(){
  let email=document.getElementById('loginEmail').value.trim(); let pw=document.getElementById('lpw').value;
- try{ let r=await fetch(BACKEND_URL+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){document.getElementById('loginMsg').textContent=j.error||'login failed'; return;} document.getElementById('loginMsg').textContent=''; alert('Logged in — FREE unlocked'); closeModal(); location.reload(); }catch(e){document.getElementById('loginMsg').textContent='Backend no reach: '+e.message;}
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){document.getElementById('loginMsg').textContent=j.error||'login failed'; return;} document.getElementById('loginMsg').textContent=''; localStorage.setItem('oddsgpt_user', email); localStorage.setItem('oddsgpt_token', j.access_token||'ok'); alert('Logged in — FREE unlocked'); closeModal(); applyLoginState(); }catch(e){document.getElementById('loginMsg').textContent='Backend no reach: '+e.message;}
 }
 async function forgotPass(){
  let email=prompt('Type your email to reset password'); if(!email) return;
