@@ -1,76 +1,88 @@
-<!-- OddsGPT V107 ALL OPTIONS - FRONTEND - DELETE ALL OLD FILES, PASTE THIS AS index.html -->
-<!-- V107: Football 150+ options + NBA/ Basketball Quarter/Half/Specials + Pool 600 + Plans Fixed + Login/Pay Fixed -->
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- OddsGPT V109 - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>OddsGPT - Type What You Want, Get Real Booking Code</title>
 <style>
-*{box-sizing:border-box} body{margin:0;background:#000;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:90px}
-a{color:#22c55e}.top{position:sticky;top:0;z-index:20;background:#000;border-bottom:1px solid #1f2937;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;letter-spacing:.2px}.eye{width:34px;height:34px;border-radius:50%;background:#22c55e;display:grid;place-items:center;color:#000;font-weight:900;font-size:18px;box-shadow:0 0 0 3px #052e16}
-.logo small{display:block;font-size:11px;opacity:.7;font-weight:600}.btn{background:#22c55e;color:#000;border:0;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer}.btn2{background:#111;border:1px solid #22c55e;color:#22c55e;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer}
-.wrap{max-width:980px;margin:0 auto;padding:14px}.card{background:#0a0f0a;border:1px solid #1f2937;border-radius:16px;padding:16px;margin:12px 0}.card h2{margin:0 0 6px}.muted{opacity:.75;font-size:13px;line-height:1.5}
-input,textarea,select{width:100%;background:#111827;color:#fff;border:1px solid #374151;border-radius:12px;padding:13px;font-size:16px;outline:none}input:focus,textarea:focus{border-color:#22c55e}
-input:-webkit-autofill{-webkit-text-fill-color:#fff!important;-webkit-box-shadow:0 0 0 1000px #111827 inset!important;caret-color:#fff}
-label{font-size:13px;font-weight:700;margin:10px 0 6px;display:block}.row{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid #374151;background:#111827;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:700;cursor:pointer}.chip.on{background:#22c55e;color:#000;border-color:#22c55e}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.plan{border:1px solid #22c55e;border-radius:16px;padding:14px;background:#06130b}.plan b{font-size:18px}.plan .price{font-size:26px;font-weight:900;margin:6px 0}.plan small{opacity:.8}
-.game{border:1px solid #1f2937;border-radius:14px;padding:12px;background:#0b0f0b}.game b{font-size:15px}.odds{color:#22c55e;font-weight:900}.hidden{display:none!important}
-.opts{max-height:280px;overflow:auto;border:1px solid #1f2937;border-radius:12px;padding:10px;background:#080d08}.opt-group{margin:10px 0}.opt-group h4{margin:10px 0 6px;color:#22c55e;font-size:13px;text-transform:uppercase}
-.slip{background:#06130b;border:1px solid #22c55e;border-radius:16px;padding:14px}.codebox{background:#000;border:1px dashed #22c55e;border-radius:12px;padding:12px;text-align:center;font-size:22px;font-weight:900;letter-spacing:2px}
-.badge{display:inline-block;background:#22c55e;color:#000;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:900}
-@media(max-width:640px){.top{padding:10px}.logo{font-size:18px}input,textarea{font-size:16px}}
-</style></head>
-<body>
-<div class="top"><div class="logo"><div class="eye">◉</div><div>OddsGPT<small>Type What You Want, Get Real Booking Code</small></div></div>
-<div class="row"><button class="btn2" id="loginBtnTop">LOGIN</button><button class="btn" id="regBtnTop">Create Account</button><button class="btn2 hidden" id="signOutBtn">Sign Out</button></div></div>
+*{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
+.top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px}.eye{width:30px;height:30px;border-radius:50%;background:#22c55e;display:grid;place-items:center;color:#000;font-size:16px}
+.logo small{display:block;font-size:11px;font-weight:400;opacity:.7}
+.btn-mint{background:#bbf7d0;color:#000;border:0;border-radius:999px;padding:11px 18px;font-weight:800;cursor:pointer}
+.btn-outline{border:1px solid #bbf7d0;color:#bbf7d0;background:transparent;border-radius:999px;padding:10px 16px;font-weight:800;cursor:pointer}
+.wrap{max-width:1000px;margin:0 auto;padding:14px}
+.hero{text-align:left;padding:18px 0 8px}.hero h1{font-size:28px;margin:0;line-height:1.2}.hero h1 span{color:#bbf7d0}.hero p{opacity:.8;font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{border:1px solid #334155;background:#0f172a;color:#fff;border-radius:999px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer}.chip.on{background:#bbf7d0;color:#000;border-color:#bbf7d0}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;padding:16px;margin:14px 0}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:760px){.plans{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.plans{grid-template-columns:1fr 1fr}}
+.plan{background:#111a2e;border:1px solid #1e293b;border-radius:18px;padding:16px;min-height:180px}.plan b{font-size:14px;letter-spacing:.5px}.price{font-size:30px;font-weight:900;margin:8px 0}.plan small{opacity:.85;font-size:12px;line-height:1.5;display:block;min-height:36px}.pay{width:100%;background:#bbf7d0;color:#000;border:0;border-radius:999px;padding:12px;font-weight:800;cursor:pointer;margin-top:12px}
+input,textarea{width:100%;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:12px;padding:13px;font-size:16px;outline:none}input:focus,textarea:focus{border-color:#bbf7d0}
+input:-webkit-autofill{-webkit-text-fill-color:#fff!important;-webkit-box-shadow:0 0 0 1000px #1e293b inset!important}
+label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opacity:.75;font-size:13px;line-height:1.5}
+.game{border:1px solid #1e293b;border-radius:14px;padding:12px;background:#0b1220;margin:8px 0}.odds{color:#bbf7d0;font-weight:900}
+.badge{display:inline-block;background:#bbf7d0;color:#000;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:900}
+.opts{max-height:320px;overflow:auto}.opt-group h4{color:#bbf7d0;font-size:12px;text-transform:uppercase;margin:12px 0 6px}
+.hidden{display:none!important}
+/* MODALS - EXACT AS VIDEO */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.modal.open{display:flex}
+.modal-box{background:#1e293b;border-radius:20px;padding:22px;width:100%;max-width:420px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal-box h2{margin:0;font-size:22px}.modal-box p{opacity:.8;font-size:13px;margin:6px 0 4px}.close{position:absolute;top:14px;right:16px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
+.check{font-size:13px;display:flex;gap:8px;align-items:center;margin:8px 0}.check input{width:auto}
+.link{color:#bbf7d0;cursor:pointer;font-weight:700}
+.slip{background:#07130b;border:1px solid #bbf7d0;border-radius:14px;padding:12px;margin-top:12px}.codebox{background:#000;border:1px dashed #bbf7d0;border-radius:10px;padding:10px;text-align:center;font-size:20px;font-weight:900;margin:10px 0}
+</style></head><body>
+<div class="top"><div class="logo"><div class="eye">◉</div><div>OddsGPT<small>Type What You Want, Get Real Booking Code</small></div></div><div style="display:flex;gap:8px"><button class="btn-outline" onclick="openModal('login')">LOGIN</button><button class="btn-mint" onclick="openModal('create')">Create Account</button><button class="btn-outline hidden" id="signOutBtn">Sign Out</button></div></div>
+
 <div class="wrap">
-<div class="card" id="authCard"><h2>Welcome to OddsGPT</h2><p class="muted">18+ only. Register to see FREE games. Paid plans unlock full buffet. Every slip comes with a real <b>SportyBet</b> booking code.</p>
-<div id="authForms"><label>Email</label><input id="email" type="email" autocomplete="email" placeholder="you@email.com">
-<label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
-<label class="hidden" id="confirmLabel">Confirm Password</label><input class="hidden" id="confirmPass" type="password" placeholder="Confirm password">
-<label><input type="checkbox" id="ageCheck" style="width:auto"> I confirm I am 18+ </label>
-<div class="row" style="margin-top:10px"><button class="btn" id="doLogin">Login</button><button class="btn2" id="doRegister">Create Account</button><button class="btn2" id="forgotBtn">Forgot Password?</button></div>
-<p class="muted" id="authMsg"></p></div>
-<div id="loggedInBox" class="hidden"><b id="welcomeName"></b> <span class="badge" id="planBadge">FREE</span><p class="muted">You are logged in. FREE slip is same for all. Paid plans give you different buffet slips.</p></div></div>
+<div class="hero"><h1>Type What You Want,<br><span>Get Real Booking Code</span></h1><p>Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code.</p>
+<div class="chips"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div></div>
 
-<div class="card"><h2>Plans — 1 USE = 1 Slip</h2><p class="muted">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
-<div class="grid" id="plans"></div></div>
+<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><p class="muted">Games reload at 12:00 AM WAT. Only findable games on SportyBet / 1xBet.</p><div id="fixtures">Login to see today's games.</div></div>
 
-<div class="card"><h2>Today's Games — <span id="todayDate"></span></h2><p class="muted">Games reload at 12:00 AM WAT. Only findable games on SportyBet / 1xBet. Blocked: II, III, U19, U21, U23, Reserves, B Team, Youth, Academy, Women. Amateur allowed but low priority.</p>
-<div class="row"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button></div>
-<div id="fixtures">Login to see today's games.</div></div>
-
-<div class="card" id="paidBox"><h2>Type What You Want <span class="badge">PAID ONLY</span></h2>
-<p class="muted">FREE: No Generate, No Wish, No Sport/Option buttons — FREE slip is auto and same for all.<br>PAID: You fit type anything — e.g. <i>"Give me 10 odds, only home win"</i> or <i>"GG only 5 odds"</i> or <i>"NBA Over 220.5 + 1st Quarter Over 55.5"</i></p>
-<label>What do you want?</label><textarea id="wishBox" rows="3" placeholder="Type what you want... e.g. Give me 10 odds mix football and basketball"></textarea>
-<div class="row" style="margin-top:8px"><button class="btn" id="askAI">Ask AI</button><button class="btn" id="genSlip">Generate Slip</button></div>
-<h3 style="margin-top:16px">Options — Choose Any (Paid Only)</h3>
-<p class="muted">All options from your screenshots are here. If you pick an option, your slip go use am. If you no pick, AI go mix.</p>
-<div class="opts" id="optionsBox"></div>
-<div id="slipOut"></div></div>
-
-<div class="card"><h2>Your Slips</h2><div id="mySlips" class="muted">Login to see slips.</div></div>
-<div class="card"><h2>Help / Complaint</h2><p class="muted">Debited without access? Drop message. Admin go check your Payment ID.</p><textarea id="complaint" rows="3" placeholder="Payment ID + what happen"></textarea><button class="btn" style="margin-top:8px" onclick="alert('Complaint saved. Admin will check your Payment ID.')">Send Complaint</button></div>
-<p class="muted" style="text-align:center">OddsGPT • 18+ • Play Responsibly • Betting is addictive</p>
+<h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
+<div class="plans">
+<div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
+<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
+<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS</small><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
+<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
+<div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS</small><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
+<div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day</small><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
+<div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
 </div>
 
-<script>
-const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";
-const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
-let currentUser=null, currentPlan="FREE", selectedSport="ALL", selectedOptions=[];
-const PLANS=[
-{id:"FREE",name:"FREE",price:0,desc:"1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games"},
-{id:"BANGER",name:"BANGER",price:100,desc:"1 USE = 1 SLIP • Max 1 per day"},
-{id:"QUICK",name:"QUICK WIN",price:200,desc:"1 USE = 2 SLIPS"},
-{id:"DAILY",name:"DAILY HUSTLE",price:300,desc:"1 DAY = 3 SLIPS"},
-{id:"TRY_AM",name:"TRY AM",price:500,desc:"3 DAYS = 9 SLIPS"},
-{id:"SHARP",name:"SHARP GUY",price:2000,desc:"7 DAYS = 35 SLIPS • 5/day"},
-{id:"BABA",name:"BABA NLA",price:5000,desc:"30 DAYS = 300 SLIPS • 10/day"},
-];
-function renderPlans(){document.getElementById('plans').innerHTML=PLANS.map(p=>`<div class="plan"><b>${p.name}</b><div class="price">₦${p.price}</div><small>${p.desc}</small><br><button class="btn" style="margin-top:10px;width:100%" onclick="payPlan('${p.id}',${p.price})">${p.price===0?'Get FREE':'Pay ₦'+p.price+' — Paystack'}</button></div>`).join('')}
-renderPlans();
-document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+<div class="card"><h2 style="margin:0">Type What You Want <span class="badge">PAID ONLY</span></h2><p class="muted">FREE: No Generate, No Wish, No Options — FREE slip auto same for all. PAID: Type anything + pick any option.</p>
+<textarea id="wishBox" rows="3" placeholder="Type what you want... e.g. Give me 10 odds, only home win"></textarea>
+<div style="display:flex;gap:8px;margin-top:10px"><button class="btn-mint" id="askAI">Ask AI</button><button class="btn-mint" id="genSlip">Generate Slip</button></div>
+<h3>Options — Choose Any (Paid Only)</h3><p class="muted">All options from your screenshots — football + NBA + basketball, same mint/dark style.</p><div class="opts" id="optionsBox"></div><div id="slipOut"></div></div>
 
-// OPTIONS - ALL FROM SCREENSHOTS
+<div class="card"><h2 style="margin:0">Your Slips</h2><div id="mySlips" class="muted">Login to see slips.</div></div>
+<div class="card"><h2 style="margin:0">Help / Complaint</h2><p class="muted">Debited without access? Drop message. Admin go check your Payment ID.</p><textarea id="complaint" rows="3" placeholder="Payment ID + what happen"></textarea><button class="btn-mint" style="margin-top:8px" onclick="alert('Complaint saved. Admin will check your Payment ID.')">Send Complaint</button></div>
+<p class="muted" style="text-align:center">OddsGPT • 18+ • Play Responsibly</p></div>
+
+<!-- LOGIN MODAL - AS VIDEO -->
+<div class="modal" id="loginModal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Login</h2><p>Welcome back</p>
+<label>Email</label><input id="email" type="email" autocomplete="email" placeholder="you@email.com">
+<label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
+<button class="btn-mint" id="doLogin" style="width:100%;margin-top:14px;padding:14px">LOGIN</button>
+<p style="text-align:center;margin-top:10px"><span class="link" onclick="forgotPass()">Forgot Password?</span></p>
+<p style="text-align:center">No account? <span class="link" onclick="openModal('create')">Create Account — Get FREE TODAY</span></p><p class="muted" id="authMsg"></p></div></div>
+
+<!-- CREATE ACCOUNT MODAL - AS VIDEO -->
+<div class="modal" id="createModal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Create Account</h2><p>Free plan unlock after you register</p>
+<label>Email</label><input id="regEmail" type="email" placeholder="you@email.com">
+<label>Password</label><input id="regPass" type="password" placeholder="Min 6 characters">
+<label>Confirm Password</label><input id="regConfirm" type="password" placeholder="Repeat password">
+<label class="check"><input type="checkbox" id="ageCheck"> I am 18+ years old</label>
+<label class="check"><input type="checkbox" id="termsCheck"> I agree to the terms</label>
+<button class="btn-mint" id="doRegister" style="width:100%;margin-top:10px;padding:14px">Create Account</button>
+<p style="text-align:center">Already have account? <span class="link" onclick="openModal('login')">LOGIN</span></p></div></div>
+
+<script>
+const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
+let currentUser=null,currentPlan="FREE",selectedSport="ALL",selectedOptions=[];
+function openModal(which){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else document.getElementById('createModal').classList.add('open')}
+function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open')}
+function setWish(t){document.getElementById('wishBox').value=t;document.getElementById('wishBox').scrollIntoView({behavior:'smooth'})}
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 const OPTIONS={
 "FOOTBALL - 1X2 / DOUBLE CHANCE":["1X2","1X2 - 1UP","1X2 - 2UP","1X2 - Never Down","Double Chance","Double Chance - 1UP","Draw No Bet","1st Half - 1X2","2nd Half - 1X2","1st Half - Double Chance","2nd Half - Double Chance","1st Half - Draw No Bet","2nd Half - Draw No Bet"],
 "FOOTBALL - OVER/UNDER":["Over/Under 0.5","Over/Under 1.5","Over/Under 2.5","Over/Under 3.5","Over/Under 4.5","Over/Under 5.5","Asian Over/Under 1","Asian Over/Under 2","Asian Over/Under 3","Asian Over/Under 4","Asian Over/Under 5","Over/Under - Early Goals 1.5","Over/Under - Early Goals 2.5","Over/Under - Early Goals 3.5","1st Half Over/Under","2nd Half Over/Under","Both Halves Over 1.5","Both Halves Under 1.5"],
@@ -78,38 +90,27 @@ const OPTIONS={
 "FOOTBALL - CORRECT SCORE / GOALS":["Correct Score","Correct Score [0:0]","Correct Score 1st Half","Correct Score 2nd Half","Half Time / Full Time","Half Time / Full Time Correct Score","Exact Goals","Exact Goals 1st Half","Exact Goals 2nd Half","Multigoals","Multiscores","Goal Range","Goal Bounds","Excluded Number of Goals","Winning Margin","Odd/Even","Odd/Even 1st Half","Odd/Even 2nd Half"],
 "FOOTBALL - TEAM / CLEAN SHEET":["Home Team Over/Under 0.5","Home Team Over/Under 1.5","Home Team Over/Under 2.5","Home Team Over/Under 3.5","Away Team Over/Under 0.5","Away Team Over/Under 1.5","Away Team Over/Under 2.5","Away Team Over/Under 3.5","Clean Sheet Home","Clean Sheet Away","Win to Nil Home","Win to Nil Away","Teams to Score","Win Both Halves","Win Either Half","Highest Scoring Half","Home Highest Scoring Half","Away Highest Scoring Half"],
 "FOOTBALL - HANDICAP":["Handicap 0:1","Handicap 0:2","Handicap 0:3","Handicap 1:0","Handicap 2:0","Handicap 3:0","Handicap 4:0","Asian Handicap -2.0","Asian Handicap -1.5","Asian Handicap -1.0","Asian Handicap -0.5","Asian Handicap 0","Asian Handicap +0.5","Asian Handicap +1.0","Asian Handicap +1.5","Asian Handicap +2.0","1st Half Handicap","2nd Half Handicap"],
-"FOOTBALL - GOAL TIMING / LEAD / STREAK":["1st Goal (Home/None/Away)","1st Goal 1st Half","1st Goal 2nd Half","Last Goal","1st Half Team Goals","2nd Half Team Goals","Any Team to lead by 1 Goal","Any Team to lead by 2 Goals","Any Team to lead by 3 Goals","Home to lead by 1/2/3","Away to lead by 1/2/3","Any Team to Score 2+ in a Row","Any Team to Score 3+ in a Row","Home to Score 2+ in a Row","Home to Score 3+ in a Row","Away to Score 2+ in a Row","Away to Score 3+ in a Row"],
+"FOOTBALL - LEAD / STREAK":["1st Goal (Home/None/Away)","1st Goal 1st Half","1st Goal 2nd Half","Last Goal","1st Half Team Goals","2nd Half Team Goals","Any Team to lead by 1 Goal","Any Team to lead by 2 Goals","Any Team to lead by 3 Goals","Home to lead by 1/2/3","Away to lead by 1/2/3","Any Team to Score 2+ in a Row","Any Team to Score 3+ in a Row","Home to Score 2+ in a Row","Home to Score 3+ in a Row","Away to Score 2+ in a Row","Away to Score 3+ in a Row"],
 "FOOTBALL - STATS (NEEDS STATS API)":["Offsides 1X2","Offsides Over/Under","Shots Over/Under","Shots on Target Over/Under","Posts and Crossbars Over/Under","Posts and Crossbars 1X2","Cards Over/Under","Exact Bookings","Sending Off","Fouls Over/Under","Corners Over/Under"],
 "FOOTBALL - PLAYER (NEEDS PLAYER API)":["Most Player Goals","Most Shots","Most Goals + Assists","Most Fouls","Most Saves","Player Cards","To Score or Assist","Player Fouls Won"],
-"BASKETBALL - FULL GAME":["Moneyline - Home Win","Moneyline - Away Win","Over/Under Total Points 76.5","Over/Under Total Points 140.5","Over/Under Total Points 150.5","Over/Under Total Points 220.5","Over/Under Total Points 221.5","Over/Under Total Points 222.5","Handicap","Odd/Even Total Points","Home Team Total Over/Under","Away Team Total Over/Under"],
-"BASKETBALL - QUARTER (Q1-Q4)":["1st Quarter Over/Under","2nd Quarter Over/Under","3rd Quarter Over/Under","4th Quarter Over/Under","1st Quarter Handicap","2nd Quarter Handicap","1st Quarter 1X2","2nd Quarter 1X2","1st Quarter Draw No Bet","2nd Quarter Draw No Bet","1st Quarter Odd/Even","2nd Quarter Odd/Even","Quarter Over/Under 39.5"],
+"BASKETBALL - FULL GAME":["Moneyline - Home Win","Moneyline - Away Win","Over/Under Total Points 76.5","Over/Under Total Points 77.5","Over/Under Total Points 78.5","Over/Under Total Points 79.5","Over/Under Total Points 80.5","Over/Under Total Points 140.5","Over/Under Total Points 150.5","Over/Under Total Points 220.5","Over/Under Total Points 221.5","Over/Under Total Points 222.5","Handicap","Odd/Even Total Points","Home Team Total Over/Under","Away Team Total Over/Under"],
+"BASKETBALL - QUARTER":["1st Quarter Over/Under","2nd Quarter Over/Under","3rd Quarter Over/Under","4th Quarter Over/Under","1st Quarter Handicap","2nd Quarter Handicap","1st Quarter 1X2","2nd Quarter 1X2","1st Quarter Draw No Bet","2nd Quarter Draw No Bet","1st Quarter Odd/Even","2nd Quarter Odd/Even","Quarter Over/Under 39.5"],
 "BASKETBALL - HALF":["1st Half Over/Under (not overtime)","2nd Half Over/Under","1st Half Handicap","2nd Half Handicap","1st Half 1X2","2nd Half 1X2","1st Half Draw No Bet","2nd Half Draw No Bet","1st Half Odd/Even","2nd Half Odd/Even"],
 "BASKETBALL - SPECIALS / NBA":["Race to 20 Points","Race to 30 Points","First Team to Lead by 12","First Team to Lead by 22","Highest Scoring Quarter","Lowest Scoring Quarter","Any Team to Win All Quarters","Both Teams to Score X in Quarter","Home to Win by X","Away to Win by X"]
 };
-function renderOptions(){let h='';for(let g in OPTIONS){h+=`<div class="opt-group"><h4>${g}</h4>`+OPTIONS[g].map(o=>`<button class="chip" onclick="toggleOpt(this,'${o.replace(/'/g,"")}')">${o}</button>`).join(' ')+`</div>`}document.getElementById('optionsBox').innerHTML=h}
-function toggleOpt(el,name){if(currentPlan==='FREE'){alert('FREE has no options. FREE slip is auto same for all. Pay to unlock options.');return}el.classList.toggle('on');if(selectedOptions.includes(name))selectedOptions=selectedOptions.filter(x=>x!==name);else selectedOptions.push(name)}
-renderOptions();
-
-function updateAuthUI(){let logged=!!currentUser;document.getElementById('authForms').classList.toggle('hidden',logged);document.getElementById('loggedInBox').classList.toggle('hidden',!logged);document.getElementById('signOutBtn').classList.toggle('hidden',!logged);document.getElementById('loginBtnTop').classList.toggle('hidden',logged);document.getElementById('regBtnTop').classList.toggle('hidden',logged);if(logged){let em=currentUser.email||'';document.getElementById('welcomeName').textContent='Welcome, '+(em.split('@')[0]||'User');document.getElementById('planBadge').textContent=currentPlan} }
-function checkLogin(){try{let t=localStorage.getItem('oddsgpt_token');let u=localStorage.getItem('oddsgpt_user');if(t&&u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuthUI();loadToday();loadSlips()}}catch(e){}}
-checkLogin();
-
-async function supabaseAuth(path,body){let r=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});let j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.msg||j.message||'Auth failed');return j}
-document.getElementById('doLogin').onclick=async()=>{let e=document.getElementById('email').value.trim(),p=document.getElementById('password').value;if(!document.getElementById('ageCheck').checked)return alert('Tick 18+ first');if(!e||!p)return alert('Enter email + password');try{let j=await supabaseAuth('token?grant_type=password',{email:e,password:p});currentUser=j.user||{email:e};localStorage.setItem('oddsgpt_token',j.access_token);localStorage.setItem('oddsgpt_user',JSON.stringify(currentUser));updateAuthUI();loadToday();alert('Login success')}catch(err){document.getElementById('authMsg').textContent=err.message;alert(err.message)}};
-document.getElementById('doRegister').onclick=async()=>{let e=document.getElementById('email').value.trim(),p=document.getElementById('password').value,c=document.getElementById('confirmPass').value;if(!document.getElementById('ageCheck').checked)return alert('Tick 18+ first');if(p!==c)return alert('Passwords no match');if(p.length<6)return alert('Password must be 6+');try{let j=await supabaseAuth('signup',{email:e,password:p});alert('Check your email to verify, then Login.');}catch(err){alert(err.message)}};
-document.getElementById('regBtnTop').onclick=()=>{document.getElementById('confirmLabel').classList.remove('hidden');document.getElementById('confirmPass').classList.remove('hidden');document.getElementById('authCard').scrollIntoView({behavior:'smooth'})};
-document.getElementById('loginBtnTop').onclick=()=>document.getElementById('authCard').scrollIntoView({behavior:'smooth'});
-document.getElementById('signOutBtn').onclick=()=>{localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');currentUser=null;currentPlan='FREE';updateAuthUI();location.href='/';};
-document.getElementById('forgotBtn').onclick=async()=>{let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');try{await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Password reset link sent to '+e+' — check inbox/spam')}catch(err){alert(err.message)}};
-
-async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='<div style="border:1px solid #22c55e;border-radius:14px;padding:18px;text-align:center">🔒 <b>Today\'s Games Are Locked</b><br>Register / Login first to see FREE games.</div>';return}try{let r=await fetch('/api/football-today?sport='+selectedSport);let j=await r.json();let list=j.games||j.fixtures||[];if(!list.length)document.getElementById('fixtures').innerHTML='No games yet — check after 12am reload.';else document.getElementById('fixtures').innerHTML=list.slice(0,10).map(g=>`<div class="game"><b>${g.home} vs ${g.away}</b> <span class="badge">${g.league||g.sport}</span><br><span class="muted">${g.time||''} • ${g.sport||'Football'}</span><br><span class="odds">${g.market||'Over 1.5'} • ${g.odds||'1.65'}</span></div>`).join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading... check connection'}}
+let h='';for(let g in OPTIONS){h+='<div class="opt-group"><h4>'+g+'</h4><div style="display:flex;flex-wrap:wrap;gap:6px">'+OPTIONS[g].map(o=>'<button class="chip" onclick="toggleOpt(this,\''+o.replace(/'/g,'')+'\')">'+o+'</button>').join('')+'</div></div>'}document.getElementById('optionsBox').innerHTML=h;
+function toggleOpt(el,n){if(currentPlan==='FREE'){alert('FREE has no options. FREE slip is auto same for all. Pay to unlock options.');return}el.classList.toggle('on');if(selectedOptions.includes(n))selectedOptions=selectedOptions.filter(x=>x!==n);else selectedOptions.push(n)}
+function updateAuth(){let l=!!currentUser;document.getElementById('signOutBtn').classList.toggle('hidden',!l);if(l){}}
+try{let t=localStorage.getItem('oddsgpt_token'),u=localStorage.getItem('oddsgpt_user');if(t&&u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuth();loadToday()}}catch(e){}
+async function sbAuth(path,body){let r=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});let j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.msg||j.message||'Auth failed');return j}
+document.getElementById('doLogin').onclick=async()=>{let e=document.getElementById('email').value.trim(),p=document.getElementById('password').value;if(!e||!p)return alert('Enter email + password');try{let j=await sbAuth('token?grant_type=password',{email:e,password:p});currentUser=j.user||{email:e};localStorage.setItem('oddsgpt_token',j.access_token);localStorage.setItem('oddsgpt_user',JSON.stringify(currentUser));updateAuth();closeModal();loadToday();alert('Login success')}catch(err){document.getElementById('authMsg').textContent=err.message;alert(err.message)}};
+document.getElementById('doRegister').onclick=async()=>{let e=document.getElementById('regEmail').value.trim(),p=document.getElementById('regPass').value,c=document.getElementById('regConfirm').value;if(!document.getElementById('ageCheck').checked)return alert('Tick I am 18+ first');if(!document.getElementById('termsCheck').checked)return alert('Tick I agree to terms');if(p!==c)return alert('Passwords no match');if(p.length<6)return alert('Password Min 6 characters');try{await sbAuth('signup',{email:e,password:p});alert('Check your email to verify, then Login.');openModal('login')}catch(err){alert(err.message)}};
+async function forgotPass(){let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e)}
+document.getElementById('signOutBtn').onclick=()=>{localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');currentUser=null;currentPlan='FREE';updateAuth();location.href='/'};
+async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}try{let r=await fetch('/api/football-today?sport='+selectedSport);let j=await r.json();let list=j.games||[];document.getElementById('fixtures').innerHTML=list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> • '+g.league+'<br><span class="odds">'+g.market+' • '+g.odds+'</span></div>').join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading...'}}
 document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-sport]').forEach(x=>x.classList.remove('on'));b.classList.add('on');selectedSport=b.dataset.sport;loadToday()});
-
-async function payPlan(planId,price){if(!currentUser)return alert('Login first to pay. Paystack needs login.');if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuthUI();loadToday();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let email=currentUser.email;let handler=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email,amount:price*100,currency:'NGN',callback:function(res){let pid=res.reference;fetch('/api/paystack-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({reference:pid,plan:planId,paymentId:pid})}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=planId;localStorage.setItem('oddsgpt_plan',planId);updateAuthUI();alert('Payment confirmed. Payment ID: '+pid+' saved. Plan: '+planId)}else alert('Verify failed: '+(j.error||''))})},onClose:function(){}});handler.openIframe()}
-
-document.getElementById('genSlip').onclick=async()=>{if(!currentUser)return alert('Login first');if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan,sport:selectedSport})});let j=await r.json();if(!j.ok)return alert(j.error||'Failed');document.getElementById('slipOut').innerHTML=`<div class="slip"><b>Your Slip — ${j.totalOdds} odds</b><br>${j.legs.map(l=>`<div>${l.home} vs ${l.away} — ${l.market} — ${l.odds}</div>`).join('')}<div class="codebox">SportyBet Code: ${j.bookingCode||'HIDDEN — Click to reveal'}</div><button class="btn" onclick="alert('Code: ${j.bookingCode||''} — copy am for SportyBet')">Show Code</button></div>`;loadSlips()};
-document.getElementById('askAI').onclick=async()=>{if(!currentUser)return alert('Login first');if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/ask-ai',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan})});let j=await r.json();alert(j.answer||j.error||'AI replied')};
-function loadSlips(){if(!currentUser)return;fetch('/api/my-slips',{headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')}}).then(r=>r.json()).then(j=>{document.getElementById('mySlips').innerHTML=(j.slips||[]).map(s=>`<div>${s.date} — ${s.totalOdds} odds — Code: ${s.bookingCode}</div>`).join('')||'No slips yet'})}
-// Paystack script
+async function payPlan(id,price){if(!currentUser){openModal('login');return alert('Login first to pay. Paystack needs login.')}if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email,amount:price*100,currency:'NGN',callback:function(res){fetch('/api/paystack-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({reference:res.reference,plan:id,paymentId:res.reference})}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved.')}})},onClose:function(){}});h.openIframe()}
+document.getElementById('genSlip').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan,sport:selectedSport})});let j=await r.json();if(!j.ok)return alert(j.error||'Failed');document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds</b><br>'+j.legs.map(l=>'<div>'+l.home+' vs '+l.away+' — '+l.market+' — '+l.odds+'</div>').join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>'};
+document.getElementById('askAI').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/ask-ai',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan})});let j=await r.json();alert(j.answer||j.error||'AI replied')};
 let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.js';document.head.appendChild(s);
 </script></body></html>
