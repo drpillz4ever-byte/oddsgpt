@@ -93,6 +93,11 @@ function applyLoginState(){
   }
 }
 window.addEventListener('load', function(){ applyLoginState(); });
+document.addEventListener('click', function(e){
+  let t=e.target.textContent.trim();
+  if(['Football','NBA','Mix'].includes(t)) window._selSport=t;
+  if(['Safe 2 odds','Over 1.5 x5','BTTS','🔥 BANGER','BANGER'].includes(t)) window._selOption=t;
+});
 function toggle(id){let e=document.getElementById(id); e.type=e.type==='password'?'text':'password';}
 function openModal(t){closeModal(); if(t==='create'){document.getElementById('regEmail').value='';document.getElementById('pw').value='';document.getElementById('cpw').value='';document.getElementById('age').checked=false;document.getElementById('terms').checked=false;document.getElementById('createBtn2').classList.remove('active');} document.getElementById(t==='create'?'createModal':'loginModal').style.display='flex';}
 function closeModal(){document.getElementById('createModal').style.display='none';document.getElementById('loginModal').style.display='none';}
@@ -116,17 +121,24 @@ function codeForToday(){let d=new Date(); let s=''+d.getFullYear()+d.getMonth()+
 function generateSlip(){
   let wish=document.getElementById('wish').value||'2 odds';
   let box=document.getElementById('slipResult'); box.style.display='block';
-  document.getElementById('slipGames').innerHTML='Loading real games from API-Football + AI... ⏳';
+  document.getElementById('slipGames').innerHTML='Loading TODAY real games from API-Football + NBA... ⏳';
   let user = localStorage.getItem('oddsgpt_user')||'';
-  fetch(BACKEND_URL+'/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'FREE',wish,userId:user})}).then(r=>r.json()).then(j=>{
-    if(!j.ok){ document.getElementById('slipGames').innerHTML='Backend error: '+(j.error||'try again'); return; }
-    let html = j.picks.map(p=> p.home+' vs '+p.away+' — '+p.market+' — '+p.odds+' <small>('+p.league+' • AI '+p.confidence+'%)</small>').join('<br>');
-    html += '<br><b>Total FREE: '+j.totalOdds+' odds — 1 USE PER DAY — SAME FOR ALL</b><br><small>'+wish+' • '+j.date+' • Source: '+j.source+'</small>';
+  // Read sport + option from selected buttons (Football/NBA/Mix, Safe/BTTS etc) - default Mix + Safe
+  let sport = window._selSport || 'Mix';
+  let option = window._selOption || 'Safe 2 odds';
+  fetch(BACKEND_URL+'/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'FREE',wish,userId:user,sport,option})}).then(r=>r.json()).then(j=>{
+    if(!j.ok){
+      if(j.noGames){ document.getElementById('slipGames').innerHTML='⚠️ '+j.message+'<br><small>Date: '+j.date+'</small>'; document.getElementById('slipCode').textContent='—'; return; }
+      document.getElementById('slipGames').innerHTML='Backend error: '+(j.error||'try again'); return;
+    }
+    let html = j.picks.map(p=> '<b>['+p.sport+']</b> '+p.home+' vs '+p.away+' — '+p.market+' — '+p.odds+' <small>('+p.league+' • AI '+p.confidence+'%)</small>').join('<br>');
+    html += '<br><b>Total '+j.plan+': '+j.totalOdds+' odds — '+j.sport+' • '+j.option+' — TODAY ONLY '+j.date+'</b><br><small>'+wish+' • '+j.count+' games today from API • Source: '+j.source+'</small>';
     document.getElementById('slipGames').innerHTML=html;
     document.getElementById('slipCode').textContent=j.code;
   }).catch(e=>{ document.getElementById('slipGames').innerHTML='Backend no reach: '+e.message; });
   box.scrollIntoView();
 }
+
 function pay(p){alert('Paystack for '+p+' — after pay, Your Plan + countdown + games + code go show');}
 // Date/time/day live
 window.addEventListener('load',function(){var w=document.getElementById('wish'); if(w){w.value=''; setInterval(function(){if(w.value.indexOf('@')!==-1) w.value='';},800);}});
