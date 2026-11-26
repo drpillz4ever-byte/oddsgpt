@@ -1,7 +1,7 @@
-<!-- OddsGPT V116 ALL RULES STAY FREE 12AM + CLOCK DATE - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- OddsGPT V117 FIXED BUTTONS - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
 <!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>OddsGPT V116 - Day Choose - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT V117 - Fixed Buttons -  - Type What You Want, Get Real Booking Code</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
 .top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
@@ -38,7 +38,7 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <div class="hero"><h1>Type What You Want,<br><span>Get Real Booking Code</span></h1><p>Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code.</p>
 <div class="chips"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div></div>
 
-<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveClock" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 --:--:-- WAT</span><span id="liveDay" style="color:#bbf7d0;font-weight:700;font-size:13px"></span></div><div id="fixtures">Login to see today's games.</div></div>
+<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveClock" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading...</span><span id="liveDay" style="color:#bbf7d0;font-weight:700;font-size:13px"></span></div><div id="fixtures">Login to see today's games.</div></div>
 
 <h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
 <div class="plans">
@@ -51,17 +51,8 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
 </div>
 
-<div class="card"><h2 style="margin:0">Type What You Wantght to choose day! E.g. 30 odds for today alone, 30 odds from Tuesday to Friday, 5 odds for tomorrow. If you no choose day, I go give you today game.</p>
-<div class="chips" style="margin:8px 0">
-<button class="chip" onclick="addDay('for today alone')">📅 Today</button>
-<button class="chip" onclick="addDay('for tomorrow')">📅 Tomorrow</button>
-<button class="chip" onclick="addDay('from Monday to Friday')">Mon to Fri</button>
-<button class="chip" onclick="addDay('from Tuesday to Friday')">Tue to Fri</button>
-<button class="chip" onclick="addDay('for weekend')">Weekend</button>
-<button class="chip" onclick="addDay('for any day')">Any Day</button>
-</div>
-<div id="dayPreview" class="muted" style="color:#bbf7d0;font-weight:700;margin:6px 0;min-height:18px"></div>
-<textarea id="wishBox" rows="4" placeholder="e.g. Give me 30 odds for today alone, or 30 odds from Tuesday to Friday, or 5 odds for tomorrow — If you no choose, I go give today"></textarea>
+<div class="card"><h2 style="margin:0">Type What You Want <span class="badge">PAID ONLY</span></h2><p class="muted">FREE: No Generate, No Wish, No Options — FREE slip auto same for all. PAID: Type anything + pick any option.</p>
+<div class="chips" style="margin:8px 0"><button class="chip" onclick="addDay('for today alone')">📅 Today</button><button class="chip" onclick="addDay('for tomorrow')">📅 Tomorrow</button><button class="chip" onclick="addDay('from Monday to Friday')">Mon to Fri</button><button class="chip" onclick="addDay('from Tuesday to Friday')">Tue to Fri</button><button class="chip" onclick="addDay('for weekend')">Weekend</button><button class="chip" onclick="addDay('for any day')">Any Day</button></div><div id="dayPreview" class="muted" style="color:#bbf7d0;font-weight:700;margin:6px 0;min-height:18px"></div><textarea id="wishBox" rows="3" placeholder="Type what you want... e.g. Give me 10 odds, only home win"></textarea>
 <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-mint" id="askAI">Ask AI</button><button class="btn-mint" id="genSlip">Generate Slip</button></div>
 <div id="optionsBox" style="display:none!important" aria-hidden="true"></div><p class="muted" style="font-size:12px">✓ All markets dey inside — just type wetin you want.</p><div id="slipOut"></div></div>
 
@@ -93,44 +84,11 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
 let currentUser=null,currentPlan="FREE",selectedSport="ALL",selectedOptions=[];
 function togglePass(id,btn){var f=document.getElementById(id);if(!f)return;var show=f.type==='password';f.type=show?'text':'password';btn.textContent=show?'🙈':'👁️'}
-function clearPassFields(){['password','regPass','regConfirm'].forEach(function(id){var f=document.getElementById(id);if(f){f.value='';f.setAttribute('readonly','readonly');f.type='password'}});var e=document.getElementById('email');if(e){e.setAttribute('readonly','readonly')}var re=document.getElementById('regEmail');if(re){re.setAttribute('readonly','readonly')}}
-function openModal(which){clearPassFields();document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else document.getElementById('createModal').classList.add('open');setTimeout(clearPassFields,80);setTimeout(clearPassFields,400)}
+function clearPassFields(){try{['password','regPass','regConfirm'].forEach(function(id){var f=document.getElementById(id);if(f){f.value='';f.setAttribute('readonly','readonly');f.type='password'}})}catch(e){}}
+function openModal(which){try{clearPassFields()}catch(e){}document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else document.getElementById('createModal').classList.add('open');setTimeout(clearPassFields,80);setTimeout(clearPassFields,400)}
 function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open')}
 function setWish(t){document.getElementById('wishBox').value=t;document.getElementById('wishBox').scrollIntoView({behavior:'smooth'})}
-
-
-function updateDateTime(){
-  let now=new Date();
-  try{
-    // Use Africa/Lagos timezone
-    let dayDate=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
-    let monthOnly=now.toLocaleDateString('en-NG',{month:'long',year:'numeric',timeZone:'Africa/Lagos'});
-    let dayOnly=now.toLocaleDateString('en-NG',{weekday:'long',timeZone:'Africa/Lagos'});
-    let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
-    let dEl=document.getElementById('todayDate');
-    if(dEl) dEl.textContent=dayDate;
-    let tEl=document.getElementById('liveTime');
-    if(tEl) tEl.textContent='🕒 '+timeStr+' WAT';
-    let dayEl=document.getElementById('liveDay');
-    if(dayEl) dayEl.textContent=dayDate+' — '+timeStr+' WAT';
-  }catch(e){
-    let fallback=now.toString();
-    let dEl=document.getElementById('todayDate');
-    if(dEl) dEl.textContent=fallback;
-  }
-}
-updateDateTime();
-setInterval(updateDateTime,1000);
-// FREE games auto change every 12 AM WAT - check every minute if date changed, reload fixtures
-let lastDateStr=new Date().toISOString().slice(0,10);
-setInterval(()=>{
-  let cur=new Date().toISOString().slice(0,10);
-  if(cur!==lastDateStr){
-    lastDateStr=cur;
-    if(window.currentUser){ try{ loadToday(); }catch(e){} }
-    updateDateTime();
-  }
-},60000);
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 const OPTIONS={
 "FOOTBALL - 1X2 / DOUBLE CHANCE":["1X2","1X2 - 1UP","1X2 - 2UP","1X2 - Never Down","Double Chance","Double Chance - 1UP","Draw No Bet","1st Half - 1X2","2nd Half - 1X2","1st Half - Double Chance","2nd Half - Double Chance","1st Half - Draw No Bet","2nd Half - Draw No Bet"],
 "FOOTBALL - OVER/UNDER":["Over/Under 0.5","Over/Under 1.5","Over/Under 2.5","Over/Under 3.5","Over/Under 4.5","Over/Under 5.5","Asian Over/Under 1","Asian Over/Under 2","Asian Over/Under 3","Asian Over/Under 4","Asian Over/Under 5","Over/Under - Early Goals 1.5","Over/Under - Early Goals 2.5","Over/Under - Early Goals 3.5","1st Half Over/Under","2nd Half Over/Under","Both Halves Over 1.5","Both Halves Under 1.5"],
@@ -147,102 +105,124 @@ const OPTIONS={
 "BASKETBALL - SPECIALS / NBA":["Race to 20 Points","Race to 30 Points","First Team to Lead by 12","First Team to Lead by 22","Highest Scoring Quarter","Lowest Scoring Quarter","Any Team to Win All Quarters","Both Teams to Score X in Quarter","Home to Win by X","Away to Win by X"]
 };
 let h='';for(let g in OPTIONS){h+='<div class="opt-group"><h4>'+g+'</h4><div style="display:flex;flex-wrap:wrap;gap:6px">'+OPTIONS[g].map(o=>'<button class="chip" onclick="toggleOpt(this,\''+o.replace(/'/g,'')+'\')">'+o+'</button>').join('')+'</div></div>'}document.getElementById('optionsBox').innerHTML=h;
+
 function parseDayFront(text){
- let t=(text||'').toLowerCase();
- let daysMap={mon:1,monday:1,tue:2,tues:2,tuesday:2,wed:3,wednesday:3,thu:4,thur:4,thurs:4,thursday:4,fri:5,friday:5,sat:6,saturday:6,sun:0,sunday:0,today:99,tomorrow:100};
- function nextDate(base, targetNum){
-   let d=new Date(base); d.setHours(0,0,0,0);
-   if(targetNum===99) return d;
-   if(targetNum===100){ d.setDate(d.getDate()+1); return d; }
-   let cur=d.getDay();
-   let diff=(targetNum - cur + 7) % 7;
-   d.setDate(d.getDate()+diff);
-   return d;
- }
- // range: from X to Y or X to Y or X - Y (allow optional dat)
- let rangeRegex=/(?:from\s+)?(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)\s*(?:dat\s*)?(?:to|\-|–|—)\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
- let m=t.match(rangeRegex);
- if(m){
-   let sKey=m[1].toLowerCase().slice(0,3); if(m[1].toLowerCase().startsWith('tues')) sKey='tues'; 
-   let eKey=m[2].toLowerCase().slice(0,3); if(m[2].toLowerCase().startsWith('tues')) eKey='tues';
-   let sNum=daysMap[m[1].toLowerCase()]!==undefined?daysMap[m[1].toLowerCase()]:daysMap[sKey];
-   let eNum=daysMap[m[2].toLowerCase()]!==undefined?daysMap[m[2].toLowerCase()]:daysMap[eKey];
-   let now=new Date(); let start=nextDate(now, sNum);
-   let end=nextDate(start, eNum);
-   if(end < start) { end.setDate(end.getDate()+7); }
-   let label=m[1]+' to '+m[2];
-   return {mode:'range', start, end, label: label, daysCount: Math.round((end-start)/86400000)+1};
- }
- if(t.includes('any day')||t.includes('whichever')||t.includes('whatever day')||t.includes('anyday')){
-   let now=new Date(); let end=new Date(now); end.setDate(end.getDate()+6);
-   return {mode:'any', start:now, end:end, label:'Any day (next 7 days)', daysCount:7};
- }
- if(t.includes('weekend')){
-   let now=new Date(); let sat=nextDate(now,6); let sun=new Date(sat); sun.setDate(sun.getDate()+1);
-   return {mode:'range', start:sat, end:sun, label:'Weekend', daysCount:2};
- }
- if(t.includes('this week')||t.includes('week')){
-   // if mon to fri mentioned handle above, else today to sunday
-   let now=new Date(); let sun=nextDate(now,0); if(sun < now) sun.setDate(sun.getDate()+7);
-   return {mode:'range', start:now, end:sun, label:'This week', daysCount: Math.round((sun-now)/86400000)+1};
- }
- // single day
- let singleRegex=/(for|on|in)?\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
- let sm=t.match(singleRegex);
- if(sm){
-   let key=sm[2].toLowerCase();
-   let num=daysMap[key]!==undefined?daysMap[key]:daysMap[key.slice(0,3)];
-   let now=new Date(); let d=nextDate(now,num);
-   let label=key.charAt(0).toUpperCase()+key.slice(1);
-   if(key==='today') label='Today only';
-   if(key==='tomorrow') label='Tomorrow';
-   return {mode:'single', start:d, end:d, label:label, daysCount:1};
- }
- // default today
- let now=new Date();
- return {mode:'today', start:now, end:now, label:'Today (default)', daysCount:1};
+  try{
+    let t=(text||'').toLowerCase();
+    let daysMap={mon:1,monday:1,tue:2,tues:2,tuesday:2,wed:3,wednesday:3,thu:4,thur:4,thurs:4,thursday:4,fri:5,friday:5,sat:6,saturday:6,sun:0,sunday:0,today:99,tomorrow:100};
+    function nextDate(base,num){
+      let d=new Date(base); d.setHours(12,0,0,0);
+      if(num===99) return d;
+      if(num===100){ d.setDate(d.getDate()+1); return d; }
+      let diff=(num - d.getDay() + 7) % 7;
+      d.setDate(d.getDate()+diff); return d;
+    }
+    let rangeRe=/(?:from\s+)?(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)\s*(?:dat\s*)?(?:to|\-|\u2013|\u2014)\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
+    let m=t.match(rangeRe);
+    if(m){
+      let sNum=daysMap[m[1].toLowerCase()]; if(m[1].toLowerCase().indexOf('tues')===0) sNum=2; if(m[1].toLowerCase().indexOf('thur')===0) sNum=4;
+      let eNum=daysMap[m[2].toLowerCase()]; if(m[2].toLowerCase().indexOf('tues')===0) eNum=2; if(m[2].toLowerCase().indexOf('thur')===0) eNum=4;
+      let now=new Date(); let start=nextDate(now,sNum); let end=nextDate(start,eNum);
+      if(end<start) end.setDate(end.getDate()+7);
+      return {mode:'range',start:start,end:end,label:m[1]+' to '+m[2],daysCount:Math.round((end-start)/86400000)+1};
+    }
+    if(t.indexOf('any day')>=0||t.indexOf('whichever')>=0||t.indexOf('whatever')>=0){
+      let now=new Date(); let end=new Date(now); end.setDate(end.getDate()+6);
+      return {mode:'any',start:now,end:end,label:'Any day',daysCount:7};
+    }
+    if(t.indexOf('weekend')>=0){
+      let now=new Date(); let sat=nextDate(now,6); let sun=new Date(sat); sun.setDate(sun.getDate()+1);
+      return {mode:'range',start:sat,end:sun,label:'Weekend',daysCount:2};
+    }
+    let singleRe=/(?:for|on|in)?\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
+    let sm=t.match(singleRe);
+    if(sm){
+      let key=sm[1].toLowerCase(); if(sm[2]) key=sm[2].toLowerCase();
+      let num=daysMap[key]; if(key.indexOf('tues')===0) num=2; if(key.indexOf('thur')===0) num=4;
+      if(num!==undefined){ let d=nextDate(new Date(),num); let lbl=key.charAt(0).toUpperCase()+key.slice(1); if(key==='today') lbl='Today only'; if(key==='tomorrow') lbl='Tomorrow'; return {mode:'single',start:d,end:d,label:lbl,daysCount:1}; }
+    }
+    let now2=new Date(); return {mode:'today',start:now2,end:now2,label:'Today (default)',daysCount:1};
+  }catch(e){ let n=new Date(); return {mode:'today',start:n,end:n,label:'Today (default)',daysCount:1}; }
 }
 function updateDayPreview(){
- let txt=document.getElementById('wishBox').value;
- let p=parseDayFront(txt);
- let el=document.getElementById('dayPreview');
- if(!el) return;
- let s=p.start.toLocaleDateString('en-NG',{weekday:'short', month:'short', day:'numeric'});
- let e=p.end.toLocaleDateString('en-NG',{weekday:'short', month:'short', day:'numeric'});
- if(p.mode==='single' || p.mode==='today') el.textContent='📅 Day: '+p.label+' — '+s;
- else if(p.mode==='range') el.textContent='📅 Day: '+p.label+' — '+s+' to '+e+' ('+p.daysCount+' days)';
- else el.textContent='📅 Day: '+p.label+' — '+s+' to '+e;
+  try{
+    let txt=document.getElementById('wishBox').value;
+    let p=parseDayFront(txt);
+    let el=document.getElementById('dayPreview'); if(!el) return;
+    let s1=p.start.toLocaleDateString('en-NG',{weekday:'short',month:'short',day:'numeric'});
+    let e1=p.end.toLocaleDateString('en-NG',{weekday:'short',month:'short',day:'numeric'});
+    if(p.mode==='single'||p.mode==='today') el.textContent='📅 Day: '+p.label+' — '+s1;
+    else el.textContent='📅 Day: '+p.label+' — '+s1+' to '+e1+' ('+p.daysCount+' days)';
+  }catch(e){}
 }
 function addDay(phrase){
- let box=document.getElementById('wishBox');
- let cur=box.value.trim();
- if(!cur) box.value='Give me 10 odds '+phrase;
- else {
-   // replace old day phrase if exists
-   box.value=cur+' '+phrase;
- }
- updateDayPreview();
- box.focus();
+  let box=document.getElementById('wishBox');
+  if(!box) return;
+  let cur=box.value.trim();
+  if(!cur) box.value='Give me 10 odds '+phrase;
+  else box.value=cur+' '+phrase;
+  updateDayPreview(); box.focus();
 }
+function updateDateTime(){
+  try{
+    let now=new Date();
+    let dayDate=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
+    let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
+    let dEl=document.getElementById('todayDate'); if(dEl) dEl.textContent=dayDate;
+    let tEl=document.getElementById('liveTime'); if(tEl) tEl.textContent='🕒 '+timeStr+' WAT';
+    let dayEl=document.getElementById('liveDay'); if(dayEl) dayEl.textContent=dayDate+' — '+timeStr+' WAT';
+  }catch(e){}
+}
+updateDateTime();
+setInterval(updateDateTime,1000);
+
 function toggleOpt(el,n){if(currentPlan==='FREE'){alert('FREE has no options. FREE slip is auto same for all. Pay to unlock options.');return}el.classList.toggle('on');if(selectedOptions.includes(n))selectedOptions=selectedOptions.filter(x=>x!==n);else selectedOptions.push(n)}
 function updateAuth(){let l=!!currentUser;document.getElementById('signOutBtn').classList.toggle('hidden',!l);if(l){}}
 try{let t=localStorage.getItem('oddsgpt_token'),u=localStorage.getItem('oddsgpt_user');if(t&&u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuth();loadToday()}}catch(e){}
-async function sbAuth(path,body){let r=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});let j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.msg||j.message||'Auth failed');return j}
+async function sbAuth(path,body){
+  // Try backend proxy first (bypasses ISP block of *.supabase.co), fallback to direct
+  try{
+    let r=await fetch('/api/auth-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:path,body:body})});
+    let j=await r.json().catch(()=>({}));
+    if(r.ok && (j.access_token || j.user || j.id)) return j;
+    if(j && j.error) throw new Error(j.error);
+  }catch(e){
+    // if proxy fails, try direct
+    if(e.message && e.message.includes('Failed to fetch')){ /* try direct below */ }
+    else if(e.message && !e.message.includes('fetch')) throw e;
+  }
+  try{
+    let r2=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    let j2=await r2.json().catch(()=>({}));
+    if(!r2.ok) throw new Error(j2.msg||j2.message||'Auth failed - check network');
+    return j2;
+  }catch(e2){
+    throw new Error('Can not fetch - check network or try again. ('+e2.message+')');
+  }
+}
 document.getElementById('doLogin').onclick=async()=>{let e=document.getElementById('email').value.trim(),p=document.getElementById('password').value;if(!e||!p)return alert('Enter email + password');try{let j=await sbAuth('token?grant_type=password',{email:e,password:p});currentUser=j.user||{email:e};localStorage.setItem('oddsgpt_token',j.access_token);localStorage.setItem('oddsgpt_user',JSON.stringify(currentUser));updateAuth();closeModal();loadToday();alert('Login success')}catch(err){document.getElementById('authMsg').textContent=err.message;alert(err.message)}};
 document.getElementById('doRegister').onclick=async()=>{let e=document.getElementById('regEmail').value.trim(),p=document.getElementById('regPass').value,c=document.getElementById('regConfirm').value;if(!document.getElementById('ageCheck').checked)return alert('Tick I am 18+ first');if(!document.getElementById('termsCheck').checked)return alert('Tick I agree to terms');if(p!==c)return alert('Passwords no match');if(p.length<6)return alert('Password Min 6 characters');try{await sbAuth('signup',{email:e,password:p});alert('Check your email to verify, then Login.');openModal('login')}catch(err){alert(err.message)}};
-async function forgotPass(){let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e)}
+async function forgotPass(){let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');try{let r=await fetch('/api/auth-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:'recover',body:{email:e}})});if(!r.ok) throw new Error('Proxy failed');alert('Reset link sent to '+e);}catch(err){try{await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e);}catch(e2){alert('Can not fetch - check network: '+e2.message)}}}
 document.getElementById('signOutBtn').onclick=()=>{localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');currentUser=null;currentPlan='FREE';updateAuth();location.href='/'};
 async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}try{let r=await fetch('/api/football-today?sport='+selectedSport);let j=await r.json();let list=j.games||[];document.getElementById('fixtures').innerHTML=list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> • '+g.league+'<br><span class="odds">'+g.market+' • '+g.odds+'</span></div>').join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading...'}}
 document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-sport]').forEach(x=>x.classList.remove('on'));b.classList.add('on');selectedSport=b.dataset.sport;loadToday()});
 async function payPlan(id,price){if(!currentUser){openModal('login');return alert('Login first to pay. Paystack needs login.')}if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email,amount:price*100,currency:'NGN',callback:function(res){fetch('/api/paystack-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({reference:res.reference,plan:id,paymentId:res.reference})}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved.')}})},onClose:function(){}});h.openIframe()}
 document.getElementById('wishBox').addEventListener('input', updateDayPreview);
-document.getElementById('wishBox').addEventListener('change', updateDayPreview);
-setTimeout(updateDayPreview,500);
-document.getElementById('genSlip').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},let drFront=parseDayFront(wish);
-body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:drFront})});let j=await r.json();if(!j.ok)return alert(j.error||'Failed');let dr=j.dateRange||parseDayFront(document.getElementById('wishBox').value);
-let drLabel=dr.label||dr.mode||'Today';
-let drDates=dr.startStr?(' ('+dr.startStr+' to '+dr.endStr+')'):'';
-document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds — '+drLabel+drDates+'</b><br><small style="opacity:.8">'+(j.daysCovered||'')+'</small><br>'+j.legs.map(l=>'<div>'+(l.date?'<span class="badge">'+l.date+'</span> ':'')+l.home+' vs '+l.away+' — '+l.league+' — '+l.market+' — '+l.odds+'</div>').join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>'};
+document.getElementById('genSlip').onclick=async()=>{
+  try{
+    if(!currentUser){openModal('login');return alert('Login first')}
+    if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');
+    let wish=document.getElementById('wishBox').value;
+    let drFront=parseDayFront(wish);
+    let r=await fetch('/api/generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish:wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:drFront})});
+    let j=await r.json();
+    if(!j.ok) return alert(j.error||'Failed');
+    let dr=j.dateRange||drFront;
+    let drLabel=dr.label||dr.mode||'Today';
+    let drDates=dr.startStr ? (' ('+dr.startStr+' to '+dr.endStr+')') : '';
+    document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds — '+drLabel+drDates+'</b><br>'+j.legs.map(function(l){return '<div>'+(l.date?'<span class="badge">'+l.date+'</span> ':'')+l.home+' vs '+l.away+' — '+l.league+' — '+l.market+' — '+l.odds+'</div>'}).join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>';
+  }catch(e){ alert('Can not fetch - check network: '+e.message); }
+};
 document.getElementById('askAI').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/ask-ai',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan})});let j=await r.json();alert(j.answer||j.error||'AI replied')};
-window.addEventListener('load',function(){setTimeout(clearPassFields,300);setTimeout(clearPassFields,1200)});
-let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.j
+let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.js';document.head.appendChild(s);
+</script></body></html>
