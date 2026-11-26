@@ -1,7 +1,7 @@
-<!-- OddsGPT V110 - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- OddsGPT V111 - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
 <!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>OddsGPT V110 -  - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT - Type What You Want, Get Real Booking Code</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
 .top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
@@ -23,7 +23,7 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 .opts{display:none!important}.opt-group h4{color:#bbf7d0;font-size:12px;text-transform:uppercase;margin:12px 0 6px}
 .hidden{display:none!important}
 .benefits{list-style:none;margin:10px 0 0;padding:0;font-size:12px;line-height:1.7;opacity:.95}.benefits li{border-top:1px solid #1e293b;padding:3px 0}
-.pass-wrap{position:relative}.pass-wrap input{padding-right:48px}.eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#bbf7d0;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:16px;line-height:1;display:grid;place-items:center}
+.pass-wrap{position:relative}.pass-wrap input{padding-right:48px}.eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#bbf7d0;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:16px;display:grid;place-items:center}
 /* MODALS - EXACT AS VIDEO */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.modal.open{display:flex}
 .modal-box{background:#1e293b;border-radius:20px;padding:22px;width:100%;max-width:420px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -42,19 +42,19 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 
 <h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
 <div class="plans">
-<div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all</li><li>✅ Hidden SportyBet code</li><li>❌ No Ask AI</li><li>❌ No Generate / No Wish</li><li>❌ No choosing options</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
-<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ All options hidden inside</li><li>✅ Football + Basketball + NBA</li><li>✅ Hidden SportyBet code</li><li>✅ Today games only, real games</li><li>❌ No Ask AI</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
-<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS • 24hrs</small><ul class="benefits"><li>✅ 2 slips in 1 use</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ All options hidden inside</li><li>✅ Football + Basketball + NBA</li><li>✅ Hidden SportyBet code</li><li>✅ Today games only</li><li>❌ No Ask AI</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
-<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Any odds you type</li><li>✅ All options hidden inside</li><li>✅ Football + Basketball + NBA</li><li>✅ Hidden SportyBet code</li><li>✅ Today games only</li><li>❌ No Ask AI</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
-<div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS • Ask AI 2/day</small><ul class="benefits"><li>✅ 9 slips in 3 days</li><li>✅ Ask AI 2 times per day</li><li>✅ Any odds you type</li><li>✅ All options hidden inside</li><li>✅ Football + Basketball + NBA</li><li>✅ Hidden SportyBet code</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
-<div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day • Ask AI 5/day</small><ul class="benefits"><li>✅ 35 slips in 7 days</li><li>✅ 5 slips per day</li><li>✅ Ask AI 5 times per day</li><li>✅ Any odds you type</li><li>✅ All options hidden inside</li><li>✅ Football + Basketball + NBA</li><li>✅ Hidden SportyBet code</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
-<div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day • Ask AI Unlimited</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI Unlimited</li><li>✅ Any odds you type</li><li>✅ All options hidden inside</li><li>✅ Football + Basketball + NBA</li><li>✅ Hidden SportyBet code</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
+<div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
+<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only, real games</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
+<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS • 24hrs</small><ul class="benefits"><li>✅ 2 slips in 1 use</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
+<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Ask AI — 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
+<div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS</small><ul class="benefits"><li>✅ 9 slips in 3 days</li><li>✅ Ask AI — 2 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
+<div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day</small><ul class="benefits"><li>✅ 35 slips in 7 days</li><li>✅ 5 slips per day</li><li>✅ Ask AI — 5 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
+<div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
 </div>
 
-<div class="card"><h2 style="margin:0">Type What You Want <span class="badge">PAID ONLY</span></h2><p class="muted">FREE: No Generate, No Wish, No Options — FREE slip auto same for all. PAID: Type anything + pick any option.</p>
+<div class="card"><h2 style="margin:0">Type What You Want <span class="badge">PAID ONLY</span></h2><p class="muted">FREE: Auto same for all. PAID: Type anything, e.g. "GG only" "Over 2.5" "NBA Quarter".</p>
 <textarea id="wishBox" rows="3" placeholder="Type what you want... e.g. Give me 10 odds, only home win"></textarea>
 <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-mint" id="askAI">Ask AI</button><button class="btn-mint" id="genSlip">Generate Slip</button></div>
-<!-- V110: OPTIONS HIDDEN - customers no see, but all still dey for JS + backend. Type anything, AI go pick am. --><div id="optionsBox" style="display:none!important" aria-hidden="true"></div><p class="muted" style="font-size:12px">✓ All options dey inside — just type wetin you want, e.g. "GG only" "Over 2.5" "NBA Quarter" "Correct Score". You no need pick from list.</p><div id="slipOut"></div></div>
+<div id="optionsBox" style="display:none!important" aria-hidden="true"></div><p class="muted" style="font-size:12px">✓ All markets dey inside — just type wetin you want.</p><div id="slipOut"></div></div>
 
 <div class="card"><h2 style="margin:0">Your Slips</h2><div id="mySlips" class="muted">Login to see slips.</div></div>
 <div class="card"><h2 style="margin:0">Help / Complaint</h2><p class="muted">Debited without access? Drop message. Admin go check your Payment ID.</p><textarea id="complaint" rows="3" placeholder="Payment ID + what happen"></textarea><button class="btn-mint" style="margin-top:8px" onclick="alert('Complaint saved. Admin will check your Payment ID.')">Send Complaint</button></div>
@@ -62,11 +62,10 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 
 <!-- LOGIN MODAL - AS VIDEO -->
 <div class="modal" id="loginModal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Login</h2><p>Welcome back</p>
-<!-- V110 AUTOFILL TRAP - dummy fields stop Chrome from filling real fields -->
 <input type="text" name="prevent_autofill_username" autocomplete="username" style="display:none" tabindex="-1" aria-hidden="true">
 <input type="password" name="prevent_autofill_password" autocomplete="new-password" style="display:none" tabindex="-1" aria-hidden="true">
 <label>Email</label><input id="email" type="email" name="oddsgpt_email_login" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" placeholder="you@email.com">
-<label>Password</label><div class="pass-wrap"><input id="password" type="password" name="oddsgpt_pass_login" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Password"><button type="button" class="eye-btn" onclick="togglePass('password',this)" aria-label="Show password">👁️</button></div>
+<label>Password</label><div class="pass-wrap"><input id="password" type="password" name="oddsgpt_pass_login" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Password"><button type="button" class="eye-btn" onclick="togglePass('password',this)">👁️</button></div>
 <button class="btn-mint" id="doLogin" style="width:100%;margin-top:14px;padding:14px">LOGIN</button>
 <p style="text-align:center;margin-top:10px"><span class="link" onclick="forgotPass()">Forgot Password?</span></p>
 <p style="text-align:center">No account? <span class="link" onclick="openModal('create')">Create Account — Get FREE TODAY</span></p><p class="muted" id="authMsg"></p></div></div>
@@ -74,8 +73,8 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <!-- CREATE ACCOUNT MODAL - AS VIDEO -->
 <div class="modal" id="createModal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Create Account</h2><p>Free plan unlock after you register</p>
 <label>Email</label><input id="regEmail" type="email" name="oddsgpt_email_reg" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" placeholder="you@email.com">
-<label>Password</label><div class="pass-wrap"><input id="regPass" type="password" name="oddsgpt_pass_reg" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Min 6 characters"><button type="button" class="eye-btn" onclick="togglePass('regPass',this)" aria-label="Show password">👁️</button></div>
-<label>Confirm Password</label><div class="pass-wrap"><input id="regConfirm" type="password" name="oddsgpt_pass_confirm" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Repeat password"><button type="button" class="eye-btn" onclick="togglePass('regConfirm',this)" aria-label="Show password">👁️</button></div>
+<label>Password</label><div class="pass-wrap"><input id="regPass" type="password" name="oddsgpt_pass_reg" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Min 6 characters"><button type="button" class="eye-btn" onclick="togglePass('regPass',this)">👁️</button></div>
+<label>Confirm Password</label><div class="pass-wrap"><input id="regConfirm" type="password" name="oddsgpt_pass_confirm" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Repeat password"><button type="button" class="eye-btn" onclick="togglePass('regConfirm',this)">👁️</button></div>
 <label class="check"><input type="checkbox" id="ageCheck"> I am 18+ years old</label>
 <label class="check"><input type="checkbox" id="termsCheck"> I agree to the terms</label>
 <button class="btn-mint" id="doRegister" style="width:100%;margin-top:10px;padding:14px">Create Account</button>
@@ -84,8 +83,8 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <script>
 const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
 let currentUser=null,currentPlan="FREE",selectedSport="ALL",selectedOptions=[];
-function togglePass(id,btn){var f=document.getElementById(id);if(!f)return;var show=f.type==='password';f.type=show?'text':'password';btn.textContent=show?'🙈':'👁️';btn.setAttribute('aria-label',show?'Hide password':'Show password')}
-function clearPassFields(){['password','regPass','regConfirm'].forEach(function(id){var f=document.getElementById(id);if(f){f.value='';f.setAttribute('readonly','readonly');f.setAttribute('autocomplete','new-password');f.type='password'}});var e=document.getElementById('email');if(e){e.value='';e.setAttribute('readonly','readonly')}var re=document.getElementById('regEmail');if(re){re.value='';re.setAttribute('readonly','readonly')}}
+function togglePass(id,btn){var f=document.getElementById(id);if(!f)return;var show=f.type==='password';f.type=show?'text':'password';btn.textContent=show?'🙈':'👁️'}
+function clearPassFields(){['password','regPass','regConfirm'].forEach(function(id){var f=document.getElementById(id);if(f){f.value='';f.setAttribute('readonly','readonly');f.type='password'}});var e=document.getElementById('email');if(e){e.setAttribute('readonly','readonly')}var re=document.getElementById('regEmail');if(re){re.setAttribute('readonly','readonly')}}
 function openModal(which){clearPassFields();document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else document.getElementById('createModal').classList.add('open');setTimeout(clearPassFields,80);setTimeout(clearPassFields,400)}
 function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open')}
 function setWish(t){document.getElementById('wishBox').value=t;document.getElementById('wishBox').scrollIntoView({behavior:'smooth'})}
