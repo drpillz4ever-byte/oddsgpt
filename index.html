@@ -1,7 +1,7 @@
-<!-- OddsGPT V118 FIXED BUTTONS - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- OddsGPT V119 FIXED BUTTONS - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
 <!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>OddsGPT V118 - Fixed Buttons -  - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT V119 - Fixed Buttons -  - Type What You Want, Get Real Booking Code</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
 .top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
@@ -38,9 +38,9 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <div class="hero"><h1>Type What You Want,<br><span>Get Real Booking Code</span></h1><p>Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code.</p>
 <div class="chips"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div></div>
 
-<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveClock" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading...</span><span id="liveDay" style="color:#bbf7d0;font-weight:700;font-size:13px"></span></div><div id="fixtures">Login to see today's games.</div></div>
+<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveClock" style="margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading...</span><span id="liveDay" style="display:none"></span></div><div id="fixtures">Login to see today's games.</div></div>
 
-<h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
+<h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">Choose your plan. Pay with Paystack popup — Payment ID go save.</p>
 <div class="plans">
 <div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
 <div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
@@ -82,6 +82,26 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 
 <script>
 const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
+// ===== V119 PRO: BACKEND IS SEPARATE PROJECT =====
+// Frontend = oddsgpt.com.ng (no api folder) | Backend = oddsgpt-backend.vercel.app (has api/index.js)
+// NEVER call relative /api/... alone - it 404s on frontend project.
+const BACKEND_BASES = ['https://oddsgpt-backend.vercel.app',''];
+async function apiFetch(endpoint, opts){
+  let lastErr=null;
+  let baseEndpoint = endpoint.split('?')[0];
+  let extra = endpoint.includes('?') ? endpoint.split('?')[1] : '';
+  for(let base of BACKEND_BASES){
+    let url = base + '/api/index?endpoint=' + baseEndpoint + (extra ? '&'+extra : '');
+    try{
+      let r = await fetch(url, {method:(opts&&opts.method)||'GET', headers:{'Content-Type':'application/json', ...((opts&&opts.headers)||{})}, body:(opts&&opts.body)?JSON.stringify(opts.body):undefined});
+      if(r.status===404){ lastErr=new Error('404 on '+url); continue; }
+      return r;
+    }catch(e){ lastErr=e; continue; }
+  }
+  throw lastErr||new Error('Failed to fetch - backend no reach');
+}
+async function apiJson(endpoint, opts){ let r=await apiFetch(endpoint,opts); let j=await r.json().catch(()=>({})); return {status:r.status, ok:r.ok, data:j}; }
+
 let currentUser=null,currentPlan="FREE",selectedSport="ALL",selectedOptions=[];
 function togglePass(id,btn){var f=document.getElementById(id);if(!f)return;var show=f.type==='password';f.type=show?'text':'password';btn.textContent=show?'🙈':'👁️'}
 function clearPassFields(){try{['password','regPass','regConfirm'].forEach(function(id){var f=document.getElementById(id);if(f){f.value='';f.setAttribute('readonly','readonly');f.type='password'}})}catch(e){}}
@@ -170,7 +190,7 @@ function updateDateTime(){
     let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
     let dEl=document.getElementById('todayDate'); if(dEl) dEl.textContent=dayDate;
     let tEl=document.getElementById('liveTime'); if(tEl) tEl.textContent='🕒 '+timeStr+' WAT';
-    let dayEl=document.getElementById('liveDay'); if(dayEl) dayEl.textContent=dayDate+' — '+timeStr+' WAT';
+    let dayEl=document.getElementById('liveDay'); if(dayEl) dayEl.textContent=''; // PRO: no duplicate time - badge already shows time
   }catch(e){}
 }
 updateDateTime();
@@ -180,33 +200,27 @@ function toggleOpt(el,n){if(currentPlan==='FREE'){alert('FREE has no options. FR
 function updateAuth(){let l=!!currentUser;document.getElementById('signOutBtn').classList.toggle('hidden',!l);if(l){}}
 try{let t=localStorage.getItem('oddsgpt_token'),u=localStorage.getItem('oddsgpt_user');if(t&&u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuth();loadToday()}}catch(e){}
 async function sbAuth(path,body){
-  // Try backend proxy first (bypasses ISP block of *.supabase.co), fallback to direct
   try{
-    let r=await fetch('/api/index?endpoint=auth-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:path,body:body})});
-    let j=await r.json().catch(()=>({}));
-    if(r.ok && (j.access_token || j.user || j.id)) return j;
+    let res=await apiJson('auth-proxy',{method:'POST',body:{path:path,body:body}});
+    let j=res.data;
+    if(res.ok && (j.access_token||j.user||j.id)) return j;
     if(j && j.error) throw new Error(j.error);
+    if(j && (j.msg||j.message)) throw new Error(j.msg||j.message);
   }catch(e){
-    // if proxy fails, try direct
-    if(e.message && e.message.includes('Failed to fetch')){ /* try direct below */ }
-    else if(e.message && !e.message.includes('fetch')) throw e;
+    if(e.message && !e.message.includes('fetch') && !e.message.includes('404') && !e.message.includes('no reach')) throw e;
   }
-  try{
-    let r2=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    let j2=await r2.json().catch(()=>({}));
-    if(!r2.ok) throw new Error(j2.msg||j2.message||'Auth failed - check network');
-    return j2;
-  }catch(e2){
-    throw new Error('Can not fetch - backend /api/index no reach ('+e2.message+'). Check say backend V118 don deploy.');
-  }
+  let r2=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  let j2=await r2.json().catch(()=>({}));
+  if(!r2.ok) throw new Error(j2.msg||j2.message||'Auth failed - check network');
+  return j2;
 }
 document.getElementById('doLogin').onclick=async()=>{let e=document.getElementById('email').value.trim(),p=document.getElementById('password').value;if(!e||!p)return alert('Enter email + password');try{let j=await sbAuth('token?grant_type=password',{email:e,password:p});currentUser=j.user||{email:e};localStorage.setItem('oddsgpt_token',j.access_token);localStorage.setItem('oddsgpt_user',JSON.stringify(currentUser));updateAuth();closeModal();loadToday();alert('Login success')}catch(err){document.getElementById('authMsg').textContent=err.message;alert(err.message)}};
 document.getElementById('doRegister').onclick=async()=>{let e=document.getElementById('regEmail').value.trim(),p=document.getElementById('regPass').value,c=document.getElementById('regConfirm').value;if(!document.getElementById('ageCheck').checked)return alert('Tick I am 18+ first');if(!document.getElementById('termsCheck').checked)return alert('Tick I agree to terms');if(p!==c)return alert('Passwords no match');if(p.length<6)return alert('Password Min 6 characters');try{await sbAuth('signup',{email:e,password:p});alert('Check your email to verify, then Login.');openModal('login')}catch(err){alert(err.message)}};
-async function forgotPass(){let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');try{let r=await fetch('/api/index?endpoint=auth-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:'recover',body:{email:e}})});if(!r.ok) throw new Error('Proxy failed');alert('Reset link sent to '+e);}catch(err){try{await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e);}catch(e2){alert('Can not fetch - check network: '+e2.message)}}}
+async function forgotPass(){let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');try{let res=await apiJson('auth-proxy',{method:'POST',body:{path:'recover',body:{email:e}}});if(!res.ok) throw new Error('Proxy failed');alert('Reset link sent to '+e);}catch(err){try{await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e);}catch(e2){alert('Can not fetch - backend no reach. Check backend V119 don deploy: '+e2.message)}}}})});if(!r.ok) throw new Error('Proxy failed');alert('Reset link sent to '+e);}catch(err){try{await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e);}catch(e2){alert('Can not fetch - check network: '+e2.message)}}}
 document.getElementById('signOutBtn').onclick=()=>{localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');currentUser=null;currentPlan='FREE';updateAuth();location.href='/'};
-async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}try{let r=await fetch('/api/index?endpoint=football-today&sport='+selectedSport);let j=await r.json();let list=j.games||[];document.getElementById('fixtures').innerHTML=list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> • '+g.league+'<br><span class="odds">'+g.market+' • '+g.odds+'</span></div>').join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading...'}}
+async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}try{let r=await apiFetch('football-today?sport='+selectedSport);let j=await r.json();let list=j.games||[];document.getElementById('fixtures').innerHTML=list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> • '+g.league+'<br><span class="odds">'+g.market+' • '+g.odds+'</span></div>').join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading...'}}
 document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-sport]').forEach(x=>x.classList.remove('on'));b.classList.add('on');selectedSport=b.dataset.sport;loadToday()});
-async function payPlan(id,price){if(!currentUser){openModal('login');return alert('Login first to pay. Paystack needs login.')}if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email,amount:price*100,currency:'NGN',callback:function(res){fetch('/api/index?endpoint=paystack-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({reference:res.reference,plan:id,paymentId:res.reference})}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved.')}})},onClose:function(){}});h.openIframe()}
+async function payPlan(id,price){if(!currentUser){openModal('login');return alert('Login first to pay. Paystack needs login.')}if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email,amount:price*100,currency:'NGN',callback:function(res){apiFetch('paystack-verify',{method:'POST',headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:{reference:res.reference,plan:id,paymentId:res.reference}}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved.')}})},onClose:function(){}});h.openIframe()}
 document.getElementById('wishBox').addEventListener('input', updateDayPreview);
 document.getElementById('genSlip').onclick=async()=>{
   try{
@@ -214,7 +228,7 @@ document.getElementById('genSlip').onclick=async()=>{
     if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');
     let wish=document.getElementById('wishBox').value;
     let drFront=parseDayFront(wish);
-    let r=await fetch('/api/index?endpoint=generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish:wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:drFront})});
+    let r=await apiFetch('generate-slip',{method:'POST',headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:{wish:wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:drFront}});
     let j=await r.json();
     if(!j.ok) return alert(j.error||'Failed');
     let dr=j.dateRange||drFront;
@@ -223,6 +237,6 @@ document.getElementById('genSlip').onclick=async()=>{
     document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds — '+drLabel+drDates+'</b><br>'+j.legs.map(function(l){return '<div>'+(l.date?'<span class="badge">'+l.date+'</span> ':'')+l.home+' vs '+l.away+' — '+l.league+' — '+l.market+' — '+l.odds+'</div>'}).join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>';
   }catch(e){ alert('Can not fetch - check network: '+e.message); }
 };
-document.getElementById('askAI').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/index?endpoint=ask-ai',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan})});let j=await r.json();alert(j.answer||j.error||'AI replied')};
+document.getElementById('askAI').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await apiFetch('ask-ai',{method:'POST',headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:{wish:wish,options:selectedOptions,plan:currentPlan}});let j=await r.json();alert(j.answer||j.error||'AI replied')};
 let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.js';document.head.appendChild(s);
 </script></body></html>
