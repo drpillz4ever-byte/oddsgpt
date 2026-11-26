@@ -1,7 +1,7 @@
-<!-- OddsGPT V111 - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- OddsGPT V112 DAY CHOOSE - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
 <!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>OddsGPT - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT V112 - Day Choose - Type What You Want, Get Real Booking Code</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
 .top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
@@ -51,8 +51,18 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Today games only</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
 </div>
 
-<div class="card"><h2 style="margin:0">Type What You Want <span class="badge">PAID ONLY</span></h2><p class="muted">FREE: Auto same for all. PAID: Type anything, e.g. "GG only" "Over 2.5" "NBA Quarter".</p>
-<textarea id="wishBox" rows="3" placeholder="Type what you want... e.g. Give me 10 odds, only home win"></textarea>
+<div class="card"><h2 style="margin:0">Type What You Want — Get Booking Code</h2>
+<p class="muted">Customer get right to choose day! E.g. 30 odds for today alone, 30 odds from Tuesday to Friday, 5 odds for tomorrow. If you no choose day, I go give you today game.</p>
+<div class="chips" style="margin:8px 0">
+<button class="chip" onclick="addDay('for today alone')">📅 Today</button>
+<button class="chip" onclick="addDay('for tomorrow')">📅 Tomorrow</button>
+<button class="chip" onclick="addDay('from Monday to Friday')">Mon to Fri</button>
+<button class="chip" onclick="addDay('from Tuesday to Friday')">Tue to Fri</button>
+<button class="chip" onclick="addDay('for weekend')">Weekend</button>
+<button class="chip" onclick="addDay('for any day')">Any Day</button>
+</div>
+<div id="dayPreview" class="muted" style="color:#bbf7d0;font-weight:700;margin:6px 0;min-height:18px"></div>
+<textarea id="wishBox" rows="4" placeholder="e.g. Give me 30 odds for today alone, or 30 odds from Tuesday to Friday, or 5 odds for tomorrow — If you no choose, I go give today"></textarea>
 <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-mint" id="askAI">Ask AI</button><button class="btn-mint" id="genSlip">Generate Slip</button></div>
 <div id="optionsBox" style="display:none!important" aria-hidden="true"></div><p class="muted" style="font-size:12px">✓ All markets dey inside — just type wetin you want.</p><div id="slipOut"></div></div>
 
@@ -105,6 +115,83 @@ const OPTIONS={
 "BASKETBALL - SPECIALS / NBA":["Race to 20 Points","Race to 30 Points","First Team to Lead by 12","First Team to Lead by 22","Highest Scoring Quarter","Lowest Scoring Quarter","Any Team to Win All Quarters","Both Teams to Score X in Quarter","Home to Win by X","Away to Win by X"]
 };
 let h='';for(let g in OPTIONS){h+='<div class="opt-group"><h4>'+g+'</h4><div style="display:flex;flex-wrap:wrap;gap:6px">'+OPTIONS[g].map(o=>'<button class="chip" onclick="toggleOpt(this,\''+o.replace(/'/g,'')+'\')">'+o+'</button>').join('')+'</div></div>'}document.getElementById('optionsBox').innerHTML=h;
+function parseDayFront(text){
+ let t=(text||'').toLowerCase();
+ let daysMap={mon:1,monday:1,tue:2,tues:2,tuesday:2,wed:3,wednesday:3,thu:4,thur:4,thurs:4,thursday:4,fri:5,friday:5,sat:6,saturday:6,sun:0,sunday:0,today:99,tomorrow:100};
+ function nextDate(base, targetNum){
+   let d=new Date(base); d.setHours(0,0,0,0);
+   if(targetNum===99) return d;
+   if(targetNum===100){ d.setDate(d.getDate()+1); return d; }
+   let cur=d.getDay();
+   let diff=(targetNum - cur + 7) % 7;
+   d.setDate(d.getDate()+diff);
+   return d;
+ }
+ // range: from X to Y or X to Y or X - Y (allow optional dat)
+ let rangeRegex=/(?:from\s+)?(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)\s*(?:dat\s*)?(?:to|\-|–|—)\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
+ let m=t.match(rangeRegex);
+ if(m){
+   let sKey=m[1].toLowerCase().slice(0,3); if(m[1].toLowerCase().startsWith('tues')) sKey='tues'; 
+   let eKey=m[2].toLowerCase().slice(0,3); if(m[2].toLowerCase().startsWith('tues')) eKey='tues';
+   let sNum=daysMap[m[1].toLowerCase()]!==undefined?daysMap[m[1].toLowerCase()]:daysMap[sKey];
+   let eNum=daysMap[m[2].toLowerCase()]!==undefined?daysMap[m[2].toLowerCase()]:daysMap[eKey];
+   let now=new Date(); let start=nextDate(now, sNum);
+   let end=nextDate(start, eNum);
+   if(end < start) { end.setDate(end.getDate()+7); }
+   let label=m[1]+' to '+m[2];
+   return {mode:'range', start, end, label: label, daysCount: Math.round((end-start)/86400000)+1};
+ }
+ if(t.includes('any day')||t.includes('whichever')||t.includes('whatever day')||t.includes('anyday')){
+   let now=new Date(); let end=new Date(now); end.setDate(end.getDate()+6);
+   return {mode:'any', start:now, end:end, label:'Any day (next 7 days)', daysCount:7};
+ }
+ if(t.includes('weekend')){
+   let now=new Date(); let sat=nextDate(now,6); let sun=new Date(sat); sun.setDate(sun.getDate()+1);
+   return {mode:'range', start:sat, end:sun, label:'Weekend', daysCount:2};
+ }
+ if(t.includes('this week')||t.includes('week')){
+   // if mon to fri mentioned handle above, else today to sunday
+   let now=new Date(); let sun=nextDate(now,0); if(sun < now) sun.setDate(sun.getDate()+7);
+   return {mode:'range', start:now, end:sun, label:'This week', daysCount: Math.round((sun-now)/86400000)+1};
+ }
+ // single day
+ let singleRegex=/(for|on|in)?\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
+ let sm=t.match(singleRegex);
+ if(sm){
+   let key=sm[2].toLowerCase();
+   let num=daysMap[key]!==undefined?daysMap[key]:daysMap[key.slice(0,3)];
+   let now=new Date(); let d=nextDate(now,num);
+   let label=key.charAt(0).toUpperCase()+key.slice(1);
+   if(key==='today') label='Today only';
+   if(key==='tomorrow') label='Tomorrow';
+   return {mode:'single', start:d, end:d, label:label, daysCount:1};
+ }
+ // default today
+ let now=new Date();
+ return {mode:'today', start:now, end:now, label:'Today (default)', daysCount:1};
+}
+function updateDayPreview(){
+ let txt=document.getElementById('wishBox').value;
+ let p=parseDayFront(txt);
+ let el=document.getElementById('dayPreview');
+ if(!el) return;
+ let s=p.start.toLocaleDateString('en-NG',{weekday:'short', month:'short', day:'numeric'});
+ let e=p.end.toLocaleDateString('en-NG',{weekday:'short', month:'short', day:'numeric'});
+ if(p.mode==='single' || p.mode==='today') el.textContent='📅 Day: '+p.label+' — '+s;
+ else if(p.mode==='range') el.textContent='📅 Day: '+p.label+' — '+s+' to '+e+' ('+p.daysCount+' days)';
+ else el.textContent='📅 Day: '+p.label+' — '+s+' to '+e;
+}
+function addDay(phrase){
+ let box=document.getElementById('wishBox');
+ let cur=box.value.trim();
+ if(!cur) box.value='Give me 10 odds '+phrase;
+ else {
+   // replace old day phrase if exists
+   box.value=cur+' '+phrase;
+ }
+ updateDayPreview();
+ box.focus();
+}
 function toggleOpt(el,n){if(currentPlan==='FREE'){alert('FREE has no options. FREE slip is auto same for all. Pay to unlock options.');return}el.classList.toggle('on');if(selectedOptions.includes(n))selectedOptions=selectedOptions.filter(x=>x!==n);else selectedOptions.push(n)}
 function updateAuth(){let l=!!currentUser;document.getElementById('signOutBtn').classList.toggle('hidden',!l);if(l){}}
 try{let t=localStorage.getItem('oddsgpt_token'),u=localStorage.getItem('oddsgpt_user');if(t&&u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuth();loadToday()}}catch(e){}
@@ -116,7 +203,14 @@ document.getElementById('signOutBtn').onclick=()=>{localStorage.removeItem('odds
 async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}try{let r=await fetch('/api/football-today?sport='+selectedSport);let j=await r.json();let list=j.games||[];document.getElementById('fixtures').innerHTML=list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> • '+g.league+'<br><span class="odds">'+g.market+' • '+g.odds+'</span></div>').join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading...'}}
 document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-sport]').forEach(x=>x.classList.remove('on'));b.classList.add('on');selectedSport=b.dataset.sport;loadToday()});
 async function payPlan(id,price){if(!currentUser){openModal('login');return alert('Login first to pay. Paystack needs login.')}if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email,amount:price*100,currency:'NGN',callback:function(res){fetch('/api/paystack-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({reference:res.reference,plan:id,paymentId:res.reference})}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved.')}})},onClose:function(){}});h.openIframe()}
-document.getElementById('genSlip').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan,sport:selectedSport})});let j=await r.json();if(!j.ok)return alert(j.error||'Failed');document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds</b><br>'+j.legs.map(l=>'<div>'+l.home+' vs '+l.away+' — '+l.market+' — '+l.odds+'</div>').join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>'};
+document.getElementById('wishBox').addEventListener('input', updateDayPreview);
+document.getElementById('wishBox').addEventListener('change', updateDayPreview);
+setTimeout(updateDayPreview,500);
+document.getElementById('genSlip').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},let drFront=parseDayFront(wish);
+body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:drFront})});let j=await r.json();if(!j.ok)return alert(j.error||'Failed');let dr=j.dateRange||parseDayFront(document.getElementById('wishBox').value);
+let drLabel=dr.label||dr.mode||'Today';
+let drDates=dr.startStr?(' ('+dr.startStr+' to '+dr.endStr+')'):'';
+document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds — '+drLabel+drDates+'</b><br><small style="opacity:.8">'+(j.daysCovered||'')+'</small><br>'+j.legs.map(l=>'<div>'+(l.date?'<span class="badge">'+l.date+'</span> ':'')+l.home+' vs '+l.away+' — '+l.league+' — '+l.market+' — '+l.odds+'</div>').join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>'};
 document.getElementById('askAI').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/ask-ai',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan})});let j=await r.json();alert(j.answer||j.error||'AI replied')};
 window.addEventListener('load',function(){setTimeout(clearPassFields,300);setTimeout(clearPassFields,1200)});
 let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.js';document.head.appendChild(s);
