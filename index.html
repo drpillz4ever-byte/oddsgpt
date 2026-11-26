@@ -316,7 +316,7 @@ async function loadToday(){
   let ds=new Date().toISOString().slice(0,10);
   try{
     let r=await apiFetch('football-today?sport='+selectedSport);
-    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V133 FIX - NO LOOP, BACKEND FALLBACK';
+    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V134 ALL-IN-ONE - PLANS RULES LOGIN PAYSTACK AI SUPABASE ADMIN COUNTDOWN';
     if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); return; }
     throw new Error('empty');
   }catch(e){
@@ -392,7 +392,7 @@ let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.j
 </script>
 
 <script>
-/* V133 FIX - NO LOOP, BACKEND FALLBACK GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
+/* V134 ALL-IN-ONE - PLANS RULES LOGIN PAYSTACK AI SUPABASE ADMIN COUNTDOWN GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
 (function(){
   function isLoggedIn(){ try{ if(localStorage.getItem('oddsgpt_token')) return true; if(localStorage.getItem('oddsgpt_user')) return true; }catch(e){} return false; }
   function lockIfNeeded(){
@@ -548,6 +548,84 @@ function doSignOut(){ try{ localStorage.removeItem('oddsgpt_token'); localStorag
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bindPayOnce); else bindPayOnce();
 })();
+</script>
+
+
+<!-- V134 ALL-IN-ONE UI: Day Choice + Countdown + Ask AI + Plan Status -->
+<div id="v134Panel" style="max-width:900px;margin:14px auto;padding:14px;background:#0a1a12;border:1px solid #22e06a;border-radius:14px;color:#eafff1">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <b>🎯 Type What You Want - Get Real Booking Code</b>
+    <span id="v134Countdown" style="background:#22e06a;color:#000;padding:6px 10px;border-radius:999px;font-weight:900;font-size:13px">FREE - Resets 12:00 AM WAT</span>
+  </div>
+  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+    <select id="v134Day" style="flex:1;min-width:160px;padding:10px;border-radius:10px;background:#07120c;color:#fff;border:1px solid #22e06a">
+      <option value="today">Today alone</option>
+      <option value="tomorrow">Tomorrow</option>
+      <option value="mon-fri">Monday - Friday</option>
+      <option value="tue-fri">Tuesday - Friday</option>
+      <option value="weekend">Weekend (Sat-Sun)</option>
+      <option value="any">Any Day</option>
+      <option value="mix">Mix - Today + Tomorrow + Weekend</option>
+    </select>
+    <input id="v134Wish" placeholder="e.g. 30 odds today alone, 50 odds mix, 2 odds BTTS" style="flex:2;min-width:200px;padding:10px;border-radius:10px;background:#07120c;color:#fff;border:1px solid #22e06a" />
+    <button onclick="v134Generate()" style="padding:10px 16px;background:#22e06a;color:#000;border:none;border-radius:10px;font-weight:900">Generate Slip</button>
+  </div>
+  <div id="v134Result" style="margin-top:10px;font-size:13px;line-height:1.6"></div>
+  <div style="margin-top:8px;font-size:12px;color:#9be8b8">Rules stand: FREE 1 slip/day, 1.50-2.00 odds, max 3 games, same for all, changes 12AM WAT. Paid slips personalised. Day choice na customer choice, but backend enforce plan limit, max odds, max games, max slips.</div>
+  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+    <input id="v134Ask" placeholder="Ask AI - e.g. Which game go win today?" style="flex:2;min-width:200px;padding:10px;border-radius:10px;background:#07120c;color:#fff;border:1px solid #22e06a" />
+    <button onclick="v134AskAI()" style="padding:10px 16px;background:#fff;color:#000;border:none;border-radius:10px;font-weight:900">Ask AI 🤖</button>
+    <span id="v134AskCount" style="font-size:12px;align-self:center"></span>
+  </div>
+  <div id="v134AskResult" style="margin-top:8px;font-size:13px"></div>
+</div>
+<script>
+/* V134 UI LOGIC - Countdown + Day Choice + Ask AI */
+function v134Plan(){ try{ let u=JSON.parse(localStorage.getItem('oddsgpt_user')||'null'); return (u&&u.plan)||'FREE'; }catch(e){ return 'FREE'; } }
+function v134UpdateCountdown(){
+  let el=document.getElementById('v134Countdown'); if(!el) return;
+  let now=new Date(); let midnight=new Date(now); midnight.setHours(24,0,0,0);
+  let diff=midnight-now; let h=Math.floor(diff/3600000), m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
+  let plan=v134Plan(); let exp=localStorage.getItem('oddsgpt_plan_expires');
+  let txt=plan+' - ';
+  if(plan==='FREE') txt+='Resets 12:00 AM WAT in '+h+'h '+m+'m '+s+'s';
+  else if(exp){ let left=new Date(exp)-now; let d=Math.floor(left/86400000), hh=Math.floor(left%86400000/3600000); txt+='Expires in '+d+'d '+hh+'h - '+new Date(exp).toLocaleString(); }
+  else txt+='Active - Resets 12:00 AM WAT';
+  el.textContent=txt;
+}
+setInterval(v134UpdateCountdown, 1000); v134UpdateCountdown();
+async function v134Generate(){
+  let wish=document.getElementById('v134Wish').value.trim(); let day=document.getElementById('v134Day').value;
+  if(!wish) return alert('Type what you want - e.g. 30 odds today alone');
+  if(!localStorage.getItem('oddsgpt_token')){ alert('Register / Login first'); if(typeof openModal==='function') openModal('login'); return; }
+  document.getElementById('v134Result').innerHTML='Generating slip for <b>'+day+'</b>... Please wait...';
+  try{
+    let bases=['/api/index','https://oddsgpt-backend.vercel.app/api/index'];
+    let done=null;
+    for(let b of bases){ try{ let r=await fetch(b+'?endpoint=generate', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({wish:wish, day:day, email:JSON.parse(localStorage.getItem('oddsgpt_user')||'{}').email||'', plan:v134Plan()})}); let j=await r.json(); if(j){ done=j; break; } }catch(e){} }
+    if(done && done.ok){ document.getElementById('v134Result').innerHTML='<b>Booking Code:</b> '+ (done.bookingCode||'—') + '<br><b>Odds:</b> '+(done.totalOdds||'')+'<br><b>Games:</b><br>'+(done.games||[]).map(g=>g.home+' vs '+g.away+' - '+(g.pick||'')).join('<br>'); }
+    else { document.getElementById('v134Result').innerHTML='Backend never respond - Slip go generate when backend live. Your wish save: <b>'+wish+'</b> for <b>'+day+'</b>. Rules stand: plan limit go apply.'; }
+  }catch(e){ document.getElementById('v134Result').innerHTML='Error: '+e.message; }
+}
+async function v134AskAI(){
+  let q=document.getElementById('v134Ask').value.trim(); if(!q) return alert('Type your question');
+  let plan=v134Plan();
+  let limits={'FREE':0,'BANGER':0,'QUICK':0,'DAILY':1,'TRY_AM':2,'SHARP':5,'BABA':999};
+  // Map DAILY HUSTLE etc
+  let p=plan.toUpperCase(); if(p==='DAILY HUSTLE') p='DAILY'; if(p==='TRY AM') p='TRY_AM'; if(p==='SHARP GUY') p='SHARP'; if(p==='BABA NLA') p='BABA';
+  let limit=limits[p]!==undefined?limits[p]:0;
+  if(limit===0) return alert('Ask AI na from DAILY HUSTLE ₦300 and above. Upgrade to use Ask AI.');
+  let key='ask_'+new Date().toISOString().slice(0,10); let used=parseInt(localStorage.getItem(key)||'0');
+  if(used>=limit) return alert('Ask AI limit reach for today for your plan ('+limit+'/day). Try tomorrow.');
+  localStorage.setItem(key, String(used+1));
+  document.getElementById('v134AskCount').textContent='Ask AI used: '+(used+1)+'/'+(limit===999?'Unlimited':limit)+' today';
+  document.getElementById('v134AskResult').innerHTML='Asking AI (Gemini + Groq)...';
+  try{
+    let r=await fetch('/api/index?endpoint=ask-ai', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({question:q, plan:plan, email:JSON.parse(localStorage.getItem('oddsgpt_user')||'{}').email||''})});
+    let j=await r.json().catch(()=>null);
+    document.getElementById('v134AskResult').innerHTML = j && j.answer ? j.answer : 'AI: Based on form, table position and importance, check FREE slip for today. Backend AI go give full answer when live.';
+  }catch(e){ document.getElementById('v134AskResult').innerHTML='AI never respond - try again.'; }
+}
 </script>
 
 </body></html>
