@@ -114,12 +114,18 @@ async function forgotPass(){
 }
 function codeForToday(){let d=new Date(); let s=''+d.getFullYear()+d.getMonth()+d.getDate(); let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))%100000; return 'ODD'+h.toString(36).toUpperCase();}
 function generateSlip(){
- // FREE SAME FOR ALL: seed = date only. PAID: seed = user + date (handled by backend). Here demo shows same FREE for all.
- let wish=document.getElementById('wish').value||'2 odds';
- document.getElementById('slipResult').style.display='block';
- document.getElementById('slipGames').innerHTML='Man City vs Arsenal — 2nd Half Over 0.5 — 1.20<br>Barcelona vs Sevilla — 2nd Half Over 0.5 — 1.20<br>Real Madrid vs Valencia — Over 1.5 — 1.30<br><b>Total FREE: 1.87 odds — 1 USE PER DAY — SAME FOR ALL</b><br><small>'+wish+'</small>';
- document.getElementById('slipCode').textContent=codeForToday();
- document.getElementById('slipResult').scrollIntoView();
+  let wish=document.getElementById('wish').value||'2 odds';
+  let box=document.getElementById('slipResult'); box.style.display='block';
+  document.getElementById('slipGames').innerHTML='Loading real games from API-Football + AI... ⏳';
+  let user = localStorage.getItem('oddsgpt_user')||'';
+  fetch(BACKEND_URL+'/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'FREE',wish,userId:user})}).then(r=>r.json()).then(j=>{
+    if(!j.ok){ document.getElementById('slipGames').innerHTML='Backend error: '+(j.error||'try again'); return; }
+    let html = j.picks.map(p=> p.home+' vs '+p.away+' — '+p.market+' — '+p.odds+' <small>('+p.league+' • AI '+p.confidence+'%)</small>').join('<br>');
+    html += '<br><b>Total FREE: '+j.totalOdds+' odds — 1 USE PER DAY — SAME FOR ALL</b><br><small>'+wish+' • '+j.date+' • Source: '+j.source+'</small>';
+    document.getElementById('slipGames').innerHTML=html;
+    document.getElementById('slipCode').textContent=j.code;
+  }).catch(e=>{ document.getElementById('slipGames').innerHTML='Backend no reach: '+e.message; });
+  box.scrollIntoView();
 }
 function pay(p){alert('Paystack for '+p+' — after pay, Your Plan + countdown + games + code go show');}
 // Date/time/day live
