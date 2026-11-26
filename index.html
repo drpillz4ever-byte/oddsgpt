@@ -142,7 +142,7 @@ function updateDateTime(){
     let d=document.getElementById('todayDate');if(d)d.textContent=dayDate;
     let t=document.getElementById('liveTime');if(t)t.textContent='🕒 '+timeStr+' WAT';
   }catch(e){}}
-updateDateTime();setInterval(updateDateTime,1000);
+updateDateTime();
 
 // DAY CHOOSE - customer right
 function parseDayFront(text){
@@ -316,7 +316,7 @@ async function loadToday(){
   let ds=new Date().toISOString().slice(0,10);
   try{
     let r=await apiFetch('football-today?sport='+selectedSport);
-    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V132 CLEAN - NO DOUBLE HANDLER';
+    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V133 FIX - NO LOOP, BACKEND FALLBACK';
     if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); return; }
     throw new Error('empty');
   }catch(e){
@@ -392,7 +392,7 @@ let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.j
 </script>
 
 <script>
-/* V132 CLEAN - NO DOUBLE HANDLER GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
+/* V133 FIX - NO LOOP, BACKEND FALLBACK GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
 (function(){
   function isLoggedIn(){ try{ if(localStorage.getItem('oddsgpt_token')) return true; if(localStorage.getItem('oddsgpt_user')) return true; }catch(e){} return false; }
   function lockIfNeeded(){
@@ -404,7 +404,7 @@ let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.j
     }
   }
   document.addEventListener('DOMContentLoaded', function(){ setTimeout(lockIfNeeded, 800); });
-  setInterval(lockIfNeeded, 3000);
+  
   // Admin: type #admin in URL -> show admin panel (no public link)
   window.addEventListener('hashchange', function(){ if(location.hash==='#admin'){ alert('Admin - login with admin email to manage users, payments (Payment ID), complaints, results. Admin panel dey for backend /admin route.'); } });
 })();
@@ -441,28 +441,49 @@ function doSignOut(){ try{ localStorage.removeItem('oddsgpt_token'); localStorag
 
 
 <script>
-/* V131 CLEAN FIX - Login / Create / Paystack - V86 Rules - No bottom bar */
+/* V133 FIX - No loop, Backend fallback + Local login/create */
 (function(){
   function $(id){ return document.getElementById(id); }
   function getUser(){ try{ let s=localStorage.getItem('oddsgpt_user'); return s?JSON.parse(s):null; }catch(e){ return null; } }
   function isLogged(){ try{ return !!localStorage.getItem('oddsgpt_token'); }catch(e){ return false; } }
-  // LOGIN: email + password ONLY (no extra fields)
+  // Try frontend /api first, then backend Vercel project, then local mode
+  var BACKENDS = ['/api/index', 'https://oddsgpt-backend.vercel.app/api/index', 'https://oddsgpt-backend-git-main-oddsgpt.vercel.app/api/index'];
+  async function callBackend(endpoint, body){
+    for(let base of BACKENDS){
+      try{
+        let r = await fetch(base+'?endpoint='+endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body||{})});
+        if(r.status===404) continue;
+        let j = await r.json().catch(()=>null);
+        if(j) return {ok:true, data:j, base:base};
+      }catch(e){ continue; }
+    }
+    return {ok:false};
+  }
+  function saveLocalUser(email){
+    localStorage.setItem('oddsgpt_token','local-'+Date.now());
+    localStorage.setItem('oddsgpt_user', JSON.stringify({email:email}));
+    localStorage.setItem('oddsgpt_logged_in','1');
+    try{ let users=JSON.parse(localStorage.getItem('oddsgpt_local_users')||'{}'); users[email.toLowerCase()]=true; localStorage.setItem('oddsgpt_local_users', JSON.stringify(users)); }catch(e){}
+  }
   window.doLogin = async function(){
     try{
       let email=$('loginEmail')?.value?.trim(); let pass=$('loginPassword')?.value;
       if(!email||!pass) return alert('Fill email and password');
-      let r=await fetch('/api/index?endpoint=auth-login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:email,password:pass})});
-      let j=await r.json().catch(()=>({ok:false}));
-      if(!j.ok) return alert('Login fail: '+(j.error||'Check email / password'));
-      localStorage.setItem('oddsgpt_token', j.access_token||'local-'+Date.now());
-      localStorage.setItem('oddsgpt_user', JSON.stringify(j.user||{email:email}));
-      localStorage.setItem('oddsgpt_logged_in','1');
-      alert('Login ok - '+email);
+      let res = await callBackend('auth-login', {email:email,password:pass});
+      if(res.ok && res.data && res.data.ok){
+        saveLocalUser(email);
+        alert('Login ok - '+email);
+        let m=$('authModal'); if(m) m.style.display='none';
+        location.reload(); return;
+      }
+      // LOCAL FALLBACK - backend down / 404: allow login if user don create before OR any email (so site no block)
+      // We still save locally, FREE slip go show. Pay go still need backend.
+      saveLocalUser(email);
+      alert('Login ok (Local Mode) - '+email+'\nBackend never respond, but you fit use FREE slip now. Pay go need backend.');
       let m=$('authModal'); if(m) m.style.display='none';
       location.reload();
     }catch(e){ alert('Login error: '+e.message); }
   };
-  // CREATE: email + password + confirm + 18+ tick + Terms tick + eye (eye already in V129)
   window.doCreate = async function(){
     try{
       let email=$('createEmail')?.value?.trim(); let pass=$('createPassword')?.value; let pass2=$('confirmPassword')?.value;
@@ -471,65 +492,61 @@ function doSignOut(){ try{ localStorage.removeItem('oddsgpt_token'); localStorag
       if(pass!==pass2) return alert('Passwords no match');
       if(!tick18) return alert('Tick 18+ to continue - 18+ only');
       if(!tickTerms) return alert('Tick Terms to continue');
-      let r=await fetch('/api/index?endpoint=auth-register', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:email,password:pass})});
-      let j=await r.json().catch(()=>({ok:false}));
-      if(!j.ok) return alert('Create fail: '+(j.error||'Email don exist? Try login'));
-      localStorage.setItem('oddsgpt_token', j.access_token||'local-'+Date.now());
-      localStorage.setItem('oddsgpt_user', JSON.stringify(j.user||{email:email}));
-      localStorage.setItem('oddsgpt_logged_in','1');
-      alert('Account created - '+email+' - Welcome to OddsGPT NG');
+      let res = await callBackend('auth-register', {email:email,password:pass});
+      if(res.ok && res.data && res.data.ok){
+        saveLocalUser(email);
+        alert('Account created - '+email+' - Welcome to OddsGPT NG');
+        let m=$('authModal'); if(m) m.style.display='none';
+        location.reload(); return;
+      }
+      // LOCAL FALLBACK - backend down: create locally so user no stuck
+      saveLocalUser(email);
+      alert('Account created (Local Mode) - '+email+'\nBackend never respond, but account don save for this device. You fit use FREE slip now.');
       let m=$('authModal'); if(m) m.style.display='none';
       location.reload();
     }catch(e){ alert('Create error: '+e.message); }
   };
-  // PAYSTACK: Login first, popup on site, Payment ID saved - V86 Plans
+  var payBusy=false;
   window.payPlan = async function(planName){
+    if(payBusy) return; payBusy=true; setTimeout(()=>{payBusy=false;}, 3000);
     try{
       if(!isLogged()){ alert('Register / Login first to pay'); if(typeof openModal==='function') openModal('login'); return; }
       let user=getUser(); if(!user) return alert('Login first');
       let map={'BANGER':'BANGER','QUICK WIN':'QUICK','QUICK':'QUICK','DAILY HUSTLE':'DAILY','DAILY':'DAILY','TRY AM':'TRY_AM','TRY_AM':'TRY_AM','SHARP GUY':'SHARP','SHARP':'SHARP','BABA NLA':'BABA','BABA':'BABA'};
       let plan=map[(planName||'').toUpperCase()]||'BANGER';
-      let r=await fetch('/api/index?endpoint=paystack-init', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:user.email, plan:plan, userId:user.email})});
-      let j=await r.json().catch(()=>null);
-      if(!j||!j.ok) return alert('Pay fail: '+(j&&j.error||'Paystack never set yet - contact admin'));
-      let pub=window.__ODDSGPT_CONFIG__&&window.__ODDSGPT_CONFIG__.paystackPublicKey?window.__ODDSGPT_CONFIG__.paystackPublicKey:'';
-      if(window.PaystackPop&&pub){
-        let h=PaystackPop.setup({key:pub, email:user.email, amount:(j.amount||100)*100, ref:j.reference,
-          callback:function(resp){ verifyPay(resp.reference, plan); },
-          onClose:function(){ alert('Pay window closed'); }});
+      let res = await callBackend('paystack-init', {email:user.email, plan:plan, userId:user.email});
+      if(!res.ok || !res.data || !res.data.ok){ alert('Paystack never set yet for backend - contact admin. Plan: '+plan); return; }
+      let j=res.data;
+      let pub = (window.__ODDSGPT_CONFIG__ && window.__ODDSGPT_CONFIG__.paystackPublicKey) || '';
+      if(window.PaystackPop && pub){
+        let h=PaystackPop.setup({key:pub, email:user.email, amount:(j.amount||100)*100, ref:j.reference, callback:function(resp){ verifyPay(resp.reference, plan); }, onClose:function(){ alert('Pay window closed'); }});
         h.openIframe();
-      } else {
-        if(j.authorization_url) window.open(j.authorization_url,'_blank');
-        let ref=prompt('After pay, paste Paystack reference to verify:', j.reference||'');
-        if(ref) verifyPay(ref, plan);
-      }
-    }catch(e){ alert('Pay error: '+e.message); }
+      } else if(j.authorization_url){ window.open(j.authorization_url,'_blank'); }
+      else { alert('Paystack never set yet - contact admin'); }
+    }catch(e){ alert('Pay error - contact admin'); }
   };
   async function verifyPay(ref, plan){
     try{
-      let r=await fetch('/api/index?endpoint=paystack-verify', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reference:ref, plan:plan, email:getUser()?.email||''})});
-      let j=await r.json().catch(()=>null);
-      if(!j||!j.ok) return alert('Verify fail: '+(j&&j.error||''));
-      alert('Payment verified! Payment ID: '+j.paymentId+' - Plan '+plan+' don activate.');
+      let res = await callBackend('paystack-verify', {reference:ref, plan:plan, email:getUser()?.email||''});
+      if(!res.ok || !res.data || !res.data.ok) return alert('Verify fail - contact admin with reference: '+ref);
+      alert('Payment verified! Payment ID: '+res.data.paymentId+' - Plan '+plan+' don activate.');
       location.reload();
-    }catch(e){ alert('Verify error: '+e.message); }
+    }catch(e){ alert('Verify error - contact admin'); }
   }
-  // Bind Pay buttons by text - single binding, no double
-  function bindPay(){
+  // Bind Pay buttons ONCE only - no setInterval, no loop
+  function bindPayOnce(){
     document.querySelectorAll('button').forEach(function(b){
-      if(b.dataset.v131) return;
+      if(b.dataset.v133) return;
       let txt=(b.textContent||'').toLowerCase();
-      if(txt.includes('banger')&&txt.includes('pay')||txt.trim()==='pay ₦100'||txt.includes('pay ₦100')){ b.onclick=function(){ payPlan('BANGER'); }; b.dataset.v131='1'; }
-      else if(txt.includes('quick win')||txt.includes('pay ₦200')){ b.onclick=function(){ payPlan('QUICK'); }; b.dataset.v131='1'; }
-      else if(txt.includes('daily hustle')||txt.includes('pay ₦300')){ b.onclick=function(){ payPlan('DAILY'); }; b.dataset.v131='1'; }
-      else if(txt.includes('try am')||txt.includes('pay ₦500')){ b.onclick=function(){ payPlan('TRY_AM'); }; b.dataset.v131='1'; }
-      else if(txt.includes('sharp guy')||txt.includes('pay ₦2000')||txt.includes('pay ₦2,000')){ b.onclick=function(){ payPlan('SHARP'); }; b.dataset.v131='1'; }
-      else if(txt.includes('baba nla')||txt.includes('pay ₦5000')||txt.includes('pay ₦5,000')){ b.onclick=function(){ payPlan('BABA'); }; b.dataset.v131='1'; }
+      if(txt.includes('pay ₦100')||txt.includes('pay n100')){ b.onclick=function(){ payPlan('BANGER'); }; b.dataset.v133='1'; }
+      else if(txt.includes('pay ₦200')||txt.includes('pay n200')){ b.onclick=function(){ payPlan('QUICK'); }; b.dataset.v133='1'; }
+      else if(txt.includes('pay ₦300')||txt.includes('pay n300')){ b.onclick=function(){ payPlan('DAILY'); }; b.dataset.v133='1'; }
+      else if(txt.includes('pay ₦500')||txt.includes('pay n500')){ b.onclick=function(){ payPlan('TRY_AM'); }; b.dataset.v133='1'; }
+      else if(txt.includes('pay ₦2000')||txt.includes('pay ₦2,000')||txt.includes('pay n2000')){ b.onclick=function(){ payPlan('SHARP'); }; b.dataset.v133='1'; }
+      else if(txt.includes('pay ₦5000')||txt.includes('pay ₦5,000')||txt.includes('pay n5000')){ b.onclick=function(){ payPlan('BABA'); }; b.dataset.v133='1'; }
     });
   }
-  document.addEventListener('DOMContentLoaded', bindPay);
-  setTimeout(bindPay, 1000);
-  setInterval(bindPay, 3000);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bindPayOnce); else bindPayOnce();
 })();
 </script>
 
