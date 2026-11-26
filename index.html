@@ -32,7 +32,7 @@ footer{border-top:1px solid #1e293b;margin-top:20px;padding:16px;text-align:cent
 </style>
 
 <style id="v135-hide">
-/* V136 - NO GAMES LIST - Customer see only FREE Slip + Paid Slip */
+/* V138 - NO GAMES LIST - Customer see only FREE Slip + Paid Slip */
 #fixtures, [id="fixtures" style="display:none !important"]{display:none !important;}
 /* Hide any Today's Games heading */
 h2, h3{ } 
@@ -42,7 +42,7 @@ h2, h3{ }
 <body>
 <header><div class="logo">OddsGPT<span>.</span></div><div style="display:flex;gap:8px" id="authHeader"><button class="btn outline" onclick="openModal('login')">LOGIN</button><button class="btn mint" onclick="openModal('create')">Create Account</button></div></header>
 
-<!-- V136 STATUS - 2 AI + API Football/Basketball + Pool 600 -->
+<!-- V138 STATUS - 2 AI + API Football/Basketball + Pool 600 -->
 <div id="v136Status" style="max-width:900px;margin:10px auto;padding:10px 14px;background:#0a1a12;border:1px solid #22e06a;border-radius:12px;font-size:13px;color:#eafff1">
   <b>🔍 LIVE STATUS:</b> <span id="v136StatusText">Checking 2 AI + API Football + Basketball + Pool 600...</span>
 </div>
@@ -54,7 +54,7 @@ async function v136CheckStatus(){
     try{
       let r=await fetch(b+'?endpoint=status'); let j=await r.json();
       if(j && j.ok){
-        el.innerHTML='Gemini: '+(j.ai.gemini.includes('OK')?'✅ OK':'❌ '+j.ai.gemini)+' | Groq: '+(j.ai.groq.includes('OK')?'✅ OK':'❌ '+j.ai.groq)+' | Football API: '+j.api.football+' | Basketball API: '+j.api.basketball+' | Pool: <b>'+j.pool.total+'/600</b> (Football '+j.pool.football+' + Basketball '+j.pool.basketball+') | Date: '+j.date;
+        el.innerHTML='Gemini: '+(j.ai.gemini.includes('OK')?'✅ OK':'⚠️ '+j.ai.gemini)+' | Groq: '+(j.ai.groq.includes('OK')?'✅ OK':'⚠️ '+j.ai.groq)+' | Rule Engine: ✅ OK'+' | Football API: '+j.api.football+' | Basketball API: '+j.api.basketball+' | Pool: <b>'+j.pool.total+'/600</b> (Football '+j.pool.football+' + Basketball '+j.pool.basketball+') | Date: '+j.date;
         return;
       }
     }catch(e){ continue; }
@@ -238,14 +238,14 @@ function updateAuth(){
   let hdr=document.getElementById('authHeader');if(!hdr)return;
   let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');currentUser=user;}catch(e){}
   if(auth){hdr.innerHTML='<button class="btn outline" onclick="doLogout()">LOGOUT</button><span class="muted" style="margin-left:8px">'+(user?user.email:'')+'</span>';}else{hdr.innerHTML='<button class="btn outline" onclick="openModal(\'login\')">LOGIN</button><button class="btn mint" onclick="openModal(\'create\')">Create Account</button>';}
-  /* V136 - no fixtures */
+  /* V138 - no fixtures */
   // Show FREE slip if logged
   if(auth){ loadToday(); }
 }
 
 // TODAY GAMES - Real + Local fallback
 
-// V136 - NO GAMES LIST - Only FREE Slip (real) + Paid Slip after pay
+// V138 - NO GAMES LIST - Only FREE Slip (real) + Paid Slip after pay
 async function loadToday(){
   let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');currentUser=user;}catch(e){}
   let so=document.getElementById('slipOut');
