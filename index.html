@@ -320,7 +320,7 @@ async function loadToday(){
   let ds=new Date().toISOString().slice(0,10);
   try{
     let r=await apiFetch('football-today?sport='+selectedSport);
-    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V129 LIVE';
+    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V130 ACTIVATED';
     if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); return; }
     throw new Error('empty');
   }catch(e){
@@ -396,7 +396,7 @@ let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.j
 </script>
 
 <script>
-/* V129 LIVE GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
+/* V130 ACTIVATED GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
 (function(){
   function isLoggedIn(){ try{ if(localStorage.getItem('oddsgpt_token')) return true; if(localStorage.getItem('oddsgpt_user')) return true; }catch(e){} return false; }
   function lockIfNeeded(){
@@ -451,5 +451,151 @@ function openHelp(){ let msg=prompt('Help / Complaint - Type your issue (e.g. I 
 function openHow(){ alert('HOW IT WORKS\n\n1. Register / Login\n2. See FREE slip for today\n3. Pick plan to unlock more slips\n4. Type what you want - e.g. 30 odds today alone\n5. Copy Booking Code to SportyBet / 1xBet'); }
 function doSignOut(){ try{ localStorage.removeItem('oddsgpt_token'); localStorage.removeItem('oddsgpt_user'); localStorage.removeItem('oddsgpt_logged_in'); }catch(e){} alert('Signed out.'); location.reload(); }
 </script>
+
+
+<script>
+/* V130 ACTIVATOR - Make EVERY button work, same V129 interface */
+(function(){
+  // ---- HELPERS ----
+  function el(id){ return document.getElementById(id); }
+  function getToken(){ try{ return localStorage.getItem('oddsgpt_token')||''; }catch(e){ return ''; } }
+  function getUser(){ try{ let s=localStorage.getItem('oddsgpt_user'); return s?JSON.parse(s):null; }catch(e){ return null; } }
+  function isLogged(){ return !!getToken(); }
+  function backendUrl(path){ return '/api/index?endpoint='+path; }
+  // Ensure eye toggles
+  function addEyeToggles(){
+    document.querySelectorAll('input[type="password"]').forEach(function(inp){
+      if(inp.dataset.eyeDone) return; inp.dataset.eyeDone='1';
+      let wrap=document.createElement('div'); wrap.style.position='relative';
+      inp.parentNode.insertBefore(wrap, inp); wrap.appendChild(inp);
+      let btn=document.createElement('button'); btn.type='button'; btn.textContent='👁️'; btn.style.cssText='position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#22e06a;border-radius:999px;width:34px;height:34px;cursor:pointer;display:grid;place-items:center';
+      btn.onclick=function(){ inp.type=inp.type==='password'?'text':'password'; btn.textContent=inp.type==='password'?'👁️':'🙈'; };
+      wrap.appendChild(btn);
+    });
+  }
+  // ---- AUTH ----
+  window.openModal = window.openModal || function(which){
+    let m=document.getElementById('authModal'); if(!m) return;
+    m.style.display='flex';
+    let loginForm=el('loginForm'), createForm=el('createForm');
+    if(which==='login'){ if(loginForm)loginForm.style.display='block'; if(createForm)createForm.style.display='none'; }
+    else { if(loginForm)loginForm.style.display='none'; if(createForm)createForm.style.display='block'; }
+  };
+  window.closeModal = window.closeModal || function(){ let m=document.getElementById('authModal'); if(m) m.style.display='none'; };
+  async function doAuth(type){
+    try{
+      let email, pass, pass2, tick18, tickTerms;
+      if(type==='login'){ email=el('loginEmail')?.value?.trim(); pass=el('loginPassword')?.value; }
+      else { email=el('createEmail')?.value?.trim(); pass=el('createPassword')?.value; pass2=el('confirmPassword')?.value; tick18=el('agree18')?.checked; tickTerms=el('agreeTerms')?.checked; if(!tick18) return alert('Tick 18+ to continue'); if(!tickTerms) return alert('Tick Terms to continue'); if(pass!==pass2) return alert('Passwords no match'); }
+      if(!email||!pass) return alert('Fill email and password');
+      let r=await fetch(backendUrl(type==='login'?'auth-login':'auth-register'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:email,password:pass})});
+      let j=await r.json().catch(()=>({ok:false}));
+      if(!j.ok) return alert('Auth fail: '+(j.error||'Check email/password'));
+      try{ localStorage.setItem('oddsgpt_token', j.access_token||'local-'+Date.now()); localStorage.setItem('oddsgpt_user', JSON.stringify(j.user||{email})); localStorage.setItem('oddsgpt_logged_in','1'); }catch(e){}
+      alert((type==='login'?'Login ok':'Account created')+' - '+email);
+      closeModal(); location.reload();
+    }catch(e){ alert('Auth error: '+e.message); }
+  }
+  window.doLogin = function(){ return doAuth('login'); };
+  window.doCreate = function(){ return doAuth('register'); };
+  // ---- GAMES / SLIP ----
+  window.loadToday = window.loadToday || async function(){
+    try{
+      let f=el('fixtures'); if(f) f.textContent='Loading today games...';
+      let r=await fetch(backendUrl('football-today'));
+      let j=await r.json().catch(()=>null);
+      let list=j&&(j.games||j.fixtures)||[];
+      if(!list.length){ if(f) f.innerHTML='<div class="muted">No games today - try again later.</div>'; return; }
+      let html=list.map(function(g){ return '<div class="game"><div><b>'+(g.home||'')+' vs '+(g.away||'')+'</b><div class="meta">'+(g.league||'')+' • '+(g.market||'')+' • '+(g.confidence||'')+'</div></div><span class="odds">'+(g.odds||'')+'</span></div>'; }).join('');
+      if(f) f.innerHTML=html;
+      let src=el('liveSource'); if(src&&j&&j.source) src.textContent='LIVE • Today Games';
+    }catch(e){ let f=el('fixtures'); if(f) f.textContent='Check connection - loading local...'; }
+  };
+  window.generateSlip = window.generateSlip || async function(){
+    try{
+      if(!isLogged()) return alert('Login first to generate slip');
+      let wish=el('wishBox')?.value||'5 odds today';
+      let plan=window.currentPlan||'FREE';
+      let user=getUser(); let userId=user&&user.email?user.email:'anon';
+      let btn=el('genBtn'); if(btn) btn.textContent='Generating...';
+      let r=await fetch(backendUrl('generate-slip'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({wish:wish,plan:plan,userId:userId,sport:'ALL'})});
+      let j=await r.json().catch(()=>null);
+      if(!j||!j.ok){ if(btn) btn.textContent='Generate Slip'; return alert('Generate fail: '+(j&&j.error||'Try again')); }
+      let slipArea=el('slipArea')||el('slip')||el('fixtures');
+      let html='<div class="slip"><b style="font-size:16px">Your Slip - '+j.totalOdds+' odds</b>'+(j.legs||[]).map(function(l){ return '<div class="slip-row"><div><b>'+l.home+' vs '+l.away+'</b><div class="meta" style="font-size:12.5px;opacity:.75">'+l.league+' • '+l.market+' • '+l.confidence+'</div></div><span class="odds">'+l.odds+'</span></div>'; }).join('')+'<div class="codebox"><b>Booking Code:</b> '+(j.bookingCode||'')+'</div></div>';
+      if(slipArea) slipArea.innerHTML=html; else alert('Slip: '+j.totalOdds+' - '+j.bookingCode);
+      if(btn) btn.textContent='Generate Slip';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(e){ alert('Generate error: '+e.message); }
+  };
+  // ---- PAY ----
+  window.payPlan = window.payPlan || async function(planName){
+    try{
+      if(!isLogged()){ alert('Register / Login first'); if(typeof openModal==='function') openModal('login'); return; }
+      let user=getUser(); if(!user) return alert('Login first');
+      planName=(planName||'BANGER').toUpperCase().replace(' ','_').replace('QUICK_WIN','QUICK').replace('DAILY_HUSTLE','DAILY').replace('TRY_AM','TRY_AM').replace('SHARP_GUY','SHARP').replace('BABA_NLA','BABA');
+      let r=await fetch(backendUrl('paystack-init'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:user.email, plan:planName, userId:user.email})});
+      let j=await r.json().catch(()=>null);
+      if(!j||!j.ok) return alert('Pay init fail: '+(j&&j.error||'Check Paystack keys in Vercel'));
+      // If authorization_url, use Paystack inline if available, else redirect
+      let publicKey=window.__ODDSGPT_CONFIG__&&window.__ODDSGPT_CONFIG__.paystackPublicKey?window.__ODDSGPT_CONFIG__.paystackPublicKey:'';
+      if(window.PaystackPop&&publicKey){
+        let handler=PaystackPop.setup({key:publicKey, email:user.email, amount:(j.amount||100)*100, ref:j.reference, callback:function(resp){ verifyPay(resp.reference, planName); }, onClose:function(){ alert('Pay window closed'); }});
+        handler.openIframe();
+      } else {
+        // Fallback: open authorization_url
+        if(j.authorization_url) window.open(j.authorization_url, '_blank');
+        let ref=prompt('After pay, paste Paystack reference here to verify (or leave empty to verify later):', j.reference||'');
+        if(ref) verifyPay(ref, planName);
+      }
+    }catch(e){ alert('Pay error: '+e.message); }
+  };
+  async function verifyPay(ref, plan){
+    try{
+      let r=await fetch(backendUrl('paystack-verify'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reference:ref, plan:plan, email:getUser()?.email||''})});
+      let j=await r.json().catch(()=>null);
+      if(!j||!j.ok) return alert('Verify fail: '+(j&&j.error||''));
+      alert('Payment verified! Payment ID: '+j.paymentId+' - Plan: '+plan+' don activate. Refresh.');
+      location.reload();
+    }catch(e){ alert('Verify error: '+e.message); }
+  }
+  // ---- ASK AI ----
+  window.askAI = window.askAI || async function(){
+    try{
+      if(!isLogged()) return alert('Login first for Ask AI');
+      let plan=window.currentPlan||'FREE';
+      if(['FREE','BANGER','QUICK','DAILY'].includes(plan)) return alert('Ask AI is paid only - TRY AM 2/day, SHARP 5/day, BABA unlimited.');
+      let wish=el('wishBox')?.value||'Analyze today games';
+      let btn=el('askBtn'); if(btn) btn.textContent='AI thinking...';
+      let r=await fetch(backendUrl('ask-ai'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({wish:wish, plan:plan, userId:getUser()?.email||''})});
+      let j=await r.json().catch(()=>null);
+      if(btn) btn.textContent='Ask AI';
+      if(!j||!j.ok) return alert('Ask AI: '+(j&&j.error||'Try again'));
+      alert('AI ('+j.ai+'): '+ (j.answer||'').slice(0,800));
+    }catch(e){ alert('Ask AI error: '+e.message); }
+  };
+  // ---- BIND ALL BUTTONS BY TEXT (fallback) ----
+  function bindButtons(){
+    document.querySelectorAll('button').forEach(function(b){
+      if(b.dataset.bound) return;
+      let txt=(b.textContent||'').toLowerCase();
+      if(/generate slip/.test(txt)){ b.id=b.id||'genBtn'; b.onclick=function(){ generateSlip(); }; b.dataset.bound='1'; }
+      if(/ask ai/.test(txt)){ b.id=b.id||'askBtn'; b.onclick=function(){ askAI(); }; b.dataset.bound='1'; }
+      if(/pay.*100|banger/.test(txt) && !/verify/.test(txt)){ b.onclick=function(){ payPlan('BANGER'); }; b.dataset.bound='1'; }
+      if(/quick win|pay.*200/.test(txt)){ b.onclick=function(){ payPlan('QUICK'); }; b.dataset.bound='1'; }
+      if(/daily hustle|pay.*300/.test(txt)){ b.onclick=function(){ payPlan('DAILY'); }; b.dataset.bound='1'; }
+      if(/try am|pay.*500/.test(txt)){ b.onclick=function(){ payPlan('TRY_AM'); }; b.dataset.bound='1'; }
+      if(/sharp guy|pay.*2000/.test(txt)){ b.onclick=function(){ payPlan('SHARP'); }; b.dataset.bound='1'; }
+      if(/baba nla|pay.*5000/.test(txt)){ b.onclick=function(){ payPlan('BABA'); }; b.dataset.bound='1'; }
+      if(/login/.test(txt) && /create|register/.test(txt)===false){ if(b.textContent.trim().toLowerCase()==='login') { b.onclick=function(){ doLogin(); }; b.dataset.bound='1'; } }
+      if(/create account/.test(txt)){ b.onclick=function(){ doCreate(); }; b.dataset.bound='1'; }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){ addEyeToggles(); bindButtons(); setTimeout(bindButtons, 1500); if(typeof loadToday==='function') loadToday(); });
+  setTimeout(function(){ addEyeToggles(); bindButtons(); }, 800);
+  setInterval(bindButtons, 3000);
+})();
+</script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
 
 </body></html>
