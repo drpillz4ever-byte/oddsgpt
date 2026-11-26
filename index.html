@@ -47,11 +47,7 @@ footer{border-top:1px solid #1e3a1e;margin-top:24px;padding:18px;text-align:cent
 .logo .balls .line{flex:1;height:1px;background:#22e06a;box-shadow:0 0 6px #22e06a}
 
 
-.bottombar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#070d07;border-top:1px solid #1e3a1e;display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
-.bottombar button{background:transparent;border:0;color:#cbd5e1;font-size:12px;font-weight:700;cursor:pointer;padding:8px 6px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1}
-.bottombar button.on{color:#22e06a}
-.bottombar button span{font-size:20px}
-.wrap{padding-bottom:90px}
+.wrap{padding-bottom:20px}
 .footer-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 .footer-links button{background:#0d1a0d;border:1px solid #1e3a1e;color:#e6edf3;border-radius:999px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer}
 
@@ -320,7 +316,7 @@ async function loadToday(){
   let ds=new Date().toISOString().slice(0,10);
   try{
     let r=await apiFetch('football-today?sport='+selectedSport);
-    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V130 ACTIVATED';
+    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V131 CLEAN - NO BOTTOM BAR';
     if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); return; }
     throw new Error('empty');
   }catch(e){
@@ -396,7 +392,7 @@ let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.j
 </script>
 
 <script>
-/* V130 ACTIVATED GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
+/* V131 CLEAN - NO BOTTOM BAR GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
 (function(){
   function isLoggedIn(){ try{ if(localStorage.getItem('oddsgpt_token')) return true; if(localStorage.getItem('oddsgpt_user')) return true; }catch(e){} return false; }
   function lockIfNeeded(){
@@ -423,14 +419,7 @@ fetch('/api/index?endpoint=config').then(r=>r.json()).then(j=>{ window.__ODDSGPT
 
 
 <!-- V129 BOTTOM - WORKING -->
-<div class="bottombar" id="bottomBar">
-  <button onclick="goHome(this)" class="on"><span>🏠</span>Home</button>
-  <button onclick="goGames(this)"><span>⚽</span>Games</button>
-  <button onclick="goSlip(this)"><span>🎟️</span>My Slip</button>
-  <button onclick="goPlans(this)"><span>💰</span>Plans</button>
-  <button onclick="goAccount(this)"><span>👤</span>Account</button>
-</div>
-<div style="text-align:center;padding:12px 12px 80px;font-size:12.5px;opacity:.85;line-height:1.7">
+<div style="text-align:center;padding:12px 12px 20px;font-size:12.5px;opacity:.85;line-height:1.7">
   <div class="footer-links">
     <button onclick="openTerms()">📄 Terms</button>
     <button onclick="openHelp()">💬 Help / Complaint</button>
@@ -441,11 +430,6 @@ fetch('/api/index?endpoint=config').then(r=>r.json()).then(j=>{ window.__ODDSGPT
   <div id="bottomStatus" style="margin-top:6px;color:#22e06a;font-weight:700">● LIVE • Today Games</div>
 </div>
 <script>
-function goHome(btn){ document.querySelectorAll('.bottombar button').forEach(b=>b.classList.remove('on')); if(btn)btn.classList.add('on'); window.scrollTo({top:0,behavior:'smooth'}); }
-function goGames(btn){ document.querySelectorAll('.bottombar button').forEach(b=>b.classList.remove('on')); if(btn)btn.classList.add('on'); let el=document.getElementById('fixtures')||document.querySelector('[id*=fixture]'); if(el) el.scrollIntoView({behavior:'smooth'}); else window.scrollTo({top:400,behavior:'smooth'}); }
-function goSlip(btn){ document.querySelectorAll('.bottombar button').forEach(b=>b.classList.remove('on')); if(btn)btn.classList.add('on'); let el=document.getElementById('slipArea')||document.getElementById('slip')||document.querySelector('.slip'); if(el) el.scrollIntoView({behavior:'smooth'}); else alert('Your slip go show here after you login and generate.'); }
-function goPlans(btn){ document.querySelectorAll('.bottombar button').forEach(b=>b.classList.remove('on')); if(btn)btn.classList.add('on'); let el=document.querySelector('.plans')||document.getElementById('plans'); if(el) el.scrollIntoView({behavior:'smooth'}); else window.scrollTo({top:1200,behavior:'smooth'}); }
-function goAccount(btn){ document.querySelectorAll('.bottombar button').forEach(b=>b.classList.remove('on')); if(btn)btn.classList.add('on'); try{ let u=localStorage.getItem('oddsgpt_user'); if(u){ alert('Logged in as: '+JSON.parse(u).email+'\nTap Sign Out for bottom to log out.'); } else { if(typeof openModal==='function') openModal('login'); else alert('Login first to see Account.'); } }catch(e){ if(typeof openModal==='function') openModal('login'); } }
 function openTerms(){ alert('ODDSGPT NG TERMS\n\n1. 18+ only.\n2. Register/Login to see FREE and Paid games.\n3. FREE: 1 slip per day, max 3 games.\n4. Paid plans: BANGER, QUICK WIN, DAILY HUSTLE, TRY AM, SHARP GUY, BABA NLA - slips and days as shown for each plan.\n5. Paystack payment must verify before access. Every payment get Payment ID for support.\n6. No refund for slip wey don generate, unless payment fail.\n7. Play responsibly.'); }
 function openHelp(){ let msg=prompt('Help / Complaint - Type your issue (e.g. I pay but no access, Payment ID, email):'); if(msg){ alert('Complaint received: '+msg+'\nWe go check am. Keep your Payment ID for support.'); } }
 function openHow(){ alert('HOW IT WORKS\n\n1. Register / Login\n2. See FREE slip for today\n3. Pick plan to unlock more slips\n4. Type what you want - e.g. 30 odds today alone\n5. Copy Booking Code to SportyBet / 1xBet'); }
@@ -597,5 +581,99 @@ function doSignOut(){ try{ localStorage.removeItem('oddsgpt_token'); localStorag
 })();
 </script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
+
+
+<script>
+/* V131 CLEAN FIX - Login / Create / Paystack - V86 Rules - No bottom bar */
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function getUser(){ try{ let s=localStorage.getItem('oddsgpt_user'); return s?JSON.parse(s):null; }catch(e){ return null; } }
+  function isLogged(){ try{ return !!localStorage.getItem('oddsgpt_token'); }catch(e){ return false; } }
+  // LOGIN: email + password ONLY (no extra fields)
+  window.doLogin = async function(){
+    try{
+      let email=$('loginEmail')?.value?.trim(); let pass=$('loginPassword')?.value;
+      if(!email||!pass) return alert('Fill email and password');
+      let r=await fetch('/api/index?endpoint=auth-login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:email,password:pass})});
+      let j=await r.json().catch(()=>({ok:false}));
+      if(!j.ok) return alert('Login fail: '+(j.error||'Check email / password'));
+      localStorage.setItem('oddsgpt_token', j.access_token||'local-'+Date.now());
+      localStorage.setItem('oddsgpt_user', JSON.stringify(j.user||{email:email}));
+      localStorage.setItem('oddsgpt_logged_in','1');
+      alert('Login ok - '+email);
+      let m=$('authModal'); if(m) m.style.display='none';
+      location.reload();
+    }catch(e){ alert('Login error: '+e.message); }
+  };
+  // CREATE: email + password + confirm + 18+ tick + Terms tick + eye (eye already in V129)
+  window.doCreate = async function(){
+    try{
+      let email=$('createEmail')?.value?.trim(); let pass=$('createPassword')?.value; let pass2=$('confirmPassword')?.value;
+      let tick18=$('agree18')?.checked; let tickTerms=$('agreeTerms')?.checked;
+      if(!email||!pass) return alert('Fill email and password');
+      if(pass!==pass2) return alert('Passwords no match');
+      if(!tick18) return alert('Tick 18+ to continue - 18+ only');
+      if(!tickTerms) return alert('Tick Terms to continue');
+      let r=await fetch('/api/index?endpoint=auth-register', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:email,password:pass})});
+      let j=await r.json().catch(()=>({ok:false}));
+      if(!j.ok) return alert('Create fail: '+(j.error||'Email don exist? Try login'));
+      localStorage.setItem('oddsgpt_token', j.access_token||'local-'+Date.now());
+      localStorage.setItem('oddsgpt_user', JSON.stringify(j.user||{email:email}));
+      localStorage.setItem('oddsgpt_logged_in','1');
+      alert('Account created - '+email+' - Welcome to OddsGPT NG');
+      let m=$('authModal'); if(m) m.style.display='none';
+      location.reload();
+    }catch(e){ alert('Create error: '+e.message); }
+  };
+  // PAYSTACK: Login first, popup on site, Payment ID saved - V86 Plans
+  window.payPlan = async function(planName){
+    try{
+      if(!isLogged()){ alert('Register / Login first to pay'); if(typeof openModal==='function') openModal('login'); return; }
+      let user=getUser(); if(!user) return alert('Login first');
+      let map={'BANGER':'BANGER','QUICK WIN':'QUICK','QUICK':'QUICK','DAILY HUSTLE':'DAILY','DAILY':'DAILY','TRY AM':'TRY_AM','TRY_AM':'TRY_AM','SHARP GUY':'SHARP','SHARP':'SHARP','BABA NLA':'BABA','BABA':'BABA'};
+      let plan=map[(planName||'').toUpperCase()]||'BANGER';
+      let r=await fetch('/api/index?endpoint=paystack-init', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email:user.email, plan:plan, userId:user.email})});
+      let j=await r.json().catch(()=>null);
+      if(!j||!j.ok) return alert('Pay fail: '+(j&&j.error||'Check Paystack keys in Vercel'));
+      let pub=window.__ODDSGPT_CONFIG__&&window.__ODDSGPT_CONFIG__.paystackPublicKey?window.__ODDSGPT_CONFIG__.paystackPublicKey:'';
+      if(window.PaystackPop&&pub){
+        let h=PaystackPop.setup({key:pub, email:user.email, amount:(j.amount||100)*100, ref:j.reference,
+          callback:function(resp){ verifyPay(resp.reference, plan); },
+          onClose:function(){ alert('Pay window closed'); }});
+        h.openIframe();
+      } else {
+        if(j.authorization_url) window.open(j.authorization_url,'_blank');
+        let ref=prompt('After pay, paste Paystack reference to verify:', j.reference||'');
+        if(ref) verifyPay(ref, plan);
+      }
+    }catch(e){ alert('Pay error: '+e.message); }
+  };
+  async function verifyPay(ref, plan){
+    try{
+      let r=await fetch('/api/index?endpoint=paystack-verify', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({reference:ref, plan:plan, email:getUser()?.email||''})});
+      let j=await r.json().catch(()=>null);
+      if(!j||!j.ok) return alert('Verify fail: '+(j&&j.error||''));
+      alert('Payment verified! Payment ID: '+j.paymentId+' - Plan '+plan+' don activate.');
+      location.reload();
+    }catch(e){ alert('Verify error: '+e.message); }
+  }
+  // Bind Pay buttons by text - single binding, no double
+  function bindPay(){
+    document.querySelectorAll('button').forEach(function(b){
+      if(b.dataset.v131) return;
+      let txt=(b.textContent||'').toLowerCase();
+      if(txt.includes('banger')&&txt.includes('pay')||txt.trim()==='pay ₦100'||txt.includes('pay ₦100')){ b.onclick=function(){ payPlan('BANGER'); }; b.dataset.v131='1'; }
+      else if(txt.includes('quick win')||txt.includes('pay ₦200')){ b.onclick=function(){ payPlan('QUICK'); }; b.dataset.v131='1'; }
+      else if(txt.includes('daily hustle')||txt.includes('pay ₦300')){ b.onclick=function(){ payPlan('DAILY'); }; b.dataset.v131='1'; }
+      else if(txt.includes('try am')||txt.includes('pay ₦500')){ b.onclick=function(){ payPlan('TRY_AM'); }; b.dataset.v131='1'; }
+      else if(txt.includes('sharp guy')||txt.includes('pay ₦2000')||txt.includes('pay ₦2,000')){ b.onclick=function(){ payPlan('SHARP'); }; b.dataset.v131='1'; }
+      else if(txt.includes('baba nla')||txt.includes('pay ₦5000')||txt.includes('pay ₦5,000')){ b.onclick=function(){ payPlan('BABA'); }; b.dataset.v131='1'; }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', bindPay);
+  setTimeout(bindPay, 1000);
+  setInterval(bindPay, 3000);
+})();
+</script>
 
 </body></html>
