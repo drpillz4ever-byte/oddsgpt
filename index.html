@@ -1,188 +1,228 @@
-// OddsGPT Backend V118 - DAY CHOOSE FEATURE
-// Customer has right to choose day games: 30 odds today alone, 30 odds Tues to Fri, 5 odds for whichever day, default today
-export const PLANS={
- FREE:{price:0,maxOdds:2,maxSlipsPerDay:1,maxLegs:3,days:1,askAI:0,slipsTotal:1},
- BANGER:{price:100,maxOdds:1000,maxSlipsPerDay:1,maxLegs:20,days:1,askAI:0,slipsTotal:1},
- QUICK:{price:200,maxOdds:1000,maxSlipsPerDay:2,maxLegs:20,days:1,askAI:0,slipsTotal:2},
- DAILY:{price:300,maxOdds:1000,maxSlipsPerDay:3,maxLegs:20,days:1,askAI:1,slipsTotal:3},
- TRY_AM:{price:500,maxOdds:1000,maxSlipsPerDay:3,maxLegs:20,days:3,askAI:2,slipsTotal:9},
- SHARP:{price:2000,maxOdds:1000,maxSlipsPerDay:5,maxLegs:20,days:7,askAI:5,slipsTotal:35},
- BABA:{price:5000,maxOdds:1000,maxSlipsPerDay:10,maxLegs:20,days:30,askAI:999,slipsTotal:300},
+<!-- OddsGPT V118 FIXED BUTTONS - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OddsGPT V118 - Fixed Buttons -  - Type What You Want, Get Real Booking Code</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
+.top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px}.eye{width:30px;height:30px;border-radius:50%;background:#22c55e;display:grid;place-items:center;color:#000;font-size:16px}
+.logo small{display:block;font-size:11px;font-weight:400;opacity:.7}
+.btn-mint{background:#bbf7d0;color:#000;border:0;border-radius:999px;padding:11px 18px;font-weight:800;cursor:pointer}
+.btn-outline{border:1px solid #bbf7d0;color:#bbf7d0;background:transparent;border-radius:999px;padding:10px 16px;font-weight:800;cursor:pointer}
+.wrap{max-width:1000px;margin:0 auto;padding:14px}
+.hero{text-align:left;padding:18px 0 8px}.hero h1{font-size:28px;margin:0;line-height:1.2}.hero h1 span{color:#bbf7d0}.hero p{opacity:.8;font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{border:1px solid #334155;background:#0f172a;color:#fff;border-radius:999px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer}.chip.on{background:#bbf7d0;color:#000;border-color:#bbf7d0}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;padding:16px;margin:14px 0}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:760px){.plans{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.plans{grid-template-columns:1fr 1fr}}
+.plan{background:#111a2e;border:1px solid #1e293b;border-radius:18px;padding:16px;min-height:180px}.plan b{font-size:14px;letter-spacing:.5px}.price{font-size:30px;font-weight:900;margin:8px 0}.plan small{opacity:.85;font-size:12px;line-height:1.5;display:block;min-height:36px}.pay{width:100%;background:#bbf7d0;color:#000;border:0;border-radius:999px;padding:12px;font-weight:800;cursor:pointer;margin-top:12px}
+input,textarea{width:100%;background:#1e293b;color:#fff;border:1px solid #334155;border-radius:12px;padding:13px;font-size:16px;outline:none}input:focus,textarea:focus{border-color:#bbf7d0}
+input:-webkit-autofill{-webkit-text-fill-color:#fff!important;-webkit-box-shadow:0 0 0 1000px #1e293b inset!important}
+label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opacity:.75;font-size:13px;line-height:1.5}
+.game{border:1px solid #1e293b;border-radius:14px;padding:12px;background:#0b1220;margin:8px 0}.odds{color:#bbf7d0;font-weight:900}
+.badge{display:inline-block;background:#bbf7d0;color:#000;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:900}
+.opts{display:none!important}.opt-group h4{color:#bbf7d0;font-size:12px;text-transform:uppercase;margin:12px 0 6px}
+.hidden{display:none!important}
+.benefits{list-style:none;margin:10px 0 0;padding:0;font-size:12px;line-height:1.7;opacity:.95}.benefits li{border-top:1px solid #1e293b;padding:3px 0}
+.pass-wrap{position:relative}.pass-wrap input{padding-right:48px}.eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#bbf7d0;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:16px;display:grid;place-items:center}
+/* MODALS - EXACT AS VIDEO */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}.modal.open{display:flex}
+.modal-box{background:#1e293b;border-radius:20px;padding:22px;width:100%;max-width:420px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal-box h2{margin:0;font-size:22px}.modal-box p{opacity:.8;font-size:13px;margin:6px 0 4px}.close{position:absolute;top:14px;right:16px;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
+.check{font-size:13px;display:flex;gap:8px;align-items:center;margin:8px 0}.check input{width:auto}
+.link{color:#bbf7d0;cursor:pointer;font-weight:700}
+.slip{background:#07130b;border:1px solid #bbf7d0;border-radius:14px;padding:12px;margin-top:12px}.codebox{background:#000;border:1px dashed #bbf7d0;border-radius:10px;padding:10px;text-align:center;font-size:20px;font-weight:900;margin:10px 0}
+</style></head><body>
+<div class="top"><div class="logo"><div class="eye">◉</div><div>OddsGPT<small>Type What You Want, Get Real Booking Code</small></div></div><div style="display:flex;gap:8px"><button class="btn-outline" onclick="openModal('login')">LOGIN</button><button class="btn-mint" onclick="openModal('create')">Create Account</button><button class="btn-outline hidden" id="signOutBtn">Sign Out</button></div></div>
+
+<div class="wrap">
+<div class="hero"><h1>Type What You Want,<br><span>Get Real Booking Code</span></h1><p>Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code.</p>
+<div class="chips"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div></div>
+
+<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveClock" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading...</span><span id="liveDay" style="color:#bbf7d0;font-weight:700;font-size:13px"></span></div><div id="fixtures">Login to see today's games.</div></div>
+
+<h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
+<div class="plans">
+<div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
+<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
+<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS • 24hrs</small><ul class="benefits"><li>✅ 2 slips in 1 use</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
+<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Ask AI — 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
+<div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS</small><ul class="benefits"><li>✅ 9 slips in 3 days</li><li>✅ Ask AI — 2 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
+<div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day</small><ul class="benefits"><li>✅ 35 slips in 7 days</li><li>✅ 5 slips per day</li><li>✅ Ask AI — 5 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
+<div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
+</div>
+
+<div class="card"><h2 style="margin:0">Type What You Want <span class="badge">PAID ONLY</span></h2><p class="muted">FREE: No Generate, No Wish, No Options — FREE slip auto same for all. PAID: Type anything + pick any option.</p>
+<div class="chips" style="margin:8px 0"><button class="chip" onclick="addDay('for today alone')">📅 Today</button><button class="chip" onclick="addDay('for tomorrow')">📅 Tomorrow</button><button class="chip" onclick="addDay('from Monday to Friday')">Mon to Fri</button><button class="chip" onclick="addDay('from Tuesday to Friday')">Tue to Fri</button><button class="chip" onclick="addDay('for weekend')">Weekend</button><button class="chip" onclick="addDay('for any day')">Any Day</button></div><div id="dayPreview" class="muted" style="color:#bbf7d0;font-weight:700;margin:6px 0;min-height:18px"></div><textarea id="wishBox" rows="3" placeholder="Type what you want... e.g. Give me 10 odds, only home win"></textarea>
+<div style="display:flex;gap:8px;margin-top:10px"><button class="btn-mint" id="askAI">Ask AI</button><button class="btn-mint" id="genSlip">Generate Slip</button></div>
+<div id="optionsBox" style="display:none!important" aria-hidden="true"></div><p class="muted" style="font-size:12px">✓ All markets dey inside — just type wetin you want.</p><div id="slipOut"></div></div>
+
+<div class="card"><h2 style="margin:0">Your Slips</h2><div id="mySlips" class="muted">Login to see slips.</div></div>
+<div class="card"><h2 style="margin:0">Help / Complaint</h2><p class="muted">Debited without access? Drop message. Admin go check your Payment ID.</p><textarea id="complaint" rows="3" placeholder="Payment ID + what happen"></textarea><button class="btn-mint" style="margin-top:8px" onclick="alert('Complaint saved. Admin will check your Payment ID.')">Send Complaint</button></div>
+<p class="muted" style="text-align:center">OddsGPT • 18+ • Play Responsibly</p></div>
+
+<!-- LOGIN MODAL - AS VIDEO -->
+<div class="modal" id="loginModal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Login</h2><p>Welcome back</p>
+<input type="text" name="prevent_autofill_username" autocomplete="username" style="display:none" tabindex="-1" aria-hidden="true">
+<input type="password" name="prevent_autofill_password" autocomplete="new-password" style="display:none" tabindex="-1" aria-hidden="true">
+<label>Email</label><input id="email" type="email" name="oddsgpt_email_login" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" placeholder="you@email.com">
+<label>Password</label><div class="pass-wrap"><input id="password" type="password" name="oddsgpt_pass_login" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Password"><button type="button" class="eye-btn" onclick="togglePass('password',this)">👁️</button></div>
+<button class="btn-mint" id="doLogin" style="width:100%;margin-top:14px;padding:14px">LOGIN</button>
+<p style="text-align:center;margin-top:10px"><span class="link" onclick="forgotPass()">Forgot Password?</span></p>
+<p style="text-align:center">No account? <span class="link" onclick="openModal('create')">Create Account — Get FREE TODAY</span></p><p class="muted" id="authMsg"></p></div></div>
+
+<!-- CREATE ACCOUNT MODAL - AS VIDEO -->
+<div class="modal" id="createModal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Create Account</h2><p>Free plan unlock after you register</p>
+<label>Email</label><input id="regEmail" type="email" name="oddsgpt_email_reg" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" placeholder="you@email.com">
+<label>Password</label><div class="pass-wrap"><input id="regPass" type="password" name="oddsgpt_pass_reg" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Min 6 characters"><button type="button" class="eye-btn" onclick="togglePass('regPass',this)">👁️</button></div>
+<label>Confirm Password</label><div class="pass-wrap"><input id="regConfirm" type="password" name="oddsgpt_pass_confirm" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" placeholder="Repeat password"><button type="button" class="eye-btn" onclick="togglePass('regConfirm',this)">👁️</button></div>
+<label class="check"><input type="checkbox" id="ageCheck"> I am 18+ years old</label>
+<label class="check"><input type="checkbox" id="termsCheck"> I agree to the terms</label>
+<button class="btn-mint" id="doRegister" style="width:100%;margin-top:10px;padding:14px">Create Account</button>
+<p style="text-align:center">Already have account? <span class="link" onclick="openModal('login')">LOGIN</span></p></div></div>
+
+<script>
+const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
+let currentUser=null,currentPlan="FREE",selectedSport="ALL",selectedOptions=[];
+function togglePass(id,btn){var f=document.getElementById(id);if(!f)return;var show=f.type==='password';f.type=show?'text':'password';btn.textContent=show?'🙈':'👁️'}
+function clearPassFields(){try{['password','regPass','regConfirm'].forEach(function(id){var f=document.getElementById(id);if(f){f.value='';f.setAttribute('readonly','readonly');f.type='password'}})}catch(e){}}
+function openModal(which){try{clearPassFields()}catch(e){}document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else document.getElementById('createModal').classList.add('open');setTimeout(clearPassFields,80);setTimeout(clearPassFields,400)}
+function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open')}
+function setWish(t){document.getElementById('wishBox').value=t;document.getElementById('wishBox').scrollIntoView({behavior:'smooth'})}
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const OPTIONS={
+"FOOTBALL - 1X2 / DOUBLE CHANCE":["1X2","1X2 - 1UP","1X2 - 2UP","1X2 - Never Down","Double Chance","Double Chance - 1UP","Draw No Bet","1st Half - 1X2","2nd Half - 1X2","1st Half - Double Chance","2nd Half - Double Chance","1st Half - Draw No Bet","2nd Half - Draw No Bet"],
+"FOOTBALL - OVER/UNDER":["Over/Under 0.5","Over/Under 1.5","Over/Under 2.5","Over/Under 3.5","Over/Under 4.5","Over/Under 5.5","Asian Over/Under 1","Asian Over/Under 2","Asian Over/Under 3","Asian Over/Under 4","Asian Over/Under 5","Over/Under - Early Goals 1.5","Over/Under - Early Goals 2.5","Over/Under - Early Goals 3.5","1st Half Over/Under","2nd Half Over/Under","Both Halves Over 1.5","Both Halves Under 1.5"],
+"FOOTBALL - GG/NG / BTTS":["GG/NG","GG/NG 2+","BTTS","1X2 & GG/NG","1X2 & Over/Under 1.5","GG/NG 1st Half","GG/NG 2nd Half","Both Teams to Score in Both Halves","Goal in Both Halves"],
+"FOOTBALL - CORRECT SCORE / GOALS":["Correct Score","Correct Score [0:0]","Correct Score 1st Half","Correct Score 2nd Half","Half Time / Full Time","Half Time / Full Time Correct Score","Exact Goals","Exact Goals 1st Half","Exact Goals 2nd Half","Multigoals","Multiscores","Goal Range","Goal Bounds","Excluded Number of Goals","Winning Margin","Odd/Even","Odd/Even 1st Half","Odd/Even 2nd Half"],
+"FOOTBALL - TEAM / CLEAN SHEET":["Home Team Over/Under 0.5","Home Team Over/Under 1.5","Home Team Over/Under 2.5","Home Team Over/Under 3.5","Away Team Over/Under 0.5","Away Team Over/Under 1.5","Away Team Over/Under 2.5","Away Team Over/Under 3.5","Clean Sheet Home","Clean Sheet Away","Win to Nil Home","Win to Nil Away","Teams to Score","Win Both Halves","Win Either Half","Highest Scoring Half","Home Highest Scoring Half","Away Highest Scoring Half"],
+"FOOTBALL - HANDICAP":["Handicap 0:1","Handicap 0:2","Handicap 0:3","Handicap 1:0","Handicap 2:0","Handicap 3:0","Handicap 4:0","Asian Handicap -2.0","Asian Handicap -1.5","Asian Handicap -1.0","Asian Handicap -0.5","Asian Handicap 0","Asian Handicap +0.5","Asian Handicap +1.0","Asian Handicap +1.5","Asian Handicap +2.0","1st Half Handicap","2nd Half Handicap"],
+"FOOTBALL - LEAD / STREAK":["1st Goal (Home/None/Away)","1st Goal 1st Half","1st Goal 2nd Half","Last Goal","1st Half Team Goals","2nd Half Team Goals","Any Team to lead by 1 Goal","Any Team to lead by 2 Goals","Any Team to lead by 3 Goals","Home to lead by 1/2/3","Away to lead by 1/2/3","Any Team to Score 2+ in a Row","Any Team to Score 3+ in a Row","Home to Score 2+ in a Row","Home to Score 3+ in a Row","Away to Score 2+ in a Row","Away to Score 3+ in a Row"],
+"FOOTBALL - STATS (NEEDS STATS API)":["Offsides 1X2","Offsides Over/Under","Shots Over/Under","Shots on Target Over/Under","Posts and Crossbars Over/Under","Posts and Crossbars 1X2","Cards Over/Under","Exact Bookings","Sending Off","Fouls Over/Under","Corners Over/Under"],
+"FOOTBALL - PLAYER (NEEDS PLAYER API)":["Most Player Goals","Most Shots","Most Goals + Assists","Most Fouls","Most Saves","Player Cards","To Score or Assist","Player Fouls Won"],
+"BASKETBALL - FULL GAME":["Moneyline - Home Win","Moneyline - Away Win","Over/Under Total Points 76.5","Over/Under Total Points 77.5","Over/Under Total Points 78.5","Over/Under Total Points 79.5","Over/Under Total Points 80.5","Over/Under Total Points 140.5","Over/Under Total Points 150.5","Over/Under Total Points 220.5","Over/Under Total Points 221.5","Over/Under Total Points 222.5","Handicap","Odd/Even Total Points","Home Team Total Over/Under","Away Team Total Over/Under"],
+"BASKETBALL - QUARTER":["1st Quarter Over/Under","2nd Quarter Over/Under","3rd Quarter Over/Under","4th Quarter Over/Under","1st Quarter Handicap","2nd Quarter Handicap","1st Quarter 1X2","2nd Quarter 1X2","1st Quarter Draw No Bet","2nd Quarter Draw No Bet","1st Quarter Odd/Even","2nd Quarter Odd/Even","Quarter Over/Under 39.5"],
+"BASKETBALL - HALF":["1st Half Over/Under (not overtime)","2nd Half Over/Under","1st Half Handicap","2nd Half Handicap","1st Half 1X2","2nd Half 1X2","1st Half Draw No Bet","2nd Half Draw No Bet","1st Half Odd/Even","2nd Half Odd/Even"],
+"BASKETBALL - SPECIALS / NBA":["Race to 20 Points","Race to 30 Points","First Team to Lead by 12","First Team to Lead by 22","Highest Scoring Quarter","Lowest Scoring Quarter","Any Team to Win All Quarters","Both Teams to Score X in Quarter","Home to Win by X","Away to Win by X"]
 };
-export const POOL_SIZE=600;
-export const BLOCKED=[" II"," III","U19","U21","U23","RESERVE","B TEAM","YOUTH","ACADEMY","WOMEN"];
-export function isBlocked(n){let s=" "+(n||"").toUpperCase()+" ";return BLOCKED.some(k=>s.includes(k))}
-export const FOOTBALL_OPTIONS=["1X2","1X2 - 1UP","1X2 - 2UP","1X2 - Never Down","Double Chance","Double Chance - 1UP","Draw No Bet","Over/Under 0.5","Over/Under 1.5","Over/Under 2.5","Over/Under 3.5","Over/Under 4.5","Over/Under 5.5","Asian Over/Under 1","Asian Over/Under 2","Asian Over/Under 3","Asian Over/Under 4","Asian Over/Under 5","Over/Under - Early Goals 1.5","Over/Under - Early Goals 2.5","Over/Under - Early Goals 3.5","1st Half Over/Under","2nd Half Over/Under","Both Halves Over 1.5","Both Halves Under 1.5","GG/NG","GG/NG 2+","BTTS","1X2 & GG/NG","1X2 & Over/Under 1.5","Correct Score","Correct Score [0:0]","Half Time / Full Time","Exact Goals","Multigoals","Multiscores","Goal Range","Winning Margin","Odd/Even","Home Team Over/Under 0.5","Home Team Over/Under 1.5","Home Team Over/Under 2.5","Away Team Over/Under 0.5","Away Team Over/Under 1.5","Clean Sheet Home","Clean Sheet Away","Win to Nil Home","Win to Nil Away","Win Both Halves","Win Either Half","Highest Scoring Half","Handicap 0:1","Handicap 0:2","Handicap 0:3","Handicap 1:0","Handicap 2:0","Asian Handicap -2.0","Asian Handicap -1.5","Asian Handicap -1.0","Asian Handicap -0.5","Asian Handicap 0","Asian Handicap +0.5","Asian Handicap +1.0","Asian Handicap +1.5","Asian Handicap +2.0","1st Goal (Home/None/Away)","Any Team to lead by 1 Goal","Any Team to lead by 2 Goals","Any Team to lead by 3 Goals","Any Team to Score 2+ in a Row","Any Team to Score 3+ in a Row","Offsides 1X2","Offsides Over/Under","Shots Over/Under","Shots on Target Over/Under","Posts and Crossbars Over/Under","Cards Over/Under","Exact Bookings","Most Player Goals","Most Shots","To Score or Assist"];
-export const BASKETBALL_OPTIONS=["Moneyline - Home Win","Moneyline - Away Win","Over/Under Total Points 76.5","Over/Under Total Points 140.5","Over/Under Total Points 150.5","Over/Under Total Points 220.5","Handicap","Odd/Even Total Points","1st Quarter Over/Under","2nd Quarter Over/Under","3rd Quarter Over/Under","4th Quarter Over/Under","1st Quarter Handicap","2nd Quarter Handicap","1st Quarter 1X2","2nd Quarter 1X2","Quarter Over/Under 39.5","1st Half Over/Under (not overtime)","2nd Half Over/Under","1st Half Handicap","2nd Half Handicap","1st Half 1X2","2nd Half 1X2","Race to 20 Points","Race to 30 Points","First Team to Lead by 12","First Team to Lead by 22","Highest Scoring Quarter","Lowest Scoring Quarter","Any Team to Win All Quarters"];
+let h='';for(let g in OPTIONS){h+='<div class="opt-group"><h4>'+g+'</h4><div style="display:flex;flex-wrap:wrap;gap:6px">'+OPTIONS[g].map(o=>'<button class="chip" onclick="toggleOpt(this,\''+o.replace(/'/g,'')+'\')">'+o+'</button>').join('')+'</div></div>'}document.getElementById('optionsBox').innerHTML=h;
 
-const DAY_MAP={
-  mon:1,monday:1,
-  tue:2,tues:2,tuesday:2,
-  wed:3,wednesday:3,
-  thu:4,thur:4,thurs:4,thursday:4,
-  fri:5,friday:5,
-  sat:6,saturday:6,
-  sun:0,sunday:0,
-  today:99,tomorrow:100
+function parseDayFront(text){
+  try{
+    let t=(text||'').toLowerCase();
+    let daysMap={mon:1,monday:1,tue:2,tues:2,tuesday:2,wed:3,wednesday:3,thu:4,thur:4,thurs:4,thursday:4,fri:5,friday:5,sat:6,saturday:6,sun:0,sunday:0,today:99,tomorrow:100};
+    function nextDate(base,num){
+      let d=new Date(base); d.setHours(12,0,0,0);
+      if(num===99) return d;
+      if(num===100){ d.setDate(d.getDate()+1); return d; }
+      let diff=(num - d.getDay() + 7) % 7;
+      d.setDate(d.getDate()+diff); return d;
+    }
+    let rangeRe=/(?:from\s+)?(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)\s*(?:dat\s*)?(?:to|\-|\u2013|\u2014)\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
+    let m=t.match(rangeRe);
+    if(m){
+      let sNum=daysMap[m[1].toLowerCase()]; if(m[1].toLowerCase().indexOf('tues')===0) sNum=2; if(m[1].toLowerCase().indexOf('thur')===0) sNum=4;
+      let eNum=daysMap[m[2].toLowerCase()]; if(m[2].toLowerCase().indexOf('tues')===0) eNum=2; if(m[2].toLowerCase().indexOf('thur')===0) eNum=4;
+      let now=new Date(); let start=nextDate(now,sNum); let end=nextDate(start,eNum);
+      if(end<start) end.setDate(end.getDate()+7);
+      return {mode:'range',start:start,end:end,label:m[1]+' to '+m[2],daysCount:Math.round((end-start)/86400000)+1};
+    }
+    if(t.indexOf('any day')>=0||t.indexOf('whichever')>=0||t.indexOf('whatever')>=0){
+      let now=new Date(); let end=new Date(now); end.setDate(end.getDate()+6);
+      return {mode:'any',start:now,end:end,label:'Any day',daysCount:7};
+    }
+    if(t.indexOf('weekend')>=0){
+      let now=new Date(); let sat=nextDate(now,6); let sun=new Date(sat); sun.setDate(sun.getDate()+1);
+      return {mode:'range',start:sat,end:sun,label:'Weekend',daysCount:2};
+    }
+    let singleRe=/(?:for|on|in)?\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
+    let sm=t.match(singleRe);
+    if(sm){
+      let key=sm[1].toLowerCase(); if(sm[2]) key=sm[2].toLowerCase();
+      let num=daysMap[key]; if(key.indexOf('tues')===0) num=2; if(key.indexOf('thur')===0) num=4;
+      if(num!==undefined){ let d=nextDate(new Date(),num); let lbl=key.charAt(0).toUpperCase()+key.slice(1); if(key==='today') lbl='Today only'; if(key==='tomorrow') lbl='Tomorrow'; return {mode:'single',start:d,end:d,label:lbl,daysCount:1}; }
+    }
+    let now2=new Date(); return {mode:'today',start:now2,end:now2,label:'Today (default)',daysCount:1};
+  }catch(e){ let n=new Date(); return {mode:'today',start:n,end:n,label:'Today (default)',daysCount:1}; }
+}
+function updateDayPreview(){
+  try{
+    let txt=document.getElementById('wishBox').value;
+    let p=parseDayFront(txt);
+    let el=document.getElementById('dayPreview'); if(!el) return;
+    let s1=p.start.toLocaleDateString('en-NG',{weekday:'short',month:'short',day:'numeric'});
+    let e1=p.end.toLocaleDateString('en-NG',{weekday:'short',month:'short',day:'numeric'});
+    if(p.mode==='single'||p.mode==='today') el.textContent='📅 Day: '+p.label+' — '+s1;
+    else el.textContent='📅 Day: '+p.label+' — '+s1+' to '+e1+' ('+p.daysCount+' days)';
+  }catch(e){}
+}
+function addDay(phrase){
+  let box=document.getElementById('wishBox');
+  if(!box) return;
+  let cur=box.value.trim();
+  if(!cur) box.value='Give me 10 odds '+phrase;
+  else box.value=cur+' '+phrase;
+  updateDayPreview(); box.focus();
+}
+function updateDateTime(){
+  try{
+    let now=new Date();
+    let dayDate=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
+    let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
+    let dEl=document.getElementById('todayDate'); if(dEl) dEl.textContent=dayDate;
+    let tEl=document.getElementById('liveTime'); if(tEl) tEl.textContent='🕒 '+timeStr+' WAT';
+    let dayEl=document.getElementById('liveDay'); if(dayEl) dayEl.textContent=dayDate+' — '+timeStr+' WAT';
+  }catch(e){}
+}
+updateDateTime();
+setInterval(updateDateTime,1000);
+
+function toggleOpt(el,n){if(currentPlan==='FREE'){alert('FREE has no options. FREE slip is auto same for all. Pay to unlock options.');return}el.classList.toggle('on');if(selectedOptions.includes(n))selectedOptions=selectedOptions.filter(x=>x!==n);else selectedOptions.push(n)}
+function updateAuth(){let l=!!currentUser;document.getElementById('signOutBtn').classList.toggle('hidden',!l);if(l){}}
+try{let t=localStorage.getItem('oddsgpt_token'),u=localStorage.getItem('oddsgpt_user');if(t&&u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuth();loadToday()}}catch(e){}
+async function sbAuth(path,body){
+  // Try backend proxy first (bypasses ISP block of *.supabase.co), fallback to direct
+  try{
+    let r=await fetch('/api/index?endpoint=auth-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:path,body:body})});
+    let j=await r.json().catch(()=>({}));
+    if(r.ok && (j.access_token || j.user || j.id)) return j;
+    if(j && j.error) throw new Error(j.error);
+  }catch(e){
+    // if proxy fails, try direct
+    if(e.message && e.message.includes('Failed to fetch')){ /* try direct below */ }
+    else if(e.message && !e.message.includes('fetch')) throw e;
+  }
+  try{
+    let r2=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    let j2=await r2.json().catch(()=>({}));
+    if(!r2.ok) throw new Error(j2.msg||j2.message||'Auth failed - check network');
+    return j2;
+  }catch(e2){
+    throw new Error('Can not fetch - backend /api/index no reach ('+e2.message+'). Check say backend V118 don deploy.');
+  }
+}
+document.getElementById('doLogin').onclick=async()=>{let e=document.getElementById('email').value.trim(),p=document.getElementById('password').value;if(!e||!p)return alert('Enter email + password');try{let j=await sbAuth('token?grant_type=password',{email:e,password:p});currentUser=j.user||{email:e};localStorage.setItem('oddsgpt_token',j.access_token);localStorage.setItem('oddsgpt_user',JSON.stringify(currentUser));updateAuth();closeModal();loadToday();alert('Login success')}catch(err){document.getElementById('authMsg').textContent=err.message;alert(err.message)}};
+document.getElementById('doRegister').onclick=async()=>{let e=document.getElementById('regEmail').value.trim(),p=document.getElementById('regPass').value,c=document.getElementById('regConfirm').value;if(!document.getElementById('ageCheck').checked)return alert('Tick I am 18+ first');if(!document.getElementById('termsCheck').checked)return alert('Tick I agree to terms');if(p!==c)return alert('Passwords no match');if(p.length<6)return alert('Password Min 6 characters');try{await sbAuth('signup',{email:e,password:p});alert('Check your email to verify, then Login.');openModal('login')}catch(err){alert(err.message)}};
+async function forgotPass(){let e=document.getElementById('email').value.trim();if(!e)return alert('Enter email first');try{let r=await fetch('/api/index?endpoint=auth-proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:'recover',body:{email:e}})});if(!r.ok) throw new Error('Proxy failed');alert('Reset link sent to '+e);}catch(err){try{await fetch(SUPABASE_URL+'/auth/v1/recover',{method:'POST',headers:{apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:e})});alert('Reset link sent to '+e);}catch(e2){alert('Can not fetch - check network: '+e2.message)}}}
+document.getElementById('signOutBtn').onclick=()=>{localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');currentUser=null;currentPlan='FREE';updateAuth();location.href='/'};
+async function loadToday(){if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}try{let r=await fetch('/api/index?endpoint=football-today&sport='+selectedSport);let j=await r.json();let list=j.games||[];document.getElementById('fixtures').innerHTML=list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> • '+g.league+'<br><span class="odds">'+g.market+' • '+g.odds+'</span></div>').join('')}catch(e){document.getElementById('fixtures').innerHTML='Loading...'}}
+document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-sport]').forEach(x=>x.classList.remove('on'));b.classList.add('on');selectedSport=b.dataset.sport;loadToday()});
+async function payPlan(id,price){if(!currentUser){openModal('login');return alert('Login first to pay. Paystack needs login.')}if(price===0){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — same for all.')}if(!window.PaystackPop)return alert('Paystack no load — refresh');let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email,amount:price*100,currency:'NGN',callback:function(res){fetch('/api/index?endpoint=paystack-verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({reference:res.reference,plan:id,paymentId:res.reference})}).then(r=>r.json()).then(j=>{if(j.ok){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved.')}})},onClose:function(){}});h.openIframe()}
+document.getElementById('wishBox').addEventListener('input', updateDayPreview);
+document.getElementById('genSlip').onclick=async()=>{
+  try{
+    if(!currentUser){openModal('login');return alert('Login first')}
+    if(currentPlan==='FREE')return alert('FREE has no Generate. FREE slip is auto same for all.');
+    let wish=document.getElementById('wishBox').value;
+    let drFront=parseDayFront(wish);
+    let r=await fetch('/api/index?endpoint=generate-slip',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish:wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:drFront})});
+    let j=await r.json();
+    if(!j.ok) return alert(j.error||'Failed');
+    let dr=j.dateRange||drFront;
+    let drLabel=dr.label||dr.mode||'Today';
+    let drDates=dr.startStr ? (' ('+dr.startStr+' to '+dr.endStr+')') : '';
+    document.getElementById('slipOut').innerHTML='<div class="slip"><b>Your Slip — '+j.totalOdds+' odds — '+drLabel+drDates+'</b><br>'+j.legs.map(function(l){return '<div>'+(l.date?'<span class="badge">'+l.date+'</span> ':'')+l.home+' vs '+l.away+' — '+l.league+' — '+l.market+' — '+l.odds+'</div>'}).join('')+'<div class="codebox">SportyBet Code: '+(j.bookingCode||'HIDDEN')+'</div></div>';
+  }catch(e){ alert('Can not fetch - check network: '+e.message); }
 };
-
-function nextDateFor(base, targetNum){
-  let d=new Date(base); d.setHours(12,0,0,0);
-  if(targetNum===99) return d;
-  if(targetNum===100){ d.setDate(d.getDate()+1); return d; }
-  let cur=d.getDay();
-  let diff=(targetNum - cur + 7) % 7;
-  d.setDate(d.getDate()+diff);
-  return d;
-}
-
-export function parseDateRange(text, baseDate=new Date()){
-  let t=(text||'').toLowerCase();
-  let rangeRegex=/(?:from\s+)?(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)\s*(?:dat\s*)?(?:to|\-|–|—)\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
-  let m=t.match(rangeRegex);
-  if(m){
-    let sRaw=m[1].toLowerCase(); let eRaw=m[2].toLowerCase();
-    let sNum=DAY_MAP[sRaw]!==undefined?DAY_MAP[sRaw]:DAY_MAP[sRaw.slice(0,3)];
-    let eNum=DAY_MAP[eRaw]!==undefined?DAY_MAP[eRaw]:DAY_MAP[eRaw.slice(0,3)];
-    if(sRaw.startsWith('tues')) sNum=DAY_MAP['tuesday'];
-    if(eRaw.startsWith('tues')) eNum=DAY_MAP['tuesday'];
-    if(sRaw.startsWith('thur')) sNum=DAY_MAP['thursday'];
-    if(eRaw.startsWith('thur')) eNum=DAY_MAP['thursday'];
-    let start=nextDateFor(baseDate, sNum);
-    let end=nextDateFor(start, eNum);
-    if(end < start) { end.setDate(end.getDate()+7); }
-    // if end same as start but user meant range, ensure at least next occurrence
-    if(end.getTime()===start.getTime()){
-      // same day range = single
-      return {mode:'single', start, end:start, startStr:start.toISOString().slice(0,10), endStr:start.toISOString().slice(0,10), label: sRaw+' to '+eRaw, daysCount:1, raw:m[0]};
-    }
-    return {mode:'range', start, end, startStr:start.toISOString().slice(0,10), endStr:end.toISOString().slice(0,10), label: m[1]+' to '+m[2], daysCount: Math.round((end-start)/86400000)+1, raw:m[0]};
-  }
-  if(t.includes('any day')||t.includes('whichever')||t.includes('whatever day')){
-    let start=new Date(baseDate); start.setHours(12,0,0,0);
-    let end=new Date(start); end.setDate(end.getDate()+6);
-    return {mode:'any', start, end, startStr:start.toISOString().slice(0,10), endStr:end.toISOString().slice(0,10), label:'Any day (next 7 days)', daysCount:7};
-  }
-  if(t.includes('weekend')){
-    let sat=nextDateFor(baseDate,6); let sun=new Date(sat); sun.setDate(sun.getDate()+1);
-    return {mode:'range', start:sat, end:sun, startStr:sat.toISOString().slice(0,10), endStr:sun.toISOString().slice(0,10), label:'Weekend', daysCount:2};
-  }
-  if(t.includes('this week')){
-    let now=new Date(baseDate); now.setHours(12,0,0,0); let sun=nextDateFor(now,0); if(sun < now || sun.getTime()===now.getTime()) sun.setDate(sun.getDate()+7);
-    return {mode:'range', start:now, end:sun, startStr:now.toISOString().slice(0,10), endStr:sun.toISOString().slice(0,10), label:'This week', daysCount: Math.round((sun-now)/86400000)+1};
-  }
-  // single day detection
-  let singleRegex=/(?:for|on|in)?\s*(mon|monday|tue|tues|tuesday|wed|wednesday|thu|thur|thurs|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
-  let sm=t.match(singleRegex);
-  if(sm){
-    let key=sm[1]||sm[2]||''; // handle capture groups
-    // the regex has 2 groups, we need the day
-    let dayToken=(sm[2]||sm[1]||'').toLowerCase();
-    // if first group is for/on/in, second is day, else first is day
-    if(['for','on','in'].includes((sm[1]||'').toLowerCase())) dayToken=(sm[2]||'').toLowerCase();
-    else dayToken=(sm[1]||'').toLowerCase();
-    // normalize
-    let num=DAY_MAP[dayToken];
-    if(num===undefined){
-      let short=dayToken.slice(0,3);
-      if(dayToken.startsWith('tues')) num=DAY_MAP['tuesday'];
-      else if(dayToken.startsWith('thur')) num=DAY_MAP['thursday'];
-      else num=DAY_MAP[short];
-    }
-    if(num!==undefined){
-      let d=nextDateFor(baseDate,num);
-      let label=dayToken.charAt(0).toUpperCase()+dayToken.slice(1);
-      if(dayToken==='today') label='Today only';
-      if(dayToken==='tomorrow') label='Tomorrow';
-      return {mode:'single', start:d, end:d, startStr:d.toISOString().slice(0,10), endStr:d.toISOString().slice(0,10), label:label, daysCount:1};
-    }
-  }
-  // default today
-  let now=new Date(baseDate); now.setHours(12,0,0,0);
-  return {mode:'today', start:now, end:now, startStr:now.toISOString().slice(0,10), endStr:now.toISOString().slice(0,10), label:'Today (default)', daysCount:1};
-}
-
-export function parseRequest(text){
- let t=(text||"").toLowerCase();let target=null;let m=t.match(/(\d+(?:\.\d+)?)\s*(?:odds|odd)/)||t.match(/odds\s*(\d+(?:\.\d+)?)/);if(m)target=parseFloat(m[1]);
- let sports=[];if(t.includes("football")||t.includes("soccer"))sports.push("Football");if(t.includes("basketball")||t.includes("nba"))sports.push("Basketball");if(t.includes("mix"))sports=["Football","Basketball"];if(!sports.length)sports=["Football","Basketball"];
- let markets=[];if(t.includes("home win"))markets.push("HOME_WIN_ONLY");if(t.includes("gg")||t.includes("btts"))markets.push("GG");if(t.includes("over 2.5"))markets.push("OVER_2.5");if(t.includes("over 1.5"))markets.push("OVER_1.5");if(t.includes("correct score"))markets.push("CORRECT_SCORE");if(t.includes("double chance"))markets.push("DOUBLE_CHANCE");if(t.includes("handicap"))markets.push("HANDICAP");if(t.includes("clean sheet"))markets.push("CLEAN_SHEET");if(t.includes("quarter"))markets.push("BASKET_QUARTER");if(t.includes("total points")||t.includes("over 220"))markets.push("BASKET_TOTAL");if(t.includes("race to"))markets.push("BASKET_RACE");if(!markets.length)markets=["MIX_ALL"];
- let dateRange=parseDateRange(text);
- return {targetOdds:target||2,markets,sports,dateRange,raw:text};
-}
-
-function shuffle(pool,seed){let h=2166136261;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=Math.imul(h,16777619)}let a=[...pool];for(let i=a.length-1;i>0;i--){h=Math.imul(h^(h>>>13),0x5bd1e995);h^=h>>>15;let j=Math.abs(h)%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
-
-function assignDates(picks, dateRange){
-  if(!dateRange) return picks;
-  let {start, end, mode}=dateRange;
-  let startMs=start.getTime(); let endMs=end.getTime();
-  let days=Math.max(1, Math.round((endMs-startMs)/86400000)+1);
-  return picks.map((p,i)=>{
-    let offset=Math.floor((i * 997) % days); // pseudo random spread
-    let d=new Date(start); d.setDate(d.getDate()+offset);
-    return {...p, date:d.toISOString().slice(0,10), dateObj:d};
-  });
-}
-
-export function buildSlip({picks,targetOdds,plan,request,userId='',dateStr=''}){
- let rule=PLANS[plan]||PLANS.FREE;let eff=Math.min(targetOdds,rule.maxOdds);
- let dr=request.dateRange||parseDateRange(request.raw||'');
- // assign dates to picks based on range
- let datedPicks=assignDates(picks.filter(p=>!isBlocked(p.league)), dr);
- if(plan==='FREE'){
-   let pool=shuffle(datedPicks,'FREE|'+dateStr);
-   let legs=pool.slice(0,3);
-   let total=legs.reduce((a,l)=>a*(l.odds||1.65),1);
-   if(total>2)total=1.85;
-   return {legs,totalOdds:+total.toFixed(2),bookingCode:'FREE-'+dateStr+'-SAME',plan, dateRange:dr, daysCovered:'Games for '+dr.label};
- }
- let pool=shuffle(datedPicks,userId+'|'+dateStr+'|'+request.raw);
- let legs=[];let total=1;
- for(let p of pool){
-   if(legs.length>=Math.min(rule.maxLegs,20))break;
-   if(total>=eff&&legs.length>=2)break;
-   legs.push(p);total*=p.odds||1.65
- }
- return {legs,totalOdds:+total.toFixed(2),bookingCode:'ODDS-'+Math.random().toString(36).slice(2,8).toUpperCase(),plan, dateRange:dr, daysCovered:'Games from '+dr.startStr+' to '+dr.endStr+' ('+dr.daysCount+' day'+(dr.daysCount>1?'s':'')+') - '+dr.label};
-}
-
-export default async function handler(req,res){
- res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization');if(req.method==='OPTIONS')return res.status(200).end();
- let url=new URL(req.url,'http://x');let path=url.pathname;
- // V118 FIX: Vercel only has api/index.js, so frontend calls /api/index?endpoint=auth-proxy etc. Use endpoint param as route.
- let endpointParam=url.searchParams.get('endpoint')||'';
- if(endpointParam) path='/api/'+endpointParam;
- // Also support body.action for POST
- if(req.body && req.body.action && !endpointParam) path='/api/'+req.body.action;
- function needAuth(){return (req.headers.authorization||'').startsWith('Bearer ')};
- if(path.includes('paystack-verify')){if(!needAuth())return res.status(401).json({ok:false,error:'Login first to pay'});return res.json({ok:true,paymentId:req.body?.paymentId||req.body?.reference,plan:req.body?.plan})}
- if(path.includes('auth-proxy')){
-   // Proxy Supabase auth to bypass ISP block of *.supabase.co
-   try{
-     let b=req.body||{};
-     let authPath=b.path||'token?grant_type=password';
-     let url2='https://hsbqkvrvdjpexgsqgsh.supabase.co/auth/v1/'+authPath;
-     let SUP_KEY=process.env.SUPABASE_ANON_KEY||'sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK';
-     let r=await fetch(url2,{method:'POST',headers:{apikey:SUP_KEY, 'Content-Type':'application/json', 'Authorization': 'Bearer '+SUP_KEY}, body: JSON.stringify(b.body||{})});
-     let j=await r.json().catch(()=>({}));
-     return res.status(r.status).json(j);
-   }catch(e){ return res.status(500).json({error:'Proxy failed: '+e.message}); }
- }
- if(path.includes('generate-slip')){
-   if(!needAuth())return res.status(401).json({ok:false,error:'Login first'});
-   let b=req.body||{};let parsed=parseRequest(b.wish||'');
-   // allow frontend to send parsed dateRange too, but we re-parse to be safe
-   if(b.dateRange && b.dateRange.start) {
-     // use frontend dateRange if valid, but re-validate with our parser as fallback
-     try{
-       let s=new Date(b.dateRange.start); let e=new Date(b.dateRange.end);
-       if(!isNaN(s) && !isNaN(e)) parsed.dateRange={...parsed.dateRange, start:s, end:e, startStr:s.toISOString().slice(0,10), endStr:e.toISOString().slice(0,10), label:b.dateRange.label||parsed.dateRange.label};
-     }catch(_){}
-   }
-   let picks=b.picks||[{home:'Arsenal',away:'Chelsea',league:'England Premier League',sport:'Football',market:'1X2',outcome:'HOME',odds:1.85},{home:'Real Madrid',away:'Barcelona',league:'Spain La Liga',sport:'Football',market:'OVER_2.5',outcome:'OVER',odds:1.75},{home:'New York Knicks',away:'Miami Heat',league:'NBA',sport:'Basketball',market:'BASKET_TOTAL',outcome:'OVER',odds:1.90},{home:'Man City',away:'Liverpool',league:'England Premier League',sport:'Football',market:'GG',outcome:'YES',odds:1.80},{home:'Bayern',away:'Dortmund',league:'Germany Bundesliga',sport:'Football',market:'1X2',outcome:'HOME',odds:2.10}];
-   let slip=buildSlip({picks,targetOdds:parsed.targetOdds,plan:b.plan||'FREE',request:parsed,userId:'u',dateStr:new Date().toISOString().slice(0,10)});
-   return res.json({ok:true,...slip})
- }
- if(path.includes('ask-ai')){if(!needAuth())return res.status(401).json({ok:false,error:'Login first'});return res.json({ok:true,answer:'AI: Based on your wish "'+(req.body?.wish||'')+'" and day '+((req.body?.wish||'')?'parsed as '+(parseDateRange(req.body.wish).label):'Today')+' , I recommend mix. Generate slip to get booking code.'})}
- return res.json({ok:true,version:'V118 DAY CHOOSE - CUSTOMER HAS RIGHT TO CHOOSE DAY',footballOptions:FOOTBALL_OPTIONS.length,basketballOptions:BASKETBALL_OPTIONS.length,pool:POOL_SIZE});
-}
+document.getElementById('askAI').onclick=async()=>{if(!currentUser){openModal('login');return alert('Login first')}if(currentPlan==='FREE')return alert('Ask AI is paid only.');let wish=document.getElementById('wishBox').value;let r=await fetch('/api/index?endpoint=ask-ai',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:JSON.stringify({wish,options:selectedOptions,plan:currentPlan})});let j=await r.json();alert(j.answer||j.error||'AI replied')};
+let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.js';document.head.appendChild(s);
+</script></body></html>
