@@ -107,21 +107,21 @@ async function register(){
  let pw=document.getElementById('pw').value; let cpw=document.getElementById('cpw').value;
  if(!document.getElementById('age').checked||!document.getElementById('terms').checked){alert('Tick 18+ and Terms');return;}
  if(pw.length<4){alert('Password min 4');return;} if(pw!==cpw){alert('Passwords no match');return;}
- try{ let r=await fetch(BACKEND_URL+'/api/auth/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){alert('Backend: '+(j.error||'signup failed'));return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login'); }catch(e){alert('Backend no reach: '+e.message+' — check Vercel backend Ready + Env Vars');}
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){alert('Backend: '+(j.error||'signup failed'));return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login'); }catch(e){alert('Network issue, please try again: '+e.message+' — check Vercel backend Ready + Env Vars');}
 }
 async function doLogin(){
  let email=document.getElementById('loginEmail').value.trim(); let pw=document.getElementById('lpw').value;
- try{ let r=await fetch(BACKEND_URL+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){document.getElementById('loginMsg').textContent=j.error||'login failed'; return;} document.getElementById('loginMsg').textContent=''; localStorage.setItem('oddsgpt_user', email); localStorage.setItem('oddsgpt_token', j.access_token||'ok'); alert('Logged in — FREE unlocked'); closeModal(); applyLoginState(); }catch(e){document.getElementById('loginMsg').textContent='Backend no reach: '+e.message;}
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){document.getElementById('loginMsg').textContent=j.error||'login failed'; return;} document.getElementById('loginMsg').textContent=''; localStorage.setItem('oddsgpt_user', email); localStorage.setItem('oddsgpt_token', j.access_token||'ok'); alert('Logged in — FREE unlocked'); closeModal(); applyLoginState(); }catch(e){document.getElementById('loginMsg').textContent='Network issue, please try again: '+e.message;}
 }
 async function forgotPass(){
  let email=prompt('Type your email to reset password'); if(!email) return;
- try{ let r=await fetch(BACKEND_URL+'/api/auth/reset',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})}); let j=await r.json(); if(!r.ok){alert(j.error||'reset failed');return;} alert('Check Gmail for real reset link — e go go to oddsgpt.com.ng'); }catch(e){alert('Backend no reach: '+e.message);}
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/reset',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})}); let j=await r.json(); if(!r.ok){alert(j.error||'reset failed');return;} alert('Check Gmail for real reset link — e go go to oddsgpt.com.ng'); }catch(e){alert('Network issue, please try again: '+e.message);}
 }
 function codeForToday(){let d=new Date(); let s=''+d.getFullYear()+d.getMonth()+d.getDate(); let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))%100000; return 'ODD'+h.toString(36).toUpperCase();}
 function generateSlip(){
   let wish=document.getElementById('wish').value||'2 odds';
   let box=document.getElementById('slipResult'); box.style.display='block';
-  document.getElementById('slipGames').innerHTML='Loading TODAY real games from API-Football + NBA... ⏳';
+  document.getElementById('slipGames').innerHTML='Analysing today's fixtures... Please wait.';
   let user = localStorage.getItem('oddsgpt_user')||'';
   // Read sport + option from selected buttons (Football/NBA/Mix, Safe/BTTS etc) - default Mix + Safe
   let sport = window._selSport || 'Mix';
@@ -129,13 +129,21 @@ function generateSlip(){
   fetch(BACKEND_URL+'/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'FREE',wish,userId:user,sport,option})}).then(r=>r.json()).then(j=>{
     if(!j.ok){
       if(j.noGames){ document.getElementById('slipGames').innerHTML='⚠️ '+j.message+'<br><small>Date: '+j.date+'</small>'; document.getElementById('slipCode').textContent='—'; return; }
-      document.getElementById('slipGames').innerHTML='Backend error: '+(j.error||'try again'); return;
+      document.getElementById('slipGames').innerHTML='Please try again: '+(j.error||'try again'); return;
     }
-    let html = j.picks.map(p=> '<b>['+p.sport+']</b> '+p.home+' vs '+p.away+' — '+p.market+' — '+p.odds+' <small>('+p.league+' • AI '+p.confidence+'%)</small>').join('<br>');
-    html += '<br><b>Total '+j.plan+': '+j.totalOdds+' odds — '+j.sport+' • '+j.option+' — TODAY ONLY '+j.date+'</b><br><small>'+wish+' • '+j.count+' games today from API • Source: '+j.source+'</small>';
+    // Mature pro copy - no API name, no repeated AI %, no beta talk
+    let dateLabel = new Date(j.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    let html = '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Your Slip — Today, '+dateLabel+'</div>';
+    html += '<div style="font-size:12px;color:#9db4a0;margin-bottom:10px;">'+j.sport+' • '+j.option+' • Verified fixtures analysed: '+j.count+'</div>';
+    html += j.picks.map(p=> {
+      let confLabel = p.confidence>=85 ? 'High Confidence' : p.confidence>=72 ? 'Good Confidence' : 'Solid';
+      return p.home+' vs '+p.away+'<br><span style="font-size:12px;color:#cfe8d3;">'+p.market+' — '+p.odds+' • '+p.league+' • '+confLabel+'</span>';
+    }).join('<br><br>');
+    html += '<br><br><div style="font-size:16px;font-weight:800;">Total Odds: '+j.totalOdds+' — FREE • 1 Use Per Day</div>';
+    html += '<div style="font-size:12px;color:#9db4a0;">Same slip for all FREE members today. Paid slips are personalised.</div>';
     document.getElementById('slipGames').innerHTML=html;
     document.getElementById('slipCode').textContent=j.code;
-  }).catch(e=>{ document.getElementById('slipGames').innerHTML='Backend no reach: '+e.message; });
+  }).catch(e=>{ document.getElementById('slipGames').innerHTML='Network issue, please try again: '+e.message; });
   box.scrollIntoView();
 }
 
