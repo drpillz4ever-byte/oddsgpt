@@ -1,7 +1,7 @@
-<!-- OddsGPT V114 CHOOSE DAY OR MIX - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- OddsGPT V116 ALL RULES STAY FREE 12AM + CLOCK DATE - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
 <!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>OddsGPT V114 - Day Choose - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT V116 - Day Choose - Type What You Want, Get Real Booking Code</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
 .top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
@@ -38,17 +38,17 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <div class="hero"><h1>Type What You Want,<br><span>Get Real Booking Code</span></h1><p>Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code.</p>
 <div class="chips"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div></div>
 
-<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveTime" style="color:#bbf7d0;font-weight:800;font-size:13px;margin:6px 0"></div><div id="fixtures">Login to see today's games.</div></div>
+<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveClock" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 --:--:-- WAT</span><span id="liveDay" style="color:#bbf7d0;font-weight:700;font-size:13px"></span></div><div id="fixtures">Login to see today's games.</div></div>
 
 <h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
 <div class="plans">
 <div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
-<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ You choose day or mix — Today, Tomorrow, Mon-Fri, Any day</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
-<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS • 24hrs</small><ul class="benefits"><li>✅ 2 slips in 1 use</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ You choose day or mix — Today, Tomorrow, Mon-Fri, Any day</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
-<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Ask AI — 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ You choose day or mix — Today, Tomorrow, Tue to Fri, Any day</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
-<div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS</small><ul class="benefits"><li>✅ 9 slips in 3 days</li><li>✅ Ask AI — 2 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ You choose day or mix — Today, Tomorrow, Tue to Fri, Any day</li></ul><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
-<div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day</small><ul class="benefits"><li>✅ 35 slips in 7 days</li><li>✅ 5 slips per day</li><li>✅ Ask AI — 5 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ You choose day or mix — Today, Tomorrow, Mon-Fri, Any day</li></ul><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
-<div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ You choose day or mix — Today, Tomorrow, Tue to Fri, Any day</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
+<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
+<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS • 24hrs</small><ul class="benefits"><li>✅ 2 slips in 1 use</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
+<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Ask AI — 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
+<div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS</small><ul class="benefits"><li>✅ 9 slips in 3 days</li><li>✅ Ask AI — 2 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
+<div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day</small><ul class="benefits"><li>✅ 35 slips in 7 days</li><li>✅ 5 slips per day</li><li>✅ Ask AI — 5 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
+<div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
 </div>
 
 <div class="card"><h2 style="margin:0">Type What You Wantght to choose day! E.g. 30 odds for today alone, 30 odds from Tuesday to Friday, 5 odds for tomorrow. If you no choose day, I go give you today game.</p>
@@ -98,25 +98,39 @@ function openModal(which){clearPassFields();document.getElementById('loginModal'
 function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open')}
 function setWish(t){document.getElementById('wishBox').value=t;document.getElementById('wishBox').scrollIntoView({behavior:'smooth'})}
 
+
 function updateDateTime(){
   let now=new Date();
-  // WAT is UTC+1
-  let watOffset=60; // minutes
-  let wat=new Date(now.getTime() + (watOffset*60000) + (now.getTimezoneOffset()*60000));
-  // Actually just use local Nigeria time via toLocaleString with timeZone
   try{
-    let dateStr=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
+    // Use Africa/Lagos timezone
+    let dayDate=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
+    let monthOnly=now.toLocaleDateString('en-NG',{month:'long',year:'numeric',timeZone:'Africa/Lagos'});
+    let dayOnly=now.toLocaleDateString('en-NG',{weekday:'long',timeZone:'Africa/Lagos'});
     let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
-    document.getElementById('todayDate').textContent=dateStr;
-    let live=document.getElementById('liveTime');
-    if(live) live.textContent='🕒 '+timeStr+' WAT — '+dateStr;
+    let dEl=document.getElementById('todayDate');
+    if(dEl) dEl.textContent=dayDate;
+    let tEl=document.getElementById('liveTime');
+    if(tEl) tEl.textContent='🕒 '+timeStr+' WAT';
+    let dayEl=document.getElementById('liveDay');
+    if(dayEl) dayEl.textContent=dayDate+' — '+timeStr+' WAT';
   }catch(e){
-    document.getElementById('todayDate').textContent=now.toLocaleDateString();
+    let fallback=now.toString();
+    let dEl=document.getElementById('todayDate');
+    if(dEl) dEl.textContent=fallback;
   }
 }
 updateDateTime();
 setInterval(updateDateTime,1000);
-
+// FREE games auto change every 12 AM WAT - check every minute if date changed, reload fixtures
+let lastDateStr=new Date().toISOString().slice(0,10);
+setInterval(()=>{
+  let cur=new Date().toISOString().slice(0,10);
+  if(cur!==lastDateStr){
+    lastDateStr=cur;
+    if(window.currentUser){ try{ loadToday(); }catch(e){} }
+    updateDateTime();
+  }
+},60000);
 const OPTIONS={
 "FOOTBALL - 1X2 / DOUBLE CHANCE":["1X2","1X2 - 1UP","1X2 - 2UP","1X2 - Never Down","Double Chance","Double Chance - 1UP","Draw No Bet","1st Half - 1X2","2nd Half - 1X2","1st Half - Double Chance","2nd Half - Double Chance","1st Half - Draw No Bet","2nd Half - Draw No Bet"],
 "FOOTBALL - OVER/UNDER":["Over/Under 0.5","Over/Under 1.5","Over/Under 2.5","Over/Under 3.5","Over/Under 4.5","Over/Under 5.5","Asian Over/Under 1","Asian Over/Under 2","Asian Over/Under 3","Asian Over/Under 4","Asian Over/Under 5","Over/Under - Early Goals 1.5","Over/Under - Early Goals 2.5","Over/Under - Early Goals 3.5","1st Half Over/Under","2nd Half Over/Under","Both Halves Over 1.5","Both Halves Under 1.5"],
