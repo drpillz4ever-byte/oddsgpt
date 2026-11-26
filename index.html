@@ -65,6 +65,7 @@ body{background:#000;color:#fff;font-family:Arial;margin:0;padding:0;overflow-x:
 
 <script>
 // === PASTE YOUR SUPABASE KEYS HERE - from Supabase Settings > API ===
+const BACKEND_URL = "https://oddsgpt-backend.vercel.app"; // change if your backend URL different
 const SUPABASE_URL = "https://hsbqkvrvdjpexgsqgsh.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_f7FMboSQ_y-7JxvmuIqwVQ_Y9sBBLLp";
 let supabaseClient = null;
@@ -80,23 +81,15 @@ async function register(){
  let pw=document.getElementById('pw').value; let cpw=document.getElementById('cpw').value;
  if(!document.getElementById('age').checked||!document.getElementById('terms').checked){alert('Tick 18+ and Terms');return;}
  if(pw.length<4){alert('Password min 4');return;} if(pw!==cpw){alert('Passwords no match');return;}
- if(!supabaseClient){alert('Supabase keys never set — paste your Project URL + Anon Key for top of file, then try again');return;}
- let {data,error}=await supabaseClient.auth.signUp({email,password:pw});
- if(error){alert('Supabase error: '+error.message+' | Status: '+error.status);return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login');
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){alert('Backend: '+(j.error||'signup failed'));return;} alert('Registered — check Gmail to confirm, then Login'); closeModal(); openModal('login'); }catch(e){alert('Backend no reach: '+e.message+' — check Vercel backend Ready + Env Vars');}
 }
 async function doLogin(){
  let email=document.getElementById('loginEmail').value.trim(); let pw=document.getElementById('lpw').value;
- if(!supabaseClient){document.getElementById('loginMsg').textContent='Supabase keys never set — paste Project URL + Anon Key'; return;}
- let {data,error}=await supabaseClient.auth.signInWithPassword({email,password:pw});
- if(error){document.getElementById('loginMsg').textContent=error.message; return;}
- document.getElementById('loginMsg').textContent=''; alert('Logged in — FREE unlocked, same FREE for all'); closeModal(); location.reload();
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})}); let j=await r.json(); if(!r.ok){document.getElementById('loginMsg').textContent=j.error||'login failed'; return;} document.getElementById('loginMsg').textContent=''; alert('Logged in — FREE unlocked'); closeModal(); location.reload(); }catch(e){document.getElementById('loginMsg').textContent='Backend no reach: '+e.message;}
 }
 async function forgotPass(){
- let email=prompt('Type your email to reset password');
- if(!email) return;
- if(!supabaseClient){alert('Supabase keys never set — go Supabase > Settings > API, copy Project URL + Anon Key, paste for top of index.html, Commit, then try Forgot again'); return;}
- let {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:'https://oddsgpt.com.ng'});
- if(error) alert(error.message); else alert('Check Gmail (Inbox + Spam) for real reset link — e go go to oddsgpt.com.ng, no more localhost');
+ let email=prompt('Type your email to reset password'); if(!email) return;
+ try{ let r=await fetch(BACKEND_URL+'/api/auth/reset',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})}); let j=await r.json(); if(!r.ok){alert(j.error||'reset failed');return;} alert('Check Gmail for real reset link — e go go to oddsgpt.com.ng'); }catch(e){alert('Backend no reach: '+e.message);}
 }
 function codeForToday(){let d=new Date(); let s=''+d.getFullYear()+d.getMonth()+d.getDate(); let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))%100000; return 'ODD'+h.toString(36).toUpperCase();}
 function generateSlip(){
