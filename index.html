@@ -30,6 +30,14 @@ textarea{min-height:90px} .codebox{background:#0b1226;border:1px dashed #334155;
 .check{display:flex;gap:8px;align-items:flex-start;margin:8px 0;font-size:13px}.check input{width:auto;margin-top:3px}
 footer{border-top:1px solid #1e293b;margin-top:20px;padding:16px;text-align:center;font-size:12px;opacity:.8}
 </style>
+
+<style id="v135-hide">
+/* V135 - NO GAMES LIST - Customer see only FREE Slip + Paid Slip */
+#fixtures, [id="fixtures" style="display:none !important"]{display:none !important;}
+/* Hide any Today's Games heading */
+h2, h3{ } 
+</style>
+
 </head>
 <body>
 <header><div class="logo">OddsGPT<span>.</span></div><div style="display:flex;gap:8px" id="authHeader"><button class="btn outline" onclick="openModal('login')">LOGIN</button><button class="btn mint" onclick="openModal('create')">Create Account</button></div></header>
@@ -38,9 +46,9 @@ footer{border-top:1px solid #1e293b;margin-top:20px;padding:16px;text-align:cent
 <p class="muted">Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code. If you no choose day, I go give today. All games findable on SportyBet / 1xBet.</p>
 <div class="chips"><button class="chip on" data-sport="ALL" onclick="switchSport(this)">ALL</button><button class="chip" data-sport="Football" onclick="switchSport(this)">Football</button><button class="chip" data-sport="Basketball" onclick="switchSport(this)">Basketball</button><button class="chip" data-sport="NBA" onclick="switchSport(this)">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div>
 
-<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate">Loading...</span></h2>
+<div class="card">
 <div id="liveClock" style="margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading WAT...</span></div>
-<div id="fixtures">Login to see today's games.</div></div>
+<div id="fixtures" style="display:none !important">Login to see today's games.</div></div>
 
 <div class="card"><h2 style="margin:0">Type What You Want</h2>
 <div class="chips" style="margin:8px 0"><button class="chip" onclick="addDay('for today alone')">📅 Today</button><button class="chip" onclick="addDay('for tomorrow')">📅 Tomorrow</button><button class="chip" onclick="addDay('from Monday to Friday')">Mon to Fri</button><button class="chip" onclick="addDay('from Tuesday to Friday')">Tue to Fri</button><button class="chip" onclick="addDay('for weekend')">Weekend</button><button class="chip" onclick="addDay('for any day')">Any Day</button></div>
@@ -207,42 +215,30 @@ function updateAuth(){
   let hdr=document.getElementById('authHeader');if(!hdr)return;
   let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');currentUser=user;}catch(e){}
   if(auth){hdr.innerHTML='<button class="btn outline" onclick="doLogout()">LOGOUT</button><span class="muted" style="margin-left:8px">'+(user?user.email:'')+'</span>';}else{hdr.innerHTML='<button class="btn outline" onclick="openModal(\'login\')">LOGIN</button><button class="btn mint" onclick="openModal(\'create\')">Create Account</button>';}
-  let f=document.getElementById('fixtures');if(f)f.innerHTML=auth?'Loading today games...':'🔒 Login to see today\'s games.';
+  /* V135 - no fixtures */
   // Show FREE slip if logged
   if(auth){ loadToday(); }
 }
 
 // TODAY GAMES - Real + Local fallback
+
+// V135 - NO GAMES LIST - Only FREE Slip (real) + Paid Slip after pay
 async function loadToday(){
   let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');currentUser=user;}catch(e){}
-  if(!user){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}
-  let ds=new Date().toISOString().slice(0,10);
-  try{
-    let r=await fetch(BACKEND_BASES[0]+'?endpoint=football-today&sport='+selectedSport).then(r=>r.text()).then(t=>{try{return JSON.parse(t)}catch(e){return {games:[]}}}).catch(()=>({games:[]}));
-    // Try backend via GET
-    let res=await callBackendGET('football-today&sport='+selectedSport);
-    let list=(res.ok&&res.data)?(res.data.games||res.data.fixtures||[]):[];
-    let src=document.getElementById('liveSource');if(src)src.textContent='Real today games • Backend';
-    if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); showFree(); return; }
-    throw new Error('empty');
-  }catch(e){
-    let list=localGames(30, ds, selectedSport, 0);
-    document.getElementById('fixtures').innerHTML=renderGames(list);
-    showFree();
+  let so=document.getElementById('slipOut');
+  if(!user){ if(so) so.innerHTML='<div style="padding:12px;background:#0a1a12;border:1px solid #22e06a;border-radius:10px">🔒 Login to see FREE Slip Today — Same For All.</div>'; return; }
+  // FREE slip must come from backend - REAL games only, no fake local
+  if(so) so.innerHTML='Loading FREE Slip Today — Real games...';
+  let res=await callBackend('generate',{wish:'FREE slip today alone', day:'today', email:user.email, plan:'FREE'});
+  if(res.ok && res.data && res.data.ok && res.data.games && res.data.games.length){
+    let games=res.data.games;
+    so.innerHTML='<h3 style="margin:8px 0 0;color:#22e06a">🔥 FREE Slip Today — Same For All</h3><div class="slip">'+games.map(g=>'<div>'+(g.home||'')+' vs '+(g.away||'')+' — '+(g.pick||g.market||'')+' @ '+(g.odd||'')+'</div>').join('')+'<div>Day: Today — Booking Code: '+(res.data.bookingCode||'—')+'</div></div>';
+    return;
   }
+  // If backend never respond, show REAL message, NOT fake teams
+  if(so) so.innerHTML='<div style="padding:12px;background:#0a1a12;border:1px solid #22e06a;border-radius:10px">🔥 FREE Slip Today — Same For All<br>Backend never respond yet. FREE slip go show real games once backend live. No fake games go show. Please refresh in 1 min.</div>';
 }
-
-function showFree(){
-  try{
-    let freeSlip=localFreeSlip();
-    let so=document.getElementById('slipOut');
-    if(so && freeSlip){ so.innerHTML='<h3 style="margin:8px 0 0;color:#22e06a">🔥 FREE Slip Today — Same For All</h3>'+renderSlip(freeSlip,'Today'); }
-  }catch(e){}
-}
-
-function localGames(n,date,sport,shift){let teams=[['Man City','Arsenal'],['Liverpool','Chelsea'],['Barcelona','Real Madrid'],['Bayern','Dortmund'],['PSG','Marseille'],['Inter','AC Milan'],['Ajax','PSV'],['Benfica','Porto'],['Galatasaray','Fenerbahce'],['Al Ahly','Zamalek']];let out=[];for(let i=0;i<n;i++){let t=teams[i%teams.length];out.push({home:t[0],away:t[1],time:'18:00',league:'Pro League',odd:'1.85',market:'Home Win'});}return out;}
-function localFreeSlip(){return [{home:'Man City',away:'Arsenal',pick:'Home Win',odd:'1.85'},{home:'Barcelona',away:'Real Madrid',pick:'Over 1.5',odd:'1.40'}];}
-function renderGames(list){return list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> — '+g.league+' — '+g.time+' — '+g.market+' @ '+g.odd+'</div>').join('')}
+function showFree(){ loadToday(); }
 function renderSlip(slip,day){return '<div class="slip">'+slip.map(g=>'<div>'+g.home+' vs '+g.away+' — '+g.pick+' @ '+g.odd+'</div>').join('')+'<div>Day: '+day+'</div></div>'}
 
 // PAY - FIXED - NO LOOP, SINGLE ALERT, PAYSTACK POPUP
