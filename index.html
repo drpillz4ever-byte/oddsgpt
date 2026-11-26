@@ -1,7 +1,7 @@
-<!-- OddsGPT V112 DAY CHOOSE - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
+<!-- OddsGPT V113 DAY CHOOSE NO RULE TEXT + DATE TIME - THIS INTERFACE - FROM YOUR VIDEO - DO NOT USE V107/V108 FLAT VERSION -->
 <!-- Dark navy + mint green, Login / Create Account popups, Plans cards as in video. Same interface, only options added inside. -->
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>OddsGPT V112 - Day Choose - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT V113 - Day Choose - Type What You Want, Get Real Booking Code</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#070b14;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:60px}
 .top{position:sticky;top:0;z-index:20;background:#070b14;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
@@ -38,7 +38,7 @@ label{font-size:13px;font-weight:700;margin:12px 0 6px;display:block}.muted{opac
 <div class="hero"><h1>Type What You Want,<br><span>Get Real Booking Code</span></h1><p>Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code.</p>
 <div class="chips"><button class="chip on" data-sport="ALL">ALL</button><button class="chip" data-sport="Football">Football</button><button class="chip" data-sport="Basketball">Basketball</button><button class="chip" data-sport="NBA">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div></div>
 
-<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><p class="muted">Games reload at 12:00 AM WAT. Only findable games on SportyBet / 1xBet.</p><div id="fixtures">Login to see today's games.</div></div>
+<div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate"></span></h2><div id="liveTime" style="color:#bbf7d0;font-weight:800;font-size:13px;margin:6px 0"></div><div id="fixtures">Login to see today's games.</div></div>
 
 <h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">BANGER max 1 per day. FREE auto same for all, cannot be changed. All paid slips come with hidden SportyBet code.</p>
 <div class="plans">
@@ -98,7 +98,26 @@ function clearPassFields(){['password','regPass','regConfirm'].forEach(function(
 function openModal(which){clearPassFields();document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else document.getElementById('createModal').classList.add('open');setTimeout(clearPassFields,80);setTimeout(clearPassFields,400)}
 function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open')}
 function setWish(t){document.getElementById('wishBox').value=t;document.getElementById('wishBox').scrollIntoView({behavior:'smooth'})}
-document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function updateDateTime(){
+  let now=new Date();
+  // WAT is UTC+1
+  let watOffset=60; // minutes
+  let wat=new Date(now.getTime() + (watOffset*60000) + (now.getTimezoneOffset()*60000));
+  // Actually just use local Nigeria time via toLocaleString with timeZone
+  try{
+    let dateStr=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
+    let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
+    document.getElementById('todayDate').textContent=dateStr;
+    let live=document.getElementById('liveTime');
+    if(live) live.textContent='🕒 '+timeStr+' WAT — '+dateStr;
+  }catch(e){
+    document.getElementById('todayDate').textContent=now.toLocaleDateString();
+  }
+}
+updateDateTime();
+setInterval(updateDateTime,1000);
+
 const OPTIONS={
 "FOOTBALL - 1X2 / DOUBLE CHANCE":["1X2","1X2 - 1UP","1X2 - 2UP","1X2 - Never Down","Double Chance","Double Chance - 1UP","Draw No Bet","1st Half - 1X2","2nd Half - 1X2","1st Half - Double Chance","2nd Half - Double Chance","1st Half - Draw No Bet","2nd Half - Draw No Bet"],
 "FOOTBALL - OVER/UNDER":["Over/Under 0.5","Over/Under 1.5","Over/Under 2.5","Over/Under 3.5","Over/Under 4.5","Over/Under 5.5","Asian Over/Under 1","Asian Over/Under 2","Asian Over/Under 3","Asian Over/Under 4","Asian Over/Under 5","Over/Under - Early Goals 1.5","Over/Under - Early Goals 2.5","Over/Under - Early Goals 3.5","1st Half Over/Under","2nd Half Over/Under","Both Halves Over 1.5","Both Halves Under 1.5"],
