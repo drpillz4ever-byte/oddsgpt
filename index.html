@@ -80,8 +80,16 @@ function applyLoginState(){
   if(user){
     if(loginBtn){ loginBtn.textContent='Sign Out'; loginBtn.onclick=function(){ localStorage.removeItem('oddsgpt_user'); localStorage.removeItem('oddsgpt_token'); location.reload(); }; }
     if(createBtn) createBtn.style.display='none';
-    // Unlock FREE: change FREE button text
-    document.querySelectorAll('.card').forEach(function(c){ if(c.innerHTML.includes('FREE')){ let b=c.querySelector('.pay'); if(b) b.textContent='FREE Unlocked — Generate Slip'; }});
+    // Unlock FREE: change badge + button + auto-generate
+    document.querySelectorAll('.card').forEach(function(c){
+      if(c.innerHTML.includes('FREE') && c.innerHTML.includes('₦0')){
+        let badge=c.querySelector('.badge'); if(badge){ badge.textContent='UNLOCKED ✓'; badge.style.color='#22e06a'; }
+        let desc=c.querySelector('.desc'); if(desc && desc.innerHTML.includes('Login to see games')){ desc.innerHTML = desc.innerHTML.replace('Login to see games','Your FREE games for today — same for all'); }
+        let b=c.querySelector('.pay'); if(b){ b.textContent='FREE Unlocked — Your Games Below ↓'; b.onclick=function(){ document.getElementById('slipResult').scrollIntoView({behavior:'smooth'}); }; }
+      }
+    });
+    // Auto-generate FREE slip after login, only once per load
+    setTimeout(function(){ if(!window._freeAuto){ window._freeAuto=true; generateSlip(); } }, 800);
   }
 }
 window.addEventListener('load', function(){ applyLoginState(); });
@@ -109,7 +117,7 @@ function generateSlip(){
  // FREE SAME FOR ALL: seed = date only. PAID: seed = user + date (handled by backend). Here demo shows same FREE for all.
  let wish=document.getElementById('wish').value||'2 odds';
  document.getElementById('slipResult').style.display='block';
- document.getElementById('slipGames').innerHTML='Man City vs Arsenal — 2nd Half Over 0.5 — 1.20<br>Barcelona vs Sevilla — 2nd Half Over 0.5 — 1.20<br>Total: '+wish+' — 2.07 odds';
+ document.getElementById('slipGames').innerHTML='Man City vs Arsenal — 2nd Half Over 0.5 — 1.20<br>Barcelona vs Sevilla — 2nd Half Over 0.5 — 1.20<br>Real Madrid vs Valencia — Over 1.5 — 1.30<br><b>Total FREE: 1.87 odds — 1 USE PER DAY — SAME FOR ALL</b><br><small>'+wish+'</small>';
  document.getElementById('slipCode').textContent=codeForToday();
  document.getElementById('slipResult').scrollIntoView();
 }
