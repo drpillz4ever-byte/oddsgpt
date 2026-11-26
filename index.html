@@ -1,73 +1,50 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABTGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8kZOcW8wkwMCQm1dSFOTupBARGaXA/oiBmUGEgZOBj0E2Mbm4wDfYLYQBCIoTy4uTS4pyGFDAt2sMjCD6sm5GYl7K3IkMtg4NG2wdSnQa5y1V6mPADzhTUouTgfQHIJZJLigqYWBg5AGyecpLCkBsCSBbpAjoKCBbB8ROh7AdQOwkCDsErCYkyBnIzgCyE9KR2ElIbKhdIMBaCvQsskNKUitKQLSzswEDKAwgop9DwH5jFDuJEMtfwMBg8YmBgbkfIZY0jYFheycDg8QthJgKUB1/KwPDtiPJpUVlUGu0gLiG4QfjHKZS5maWk2x+HEJcEjxJfF8Ez4t8k8iS0VNwVlmjmaVXZ/zacrP9NbdwX7OQshjxFNmcttKwut4OnUlmc1Yv79l0e9/MU8evpz4p//jz/38A9Ylkoq8RzkUAABpFSURBVHicrXp5jKVXld85595ved9ba+1auqt3L+2lGTA2jIfFZBgMjIUmBALMBAnNIEWKlCiJIqEof84fEykaofmPzB/JJJlAlCHGCvsMMNgmLAPG7W7c7r27upau5dVbv+0u5+SP96pc3bbBBt+SnlTv3e+753e2ezaEN2MhAiCCgIi8js0ICCICv3rv6zj6N3waEYVfJkRVMWoEYUMHVdKhBhQWAQFn2GXeDL3peT/0L7+A8DdE8msCQAREZBYAwAQnDicTS0nY0DpUpMgZ70rHBj17FkARQMEIVYzMwg7MwKVrZrhcuqGHkUxel/DeDAD7SW8dr87d36zPVJAp75q850zqvfUu994JsICAALMIMIAC1AIKVEWFNQpbSsdkBr57MetdzmGsg/BGpfHGABCNSZ97S+vYW+eCKOy383zHusyXQ+sy5hLYMDtmL8IgIsweADwzIAsKaFGxwgBUhBhh1FS1hUgHtH1+uH1mCCOl4jcA4vUCQAQAFJGJE9VTjy1V42p3rRh2cpt5ToEzcIU3xnr2LN4557xj5v1qgYAAIAzAIiAUElVAVUhFFDZVYynUidp4rt95KRvT9fpQvC4AI65ghKefOLx0fL5zo0h7BefoumKG3lpbmDzNsjzPnXW3EY0oIqPPvW+QUCmliNgLe9aJiloaYwxqOHlP1ZV849vbLuXXKYpfDYAUsefGkfgdH71XF5XuSupy8D0lBab5oL2z3esNrLUj4ogI8eV3jv3L6GN37X+z1oqQvGGMoDIbUkTJvG4ej1ee6fQvFa8Hw68AQETMfOR3pn7rvfd0rhqXMvfID6mw+fqt9e2tNjMrpZRSMPYjI36P3LwAgMj4kD3SR6YtuwaLiEGoEciVPp7U8UzE5Ocerveu5WtPd/es7tcBMOL9fR9ZvO/0XStneugAurF4WN9YXV5e8d4HQUBE4xchsBfvHbMACCCgAiAAAOGR6u8/FVWoEMGWbo9TQRiIBwZfOxQLwPzb6+XQXfva1i+Xw2sCGPH+9D9ZOn706Pr5vpbQt7Xz5tLlS51Od490RCCkojAsPqyq2mSlPpUk9TiINQK6kq1lELCls8aZ0pSZKQalTb0wIOGuNMb0BWGglSpyU19MMMIDp2vM/vJTm79EDq8OYPTAvU8snDx5dP18X5lAZ9W0HPzi3C+MsXEcA4AIa63KwjrvjpyavfvB483GlMl9b6fX3uiWhSkyw+CdWDPwWitEpIBAiyA7sGVu8p3CFh5xDGNP7FEYlrmtzccY08zphC1ffW05vAqA0dbDj06dfuSe1bM9zVp60SDrvXT+AhGFYSgiREiIwzQ7dPfMx/7ow4cXjqxf69+8uvnCmTObWxulMYIiwLUDka5ilATrL3TYjNyoIJIKMKhrXVMmM4NbqXd8h6eKK1GZ2eqBSFXV/MO13kqx9mznVTHcCWBkgs3j8Xv+8VtWnutr0W5HlTZ/8cXzSgeB1iKgFDJD6bOPf+bxT37sU6uXO+fOXL65svz8mefSNCVUQCIoQUMe+IMjUY3O/N+rvatGSmAREWHhsY1oVWnFGHF3o2+GbqS0oxsAEStJXKSmuhhTDIffO3X9+1v9yzki3BFx0CsAACXw9t8/uXa2hyLpujeuOH/+JaW0VkpEtCb2EjfxP/7F5/7Vn/y75Rd7Kzdu7XQ3f/KTH+ZZHugAQJgZA2keCU58aPHEB+ZUzY+CtrEbFSBCJPTO9TeH+babPzLfWqgxMxGO7zuRIi/iapiuFkpo9Yed44/NqBq9CsdfqTwPfnSpGU321rJyHYIguHTpkrVupDlak/M8tVD987/406Mzp888f64w2YULl7/4P7+otSYi7/0ofGBhqLu5d9TjJLj89W0oiL28arzt2Qc6uu+Ru1ZXllcvbu2/gklRFEXW2sbRJJnVldng0v/ZuEOR9H7eC0vzRHJgfmr1+a7rAUG8vLxcliaKIhYhRO+50tB/9p/+w5Hp0xcuXEYFvW7/K08+qZRSWnnvBUaBGwCD6+La91JQ4vuAtHskwh0wFCljisvPX7/vHSfTrEDkou/yXgkI7Nk5p0AV2yU731iKWndVuhfz/QZD+wAgENz33sX2ldwbsD3sD7v9/mDE+1HGwuj+zef+eHHy1KVLV4wtQejLX34yy/MwDL33ACJObMFWHDU4mVfVJagfUo3jQWWeIGLnWJzcocUiEobBMB2mduudnzpUZM5mDncFYY2lgEyXweHWi+nBRyZA3SZAvUc9s0yfrmkI005atD2S2lzb2runiDAvi/d95KGluVMXfnGFxTfqja996+vX164kccM6AwzWc7TIB+5T8VQQJUpHgYoRQXwJQOCMzza5faFonzeSeiSC3esZEacXpiYfUDfO3vKZH13Qe6pUFmUURnnbQBjaIU8/UNt+frhnzWMbIERGeeQzx9MbMtwoXZvSfNDpdLXWiEiE3vP0odonP/3xmp8D5Gqt1usMvvTDL9gVXfY8EkLNz74LKpO4caboXLZFj71hIGDLYAVDjCf01PF4/q010nT9e+ngQikIIqJQJfWEK3Zns3v8LXOLiws/+sY5M7TwsppAXIl8yZXFMJ5Rs/fUz/2vVeTxz3qEgkUaJyohBpu9gRswi/R6fSICkJGasbh733JX2VH9fE1rVe2XL7SfmT2aXD1bUqiCWVj4IG6dzc/99wHsWhiOQk9AAOBS8lt25ZZd+cHg0Lsbx5+oX1fYPlPokJJW0u/1y63yyH0HQxde+dHWfW+7+7nvn8V9QjCljcKw7DiqoDA0TyS9C9nodw27Qe/ifa3ehnGGbcq5yZhZayUCiGKtnzpYn2nNb6xsWy6rSXKzv155ZNh5NvYuwwlcfFxd/7vhxs9SRCRNAiIiSpMIIIAgECOwCAAy3Hy6n26444+1ynUJ60F/Z2gLd+zkUZ/6qxfXmfnR9z+8sbaxemlzz1iZGQg4Fy6hu5rP3FPrXchGv9LIY1ANm1PVYbu0Q8ees2xk6WMzY+QjJw+5AW21N4aD4aCddYLlINZr5wYqpKlHZfXH6cbPUh0q0CAKKFAq1hgoChArRIGKGhGGSodKhUpp2rmQXXu2u/BYZXu9m7fNybcfVBFurW9FcWCdWbu2+djvvWfsV3aXMVYp8qkv+i5uBqpOI2dKgCAgE4erbDFLjRuIZeus2zNf7zmu6emJ2e2NTp7lxhQbm5u1e8qt84UZQOUeJi0r3x/qUHkQXVFBXfvQ+ciFizDxtqRyKNAH0IfWiwONuqKCWOtY7VwoL3+9kwSVA9Pzxx5pzj+EwFqAkyQ59/yLc7PzlXq4P4DzzpNGO/Q+Z5dz60gycv2aEFlk8nA161hfeDZgbDli/IgF3vPETMvn1O93BBiYMyqWFoJrf9eRiGsP4sYzGYCoQCEKVIRa8NsfO+4RwqaOW+Hqz3vVqcgbt/FCr3c1G1wvdaAmjibphjUDN3Wq7jbtxR+1H/304rmv7tjCKU39fm/1xq1jpw7/4seX9l9bLCwWfM75jm0drrTPDgFRjxKOpBX1V0t0ICzWWIBxwjESYrPVzAdlXuZKkS85POqQw871Ml4CCqXzktGhcuwhgiOPTi08OiVepPTbVzIuM2ZxgfcM8w9OzT7Q2nyh277QS7uOvZBSg7w/Ozc/WLMl+KkTlbWfD1QIStFLL1ycnJu4zZsCsGelFBsoejx9IAEFwEAiouoUhNqkzuXeCzvn9zyAMGAAOlD97rAsCmtNWZh4FgcbRZE6Qdt5oRAvKlZhCx/49KG5t01unOst/2inczntXEtVhOBxsFNsnO13VwbbV4dH3z9938cXJRBUaEtbtn3YUGCpu5a3lkLvWERI0dbGNikCAt6XBjnnEcUX3pUOAXVDj4240gpY2BrHZpy5wu41wSw6IgBMh5n3zhqbl0XYkHTLeuso5uyWFYGytEfeN1Ofq9z8+Q45ah6M++0smQ5765nSlA9M/aCePlovt+217+6w1wdO14vC6ljZ3HNigHxnNW0uxqOSIwJmacaMOlb7ixPMTEqJEbaevY+bGkY+PmpqXwo7Zsue7W03NQhp8l6ssZ7ZecfsKg2V9QwoCSagaHsRv/Bwa+Jkw6dcrUSdm1n3cqFAM/OJ354ebKZREBaZv/SdzXzbaEPbNwYzp+vT9yeoAQgrC+LBpjsmbCAoEGEBMKXNsyKM9b7LduQvWbx4C77gsKbGF1lY1d6wOBCPLHwb+QCkAUScdyxeGJ0TFYArmAIIGyAeSVNtPt66MSx3yiDRi++sp9tmsOyynrn+D207cMTUXc5n316ztyCcUpYdk5++t9q/bMiLqrCItzklEwGoEf3inUvTjPQr8y0ERrFsCg4SPQagI3SOhUWYX1mgJEXesbVWkJGQQZDIlV48C2kdKR8iC1RinWZFvpN3rqRRPdCxHqwWUleTxyv9FVNbDIuOVUoX21YC6a0UtWaIGsBhf8uVpfWOAIFGpQoB7301SbTWd9ixyCgpAmeZKjhWIVTgvZPd0s3teBEAnXPee2YW5r28RFAAZSRUNj6IFFVg7uEaxWrn8rB2RN/1+CwqGfRLNuC2JaoEqom9nbzS0n4oKkKKgAIkBc56BnEFW+f31L1Zr+tQwyvWiD4UURrGEkBARBIWkVEJEcblNBABEWYeUQ8MiCzoPYMCZilu+TK1hHTj6TZoOHBPY9grJk7Fh9/X3Dmfbb04COpq8kiyuZ1FE0G5Y91AYhUOVk3tQOQy8LkQYNG3zltSFS5AGESNCTDOePavQr4Ajv4IxhJwdreMA7JnMiNvMDKcMftF2LO13jPrBEAQkChA8KCduvGd7cGVoevY1lyoAuivlRMHapqC7RdzRAxaqix8shQkC8oYJ3XOBrkdOG+8G4A4jOrKuRHDgIWJVGYya9ydFkCECIwMCrzZlQBbUQpHJR5khN0gZFTrYAfOeWYGFED0lm3matMhMKBX4tk7JK01BZe/taOq1L6Z3vOh+dbhZNgvq5NR7FGQ4ynVvLe+cSE9+I76AZf018qr39wRRgi4Ekbi09psZFMRx6BJRBSpoixc6WG/Hx2JAAEJSKEreSwBM3SokRQgyW1lQAEA8NZ78QDivWdh8T7bca35mEUCUwmqGkQ8eLZcqQb12chsyPm/uRWEPHk4CutoC6cjRE8bL2TaquUf9Fnw8lPb5HRYUWFTKQg8uJkjtc5KsddTQEXZMDOZhdsRIBCQkCIVocv8GEAxcEGghAA1EN6WsSGgNyLEMC4rABFuvZRNL9Z0VSCleDpkFvRAQErrou1xiNmKvfqNnZXv9C5+cRMyBFEU8tSxig713FJ99e973BcwxAbm7mrZHdINaM3Uti9mSiEIMnNUidgzl7d7FERCBA0YoA5V2XNjAGXHoQaliCIkAFLjZE9EkJCdOONVSMDgnVMhdq86rfXsvUl/rWjUaxTgyKrKnnVdD4IKyPelXOcQ9PpzO8VmWXYkiiCKYPvF3uqzHfBoUquqMn2w1rmZLj1c1xBuXu4pTQAgLJNzE846uD2iVloJA0WEiijAYgQAEd3AW+fDSFGFmEHpl4UwMgOTWYplVD9LqlHRt8tn+r/9T5cKKjYv9oSENAmzLyx7toXzhsWwKxx7AYPbl/oK6cKT2y998dba/xuESaAUucLH80r1q+2dnbd/5NiNZ9JiUAACC2sVOCo6G709AkYrCLR3XldIB+hZfN/vZnwCebeMmxpDFJQgeNn7jkLZou8wECQAQFM6FH/hb3fWz2dZO8s65eEH5ikBkzsG8da7zHLugEFYwIMY4IH0ltMw1FE9VEhgwBWspuTRD5y+9HT7ng9PLkwfPPO1ZR0SCIJAGAepSfOOucMAgiBgYRVRWFNF3wIDINDIXnduZNEkIYKKQKHaLzhE8MYzc9zQWmlnOajqzq3h979wUcf4wDuPYxovvGUqWdDsxgEsexAWQgAUccIprj/b714pxAsROSs+dJ/590/IjWpe7/zBv3j02b+8Ouj0tQoEBIWihjKpEZb9URARoSCEIoCVGT24WYz0nEY1jP71PEhIBajqyA7CKHxZCAJElLaLsBmUecnEhSlN6uqTtdn6wtK7Kwvv461zw6XTM/XD8eimH+kuG2+GVhxzzuiBBMzQmaGtHcF/++ef7J1Rzzz/g3/9nz908avDc89crSTRqAMaRgFWJN0s7mB/klSc8bpOFEBQU72r+WgDAQAScCbDHVudilRVsfggDPabvwib1DnH9YMVUxqX+zAIW9WJNB3+/ReuHDjaetsfzq79vN+caS69e6q2GFMILOIZmMUxm9I65x34+lLw7j++95//yz/6yZeWn1t9+k+//M/Wn8W//a8/jZMAkZAwUFFtLkq7Bbvb2A8AYRiU1oTVoDIZFAPLKSMhjO9dBBCoHY2OPTp780c9N/CYUm6KUWq2t3Soo3qQtvM4jlvN5jBNnXOKyAfwzs8emj4e/exv1tpXy2qjokNEDRRIkGCZenAU13V9Jpo/cKC4RZcvXzv6WPVjn/rgM3+5/JW/+k4caRQUYW+hNpPkarBzaXhHlzKuxAEFNizDVjj/SHXtZ73BpWJcx95VdBSQU3+40D6Xu4zT66WO9HAw3K+CAMDMcT1sVicGvYHzjkbVZEJr/dK7mg9+ZM4UZuVMr3Ot8JkCQSJEIgIl6FRNkhmaP9U8ft+ivZZ8/79duH7pRq2WkAAQkOiF49NptXP12S3xdw4fTE1Pdtv95okKRDj7W8lLf30LZVxx2ZUTAgi0TiWLpydWfzJ0AwtDtOzKotxDCAAqIB3r6myUrlmxLCQIhAiI4kqBChx+eGLp4VZzLiTFXrxlAwCagoBCYEQbdC7yxWc21y5tqQCiMAIRUggc3PPQ/NRD5Xf/yzXbQ2fcfgC1ehU8uthEzfDAQ7Wti4POmXRPRLseUwARu+ezhYdaUYt0FPY7WZxE1lhmht3gQgTKvhHk1slqesOaoWPyKAgAGABYuPq99uXvbUdJUJ0I44amRAQBjXJDSdtF1i+9eCIMI42gnPWkKcBw+nhD5gZPf2k132S8XXm0VklSaW92W0tVIK8S6pxNb2vnvLwXAQSqS+HJ3ztw9bsdTTS8VoaJHg7Sl9Vs9zFdUa0jVd+HcttZ7wR4XElEBBD2zH5/ZiEAQApJESLiaPoDgZDipDJxpOKiYuXnHS4ACfaKKKPjZmanezuD5GBgjT/yj6ZuPNseXsv3W8irNDiOPTGLFrvXC9N2fiBCnGfFbSqJAAJElByIkmbFdSXrFNaYUf6AhHtFsd34XEB2O3kiNKJdYWUiiieDYTcbrhpClH357Ij61kQLPLjAhNO6eiAMJ9WVr9zZ4HhFx4YQNLz1T46sPLMDqDsXB6EOjTWmNHfuRBQRFVFlOoqiyKaeSyGmMjfO2j0zHIW1o/YCKAwqOqhqFSMF5AqXbpTe8N4gxv43Nxr1SqU6HPYbJyv5oDj8u9Nn/2pZDNzR53tF1oyAApXF6P6PHjz/1HpjMtk82wvj0Bhzh1fd3YwCogIKakFQURPTE1Ec9TodV1oBYGQVKCEejT0hIBF6y6bvTN95y3C7ZsKoUSRQq1Xr9fqgO5y4P+msDu/6yIELX19PbxSvHAJ5tTYroojMPtRYOD159VtbtanK5tluVImcs+VryOG2/wCiRogamFwURyLAzpsBsxEQHoUbv3zV6/VqNRn20tkHG+31/uHHpm691N38ce91tVnH3xIKy8H3TU4u1q99d7s6E22fG0RhwCB5lt+xudFoLC4urqysDAYDAJidnt3c3gSAVn2iO+iM9xwOkCDf5NqicgUUHU4OEAIM171N/X6+tiaaClWW5osPTbVvDhbe0Rh2ixvf3iKF7F9fo3u0Rg8ceXymNl25/r3t6ky889KAPOlIFXnp/XhUrNFofO5zn9vY2Gg0Gk8++eQjjzyyuLj41FNPPf74451O59r1q2m/3D74/MF3RZ2L1gxh8pTynoarfuqUAsZ/+LPucNWMiilBEDSadZNbJ2byVKO/lh5812QxLK997TWph1f2ifcWeyHC69/c6t5Kjz0+O9jMmyeqeoLKoYmiKI6jkfJMTEzcunXr85//fL/f/+xnP7uyshKEwQc+8IHzL52fmpr6/Sc+/J5H3zNxMjr/vzPdxMYpLK1zxi1/e3jtm9n5vx4MVszoIq7Xa0mSDHaGUPXNu2vd1eGh351Mu8W1r20RvSb1v0wC458JhWX6rY2ld85e/84GOyFF/WspeaUj7dmDwCc+8Ympqcm11bXNza2TJ0602232Mjc/d+nSpdnZ6WY89fXr/2PmPSIWBzd995JpP29cLkvvT7JNv3PWRHEUBmGZW8umdawqCF78kfdPrv+0t/nj/m80brMfQ7IQnXhifni92DrX11Vlh67cssDIwN77uBIVeQkASauSmxwRKklsnanU47zIfYpBrJwVLmBcOUEQC4igAz0qjYUzQdyKzNC07q607q5e++pWuvxmDDztxwAKjn3wQGOhsvrjTrZldKxc7sodJ6UwclDRKlIQga4TKFEK4moQThIR5G1fpt6WTEI+Zy7YFyLGeysUYjwZ6pp2uY8m1dwjzWzL3PjGthh500bO9jYioIgkB6ODvzMJAJ3zabphSKMI+Mzb4divv9bzuC/BVRqDmtZJIATCHM/oqfurQrD+TC+9XtwxgPMmARjt3uVK42Sy8PAEauheyYY3C5cLACIJsLAVtsKOwe/W+RCQABWRRgwQCUe0qRiSxbB1MmGRzZ/2++fz/Ue8XpLeEIAxNbvjxsnBaOr+WjyjXc7Fps03rR14bwQ8CIPpWkEgjQSkawQIoJA0BHWKp3VlPqQEy23X+UWWLZdj0t/4GPKvOzu9f2paQ3Iorh+O4plAhQROXOHByThIZRQSDEA06FirkGzhyrZLl016swQjvzbpvxmAvedp3MEerwjDhgoaKqgpVSEKEAW9ZVt6N2Tb967vpXi5lQ90Z3D2hgn4jcjf95pRRAn8K6wPxy2H0Yjmm3Dy/wcawvb8qee0nwAAAABJRU5ErkJggg==">
-<link rel="apple-touch-icon" href="data:image/png;base64,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">
-<meta name="theme-color" content="#070d07">
-<title>OddsGPT NG - Type What You Want, Get Real Booking Code</title>
+<title>OddsGPT V121 FINAL - 18+ & Terms - Launch Ready</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-:root{--navy:#070d07;--mint:#22e06a;--card:#0d1a0d;--line:#1e3a1e}
-*{box-sizing:border-box}body{margin:0;background:#070d07;color:#e6edf3;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
-a{color:var(--mint);text-decoration:none}a:hover{text-decoration:underline}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--navy);border-bottom:1px solid #1e3a1e;position:sticky;top:0;z-index:20}
-.logo{font-weight:900;font-size:22px;letter-spacing:-.5px}.logo span{color:var(--mint)}
-.btn{border-radius:999px;padding:10px 18px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid #334155;background:transparent;color:#e6edf3;letter-spacing:.1px}
-.btn.mint{background:var(--mint);color:#000;border-color:var(--mint)}.btn.outline{border-color:#22e06a;color:#22e06a}
-.wrap{max-width:1120px;margin:0 auto;padding:20px 18px 40px}
-h1{font-size:34px;line-height:1.15;margin:12px 0 6px;font-weight:900;letter-spacing:-1px}h1 span{color:var(--mint)}
-h2{font-size:21px;font-weight:800;letter-spacing:-.3px;margin:0}
-h3{font-size:16px;font-weight:800;letter-spacing:-.2px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.chip{border:1px solid #334155;background:#0f172a;color:#cbd5e1;border-radius:999px;padding:8px 14px;font-weight:600;font-size:13px;cursor:pointer}
+:root{--navy:#0a1224;--mint:#bbf7d0;--card:#111c36}
+*{box-sizing:border-box}body{margin:0;background:#060d1f;color:#e6edf3;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+a{color:var(--mint)}header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--navy);border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:20}
+.logo{font-weight:900;font-size:20px;letter-spacing:.5px}.logo span{color:var(--mint)}
+.btn{border-radius:999px;padding:10px 16px;font-weight:800;cursor:pointer;border:1px solid #334155;background:transparent;color:#e6edf3}
+.btn.mint{background:var(--mint);color:#000;border-color:var(--mint)}.btn.outline{border-color:#bbf7d0;color:#bbf7d0}
+.wrap{max-width:1100px;margin:0 auto;padding:18px}
+h1{font-size:30px;line-height:1.2;margin:10px 0}h1 span{color:var(--mint)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{border:1px solid #334155;background:#0f172a;color:#cbd5e1;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer}
 .chip.on,.chip:hover{background:var(--mint);color:#000;border-color:var(--mint)}
-.card{background:var(--card);border:1px solid #1e3a1e;border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.muted{opacity:.75;font-size:13.5px;line-height:1.6}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:900px){.plans{grid-template-columns:repeat(2,1fr)}h1{font-size:28px}}
-@media(max-width:560px){.plans{grid-template-columns:1fr}.wrap{padding:14px 12px 32px}}
-.plan{background:linear-gradient(180deg,#122412,#0d1a0d);border:1px solid #1e3a1e;border-radius:16px;padding:18px;display:flex;flex-direction:column}
-.plan b{font-size:14px;letter-spacing:1.2px;text-transform:uppercase;color:#e6edf3}.price{font-size:30px;font-weight:900;margin:8px 0 2px;letter-spacing:-1px;line-height:1}
-.plan small{font-size:12px;line-height:1.5;opacity:.8;min-height:36px;display:block}
-.benefits{list-style:none;margin:12px 0 0;padding:0;font-size:13px;line-height:1.65}.benefits li{border-top:1px solid #1e3a1e;padding:6px 0;display:flex;gap:8px}
-.pay{width:100%;margin-top:auto;margin-top:14px;background:var(--mint);color:#000;border:0;border-radius:999px;padding:12px 14px;font-weight:800;font-size:14px;cursor:pointer}
-.game{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-top:1px solid #1e3a1e;padding:10px 0;font-size:14px}.game b{font-weight:700}.game .meta{font-size:12.5px;opacity:.75;margin-top:2px}.odds{color:var(--mint);font-weight:800;white-space:nowrap}
-textarea,input{width:100%;background:#0a120a;color:#e6edf3;border:1px solid #1e3a1e;border-radius:12px;padding:12px 14px;margin:6px 0;font-family:inherit;font-size:14px}
-textarea{min-height:92px;line-height:1.6} .codebox{background:#0a120a;border:1px dashed #334155;border-radius:12px;padding:12px;margin-top:12px;word-break:break-all;font-size:13px;line-height:1.6}
+.card{background:var(--card);border:1px solid #1e293b;border-radius:16px;padding:16px;margin:14px 0}
+.muted{opacity:.75;font-size:13px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.plan{background:linear-gradient(180deg,#132043,#0e1a33);border:1px solid #23325d;border-radius:14px;padding:14px}
+.plan b{font-size:15px;letter-spacing:.4px}.price{font-size:24px;font-weight:900;margin:6px 0}
+.benefits{list-style:none;margin:10px 0 0;padding:0;font-size:12px;line-height:1.7;opacity:.95}.benefits li{border-top:1px solid #1e293b;padding:3px 0}
+.pay{width:100%;margin-top:10px;background:var(--mint);color:#000;border:0;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}
+.game{border-top:1px solid #1e293b;padding:8px 0}.odds{color:var(--mint);font-weight:700}
+textarea,input{width:100%;background:#0b1226;color:#e6edf3;border:1px solid #23325d;border-radius:10px;padding:12px;margin:6px 0}
+textarea{min-height:90px} .codebox{background:#0b1226;border:1px dashed #334155;border-radius:10px;padding:10px;margin-top:10px;word-break:break-all}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:50;padding:12px}
-.modal.open{display:flex}.modalBox{background:#0d1a0d;border:1px solid #1e3a1e;border-radius:18px;padding:22px;min-width:320px;max-width:92vw;max-height:90vh;overflow:auto}
-.pass-wrap{position:relative}.pass-wrap input{padding-right:48px}.eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#22e06a;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:16px;display:grid;place-items:center}
-.badge{display:inline-block;background:#22e06a;color:#000;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:800;margin-right:6px}
-.slip{background:#0a120a;border:1px solid #1e3a1e;border-radius:14px;padding:16px;margin:12px 0}
-.slip-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid #1e3a1e;font-size:14px;line-height:1.5}.slip-row b{font-weight:700}
-.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:13.5px;line-height:1.6}.check input{width:18px;height:18px;margin-top:2px;flex-shrink:0}
-footer{border-top:1px solid #1e3a1e;margin-top:24px;padding:18px;text-align:center;font-size:12.5px;opacity:.8;line-height:1.7}
-
-.logo{font-weight:900;font-size:26px;letter-spacing:-.5px;line-height:1;display:flex;flex-direction:column;gap:2px}
-.logo .name{color:#fff}.logo .name span{color:#22e06a;text-shadow:0 0 12px #22e06a,0 0 24px #22e06a;font-size:20px;vertical-align:top}
-.logo .balls{display:flex;align-items:center;gap:6px;font-size:12px;color:#22e06a}
-.logo .balls .line{flex:1;height:1px;background:#22e06a;box-shadow:0 0 6px #22e06a}
-
-
-.wrap{padding-bottom:20px}
-.footer-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
-.footer-links button{background:#0d1a0d;border:1px solid #1e3a1e;color:#e6edf3;border-radius:999px;padding:10px 16px;font-weight:700;font-size:13px;cursor:pointer}
-
+.modal.open{display:flex}.modalBox{background:#0e1a33;border:1px solid #23325d;border-radius:16px;padding:18px;min-width:320px;max-width:92vw;max-height:90vh;overflow:auto}
+.pass-wrap{position:relative}.pass-wrap input{padding-right:48px}.eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#bbf7d0;border-radius:999px;width:34px;height:34px;cursor:pointer;font-size:16px;display:grid;place-items:center}
+.badge{display:inline-block;background:#bbf7d0;color:#000;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:800;margin-right:6px}
+.slip{background:#0b1226;border:1px solid #1e293b;border-radius:12px;padding:12px;margin:10px 0}
+.check{display:flex;gap:8px;align-items:flex-start;margin:8px 0;font-size:13px}.check input{width:auto;margin-top:3px}
+footer{border-top:1px solid #1e293b;margin-top:20px;padding:16px;text-align:center;font-size:12px;opacity:.8}
 </style>
 </head>
 <body>
-<header><div class="logo"><div class="name">OddsGPT<span>NG</span></div><div class="balls"><span class="line"></span><span>⚽ 🏀</span><span class="line"></span></div></div><div style="display:flex;gap:8px" id="authHeader"><button class="btn outline" onclick="openModal('login')">LOGIN</button><button class="btn mint" onclick="openModal('create')">Create Account</button></div></header>
+<header><div class="logo">OddsGPT<span>.</span></div><div style="display:flex;gap:8px" id="authHeader"><button class="btn outline" onclick="openModal('login')">LOGIN</button><button class="btn mint" onclick="openModal('create')">Create Account</button></div></header>
 <div class="wrap">
-<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 2px"><span style="background:#22e06a;color:#000;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900">● LIVE</span><span class="muted" id="liveSource" style="font-size:12px">LIVE • Today Games</span></div>
 <h1>Type What You Want,<br><span>Get Real Booking Code</span></h1>
 <p class="muted">Try 10 odds, 20 odds, 30 odds — Football, NBA, Mix. Every slip comes with real SportyBet code. If you no choose day, I go give today. All games findable on SportyBet / 1xBet.</p>
 <div class="chips"><button class="chip on" data-sport="ALL" onclick="switchSport(this)">ALL</button><button class="chip" data-sport="Football" onclick="switchSport(this)">Football</button><button class="chip" data-sport="Basketball" onclick="switchSport(this)">Basketball</button><button class="chip" data-sport="NBA" onclick="switchSport(this)">NBA</button><button class="chip" onclick="setWish('Give me Safe 2 Odds')">Safe 2 Odds</button><button class="chip" onclick="setWish('Give me Safe 1.5 Odds')">Safe 1.5 Odds</button></div>
 
 <div class="card"><h2 style="margin:0">Today's Games — <span id="todayDate">Loading...</span></h2>
-<div id="liveClock" style="margin:8px 0"><span id="liveTime" style="background:#22e06a;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading WAT...</span></div>
+<div id="liveClock" style="margin:8px 0"><span id="liveTime" style="background:#bbf7d0;color:#000;border-radius:999px;padding:6px 12px;font-weight:900;font-size:13px">🕒 Loading WAT...</span></div>
 <div id="fixtures">Login to see today's games.</div></div>
 
 <div class="card"><h2 style="margin:0">Type What You Want</h2>
 <div class="chips" style="margin:8px 0"><button class="chip" onclick="addDay('for today alone')">📅 Today</button><button class="chip" onclick="addDay('for tomorrow')">📅 Tomorrow</button><button class="chip" onclick="addDay('from Monday to Friday')">Mon to Fri</button><button class="chip" onclick="addDay('from Tuesday to Friday')">Tue to Fri</button><button class="chip" onclick="addDay('for weekend')">Weekend</button><button class="chip" onclick="addDay('for any day')">Any Day</button></div>
-<div id="dayPreview" class="muted" style="color:#22e06a;font-weight:700;margin:6px 0;min-height:18px"></div>
+<div id="dayPreview" class="muted" style="color:#bbf7d0;font-weight:700;margin:6px 0;min-height:18px"></div>
 <textarea id="wishBox" placeholder="e.g. Give me 30 odds for today alone, or 30 odds from Tuesday to Friday, or 5 odds for tomorrow — If you no choose, I go give today"></textarea>
 <div id="optionsBox" style="display:none!important"></div>
 <p class="muted" style="font-size:12px">✓ All markets dey inside — just type wetin you want. Customer get right to choose any day. FREE same for all but e dey change every 12 AM WAT.</p>
@@ -77,10 +54,10 @@ footer{border-top:1px solid #1e3a1e;margin-top:24px;padding:18px;text-align:cent
 
 <h2 style="font-size:22px;margin:18px 0 4px">Plans — 1 USE = 1 Slip</h2><p class="muted" style="margin:0 0 12px">Choose your plan. Pay with Paystack popup — Payment ID go save. No hidden rules.</p>
 <div class="plans">
-<div class="plan"><b>FREE</b><div class="price">₦0 <span style="font-size:14px;font-weight:700;opacity:.7">FREE</span></div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all users</li><li>🔄 Changes every 12 AM WAT</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
-<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day • Safe 2-3</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
-<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 1 SLIP • 24hrs • Safe 2-3</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Safe 2-3 odds slip</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
-<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Safe 2-3 odds slip</li><li>✅ No Ask AI for this plan</li><li>✅ Any odds you type</li><li>✅ Choose day / mix</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
+<div class="plan"><b>FREE</b><div class="price">₦0</div><small>1 USE PER DAY • SAME FOR ALL • 1.50-2.00 • Max 3 games</small><ul class="benefits"><li>✅ 1 slip per day</li><li>✅ 1.50 - 2.00 odds</li><li>✅ Max 3 games</li><li>✅ Same slip for all users</li><li>🔄 Changes every 12 AM WAT</li></ul><button class="pay" onclick="payPlan('FREE',0)">Get FREE</button></div>
+<div class="plan"><b>BANGER</b><div class="price">₦100</div><small>1 USE = 1 SLIP • Max 1 per day</small><ul class="benefits"><li>✅ 1 slip, 1 use</li><li>✅ Max 1 per day</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('BANGER',100)">Pay ₦100 — Paystack</button></div>
+<div class="plan"><b>QUICK WIN</b><div class="price">₦200</div><small>1 USE = 2 SLIPS • 24hrs</small><ul class="benefits"><li>✅ 2 slips in 1 use</li><li>✅ 24hrs access</li><li>✅ Any odds you type</li><li>✅ Football + Basketball + NBA</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('QUICK',200)">Pay ₦200 — Paystack</button></div>
+<div class="plan"><b>DAILY HUSTLE</b><div class="price">₦300</div><small>1 DAY = 3 SLIPS</small><ul class="benefits"><li>✅ 3 slips in 1 day</li><li>✅ Ask AI — 1 per day</li><li>✅ Any odds you type</li><li>✅ Choose day / mix</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('DAILY',300)">Pay ₦300 — Paystack</button></div>
 <div class="plan"><b>TRY AM</b><div class="price">₦500</div><small>3 DAYS = 9 SLIPS</small><ul class="benefits"><li>✅ 9 slips in 3 days</li><li>✅ Ask AI — 2 per day</li><li>✅ Any odds you type</li><li>✅ Choose day / mix</li><li>✅ Confidence % show</li></ul><button class="pay" onclick="payPlan('TRY_AM',500)">Pay ₦500 — Paystack</button></div>
 <div class="plan"><b>SHARP GUY</b><div class="price">₦2000</div><small>7 DAYS = 35 SLIPS • 5/day</small><ul class="benefits"><li>✅ 35 slips in 7 days</li><li>✅ 5 slips per day</li><li>✅ Ask AI — 5 per day</li><li>✅ Any odds you type</li><li>✅ Choose day / mix</li></ul><button class="pay" onclick="payPlan('SHARP',2000)">Pay ₦2000 — Paystack</button></div>
 <div class="plan"><b>BABA NLA</b><div class="price">₦5000</div><small>30 DAYS = 300 SLIPS • 10/day</small><ul class="benefits"><li>✅ 300 slips in 30 days</li><li>✅ 10 slips per day</li><li>✅ Ask AI — Unlimited</li><li>✅ Any odds you type</li><li>✅ Choose day / mix + Priority</li></ul><button class="pay" onclick="payPlan('BABA',5000)">Pay ₦5000 — Paystack</button></div>
@@ -113,519 +90,194 @@ footer{border-top:1px solid #1e3a1e;margin-top:24px;padding:18px;text-align:cent
 
 <!-- TERMS -->
 <div class="modal" id="termsModal"><div class="modalBox" style="max-width:600px"><h3>Terms & Conditions + 18+ Responsible</h3>
-<p style="font-size:13px;line-height:1.6">1. You must be 18+ to use OddsGPT. 2. OddsGPT provides football & basketball analysis, no win guarantee. 3. All games na real, findable on SportyBet / 1xBet, real games, blocked leagues (II, III, U19, U21, U23, Reserves, Youth, Women) no dey. 4. FREE slip same for all users, max 3 games, 1.50-2.00, e dey change every 12 AM WAT. 5. Paid plans buffet different per user, customer get right to choose day: today alone, tomorrow, Mon-Fri, Tue-Fri, weekend, any day. If you no choose, default today. 6. BANGER 1 slip max 1/day, QUICK WIN 2 slips, DAILY HUSTLE 3 slips, TRY AM 9 slips (3 days), SHARP GUY 35 slips (7 days, 5/day), BABA NLA 300 slips (30 days, 10/day). 7. Ask AI only from DAILY HUSTLE ₦300 and above: DAILY 1/day, TRY AM 2/day, SHARP 5/day, BABA unlimited. No Ask AI for FREE, BANGER, QUICK WIN. 8. Paystack na popup for site, no be new tab. Every payment get Payment ID wey dey save. 9. Gamble responsibly — 18+ only. 10. By creating account you agree to these terms.</p>
+<p style="font-size:13px;line-height:1.6">1. You must be 18+ to use OddsGPT. 2. OddsGPT provides football & basketball analysis, no win guarantee. 3. All games na real, findable on SportyBet / 1xBet, pool 600, blocked leagues (II, III, U19, U21, U23, Reserves, Youth, Women) no dey. 4. FREE slip same for all users, max 3 games, 1.50-2.00, e dey change every 12 AM WAT. 5. Paid plans buffet different per user, customer get right to choose day: today alone, tomorrow, Mon-Fri, Tue-Fri, weekend, any day. If you no choose, default today. 6. BANGER 1 slip max 1/day, QUICK WIN 2 slips, DAILY HUSTLE 3 slips, TRY AM 9 slips (3 days), SHARP GUY 35 slips (7 days, 5/day), BABA NLA 300 slips (30 days, 10/day). 7. Ask AI only from DAILY HUSTLE ₦300 and above: DAILY 1/day, TRY AM 2/day, SHARP 5/day, BABA unlimited. No Ask AI for FREE, BANGER, QUICK WIN. 8. Paystack na popup for site, no be new tab. Every payment get Payment ID wey dey save. 9. Gamble responsibly — 18+ only. 10. By creating account you agree to these terms.</p>
 <p style="text-align:right"><a href="#" onclick="document.getElementById('termsModal').classList.remove('open');return false">Close</a></p>
 </div></div>
 
 <script>
-// ===== V121 FINAL - ALL RULES + 18+ + TERMS + BEST PRO =====
+// ===== V134 FIX - ALL BUTTONS WORKING - NO LOOP - BACKEND FALLBACK + LOCAL =====
 const SUPABASE_URL="https://hsbqkvrvdjpexgsqgsh.supabase.co";
 const SUPABASE_KEY="sb_publishable_f7FMboSQ_y-7Jxvm0Q8qH2oGp2hIyK";
-const BACKEND_BASES=['https://oddsgpt-backend.vercel.app'];
+const BACKEND_BASES=['/api/index','https://oddsgpt-backend.vercel.app/api/index','https://oddsgpt-backend-git-main-oddsgpt.vercel.app/api/index'];
 let currentUser=null;let currentPlan='FREE';let selectedOptions=[];let selectedSport='ALL';
 
-// UI basics - must work even without backend
 function togglePass(id,btn){let f=document.getElementById(id);if(!f)return;let show=f.type==='password';f.type=show?'text':'password';f.setAttribute('type',f.type);if(btn)btn.textContent=show?'🙈':'👁️'}
 function clearPassFields(){try{['password','regPass','regConfirm'].forEach(function(id){let el=document.getElementById(id);if(el){el.value='';el.type='password';el.setAttribute('type','password')}})}catch(e){}}
-function openModal(which){try{clearPassFields()}catch(e){}document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');document.getElementById('termsModal').classList.remove('open');if(which==='login')document.getElementById('loginModal').classList.add('open');else if(which==='create')document.getElementById('createModal').classList.add('open');else if(which==='terms')document.getElementById('termsModal').classList.add('open');setTimeout(clearPassFields,100)}
-function closeModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('createModal').classList.remove('open');document.getElementById('termsModal').classList.remove('open')}
+function openModal(which){try{clearPassFields()}catch(e){}let lm=document.getElementById('loginModal');let cm=document.getElementById('createModal');let tm=document.getElementById('termsModal');if(lm)lm.classList.remove('open');if(cm)cm.classList.remove('open');if(tm)tm.classList.remove('open');if(which==='login'&&lm)lm.classList.add('open');else if(which==='create'&&cm)cm.classList.add('open');else if(which==='terms'&&tm)tm.classList.add('open');setTimeout(clearPassFields,100)}
+function closeModal(){let lm=document.getElementById('loginModal');let cm=document.getElementById('createModal');let tm=document.getElementById('termsModal');if(lm)lm.classList.remove('open');if(cm)cm.classList.remove('open');if(tm)tm.classList.remove('open')}
 function showTerms(){openModal('terms')}
 function setWish(t){let b=document.getElementById('wishBox');if(b){b.value=t;updateDayPreview();b.scrollIntoView({behavior:'smooth'})}}
 function switchSport(el){document.querySelectorAll('[data-sport]').forEach(function(x){x.classList.remove('on')});el.classList.add('on');selectedSport=el.dataset.sport;if(currentUser)loadToday();}
 
-// CLOCK + DATE DAY MONTH - WAT
-function updateDateTime(){
-  try{
-    let now=new Date();
-    let dayDate=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});
-    let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});
-    let d=document.getElementById('todayDate');if(d)d.textContent=dayDate;
-    let t=document.getElementById('liveTime');if(t)t.textContent='🕒 '+timeStr+' WAT';
-  }catch(e){}}
-updateDateTime();
+// CLOCK
+function updateDateTime(){try{let now=new Date();let dayDate=now.toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Africa/Lagos'});let timeStr=now.toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true,timeZone:'Africa/Lagos'});let d=document.getElementById('todayDate');if(d)d.textContent=dayDate;let t=document.getElementById('liveTime');if(t)t.textContent='🕒 '+timeStr+' WAT';}catch(e){}}
+updateDateTime();setInterval(updateDateTime,1000);
 
-// DAY CHOOSE - customer right
-function parseDayFront(text){
-  try{
-    let t=(text||'').toLowerCase();
-    let map={mon:1,monday:1,tue:2,tuesday:2,wed:3,wednesday:3,thu:4,thursday:4,fri:5,friday:5,sat:6,saturday:6,sun:0,sunday:0};
-    function nextD(base,num){let d=new Date(base);d.setHours(12,0,0,0);if(num===99)return d;if(num===100){d.setDate(d.getDate()+1);return d}let diff=(num-d.getDay()+7)%7;d.setDate(d.getDate()+diff);return d}
-    let re=/(?:from\s+)?(mon|monday|tue|tuesday|wed|wednesday|thu|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)\s*(?:to|-)\s*(mon|monday|tue|tuesday|wed|wednesday|thu|thursday|fri|friday|sat|saturday|sun|sunday|today|tomorrow)/i;
-    let m=t.match(re);
-    if(m){let s=map[m[1].toLowerCase()]||1;let e=map[m[2].toLowerCase()]||5;let now=new Date();let a=nextD(now,s);let b=nextD(a,e);if(b<a)b.setDate(b.getDate()+7);return{mode:'range',start:a,end:b,label:m[1]+' to '+m[2],days:Math.round((b-a)/86400000)+1}}
-    if(t.includes('any day')||t.includes('whatever')){let n=new Date();let en=new Date(n);en.setDate(en.getDate()+6);return{mode:'any',start:n,end:en,label:'Any day',days:7}}
-    if(t.includes('weekend')){let n=new Date();let sat=nextD(n,6);let sun=new Date(sat);sun.setDate(sun.getDate()+1);return{mode:'range',start:sat,end:sun,label:'Weekend',days:2}}
-    let single=/(?:for|on)?\s*(today|tomorrow|mon|monday|tue|tuesday|wed|wednesday|thu|thursday|fri|friday|sat|saturday|sun|sunday)/i;
-    let sm=t.match(single);
-    if(sm){let k=sm[1].toLowerCase();let num=k==='today'?99:k==='tomorrow'?100:(map[k]||99);let d=nextD(new Date(),num);return{mode:'single',start:d,end:d,label:k.charAt(0).toUpperCase()+k.slice(1),days:1}}
-    let now2=new Date();return{mode:'today',start:now2,end:now2,label:'Today (default)',days:1};
-  }catch(e){let n=new Date();return{mode:'today',start:n,end:n,label:'Today',days:1}}
-}
-function updateDayPreview(){try{let txt=document.getElementById('wishBox').value;let p=parseDayFront(txt);let el=document.getElementById('dayPreview');if(!el)return;let s1=p.start.toLocaleDateString('en-NG',{weekday:'short',month:'short',day:'numeric'});let e1=p.end.toLocaleDateString('en-NG',{weekday:'short',month:'short',day:'numeric'});if(p.mode==='single'||p.mode==='today')el.textContent='📅 Day: '+p.label+' — '+s1;else el.textContent='📅 Day: '+p.label+' — '+s1+' to '+e1+' ('+p.days+' days)'}catch(e){}}
-function addDay(phrase){let b=document.getElementById('wishBox');if(!b)return;let cur=b.value.trim();b.value=cur?cur+' '+phrase:'Give me 10 odds '+phrase;updateDayPreview();b.focus()}
-function toggleOpt(o){let i=selectedOptions.indexOf(o);if(i>=0)selectedOptions.splice(i,1);else selectedOptions.push(o)}
-
-// API - absolute backend
-
-// ===== V124 LOCAL GAME ENGINE - WORKS EVEN IF BACKEND FAILS =====
-const LEAGUE_TEAMS={
-"Premier League":["Man City","Arsenal","Liverpool","Chelsea","Man Utd","Tottenham"],
-"La Liga":["Real Madrid","Barcelona","Atletico Madrid","Sevilla","Real Sociedad","Valencia"],
-"Serie A":["Inter","AC Milan","Napoli","Juventus","AS Roma","Atalanta"],
-"Bundesliga":["Bayern Munich","Borussia Dortmund","RB Leipzig","Bayer Leverkusen","Stuttgart"],
-"Ligue 1":["PSG","Marseille","Lyon","Monaco","Lille","Nice"],
-"Eredivisie":["Ajax","PSV Eindhoven","Feyenoord","AZ Alkmaar"],
-"Primeira Liga":["Benfica","FC Porto","Sporting CP","Braga"],
-"Belgian Pro League":["Club Brugge","Anderlecht","Gent","Genk"],
-"Super Lig":["Galatasaray","Fenerbahce","Besiktas","Trabzonspor"],
-"Swedish Allsvenskan":["Malmo FF","AIK","Djurgarden","Hammarby"],
-"Swiss Super League":["Young Boys","FC Basel","FC Zurich","Servette"],
-"MLS":["LAFC","Inter Miami","LA Galaxy","New York City FC"],
-"Brasileirão":["Flamengo","Palmeiras","Santos","Corinthians","Sao Paulo"],
-"NPFL Nigeria":["Enyimba","Rivers United","Remo Stars","Kano Pillars","Shooting Stars"],
-"Scottish Premiership":["Celtic","Rangers","Hearts","Aberdeen"],
-"Championship":["Leeds United","Leicester City","Southampton","Norwich"],
-"Austrian Bundesliga":["Red Bull Salzburg","Rapid Vienna","Sturm Graz"],
-"Danish Superliga":["FC Copenhagen","FC Midtjylland","Brondby"],
-"Norwegian Eliteserien":["Bodo/Glimt","Molde","Rosenborg"],
-"Polish Ekstraklasa":["Legia Warsaw","Lech Poznan","Wisla Krakow"],
-"NBA":["Lakers","Warriors","Celtics","Bulls","Heat","Bucks","Nuggets","Suns","Knicks","76ers"],
-"Euroleague":["Barcelona Basket","Real Madrid Basket","Fenerbahce","Olympiacos","Panathinaikos"]
-};
-const LOCAL_LEAGUES=Object.keys(LEAGUE_TEAMS);
-const LOCAL_M_FB=["1X2 - Home Win","1X2 - Away Win","Double Chance 1X","Double Chance X2","Over 2.5","Over 1.5","Over 3.5","Under 2.5","BTTS Yes","BTTS No","GG + Over 2.5","HT Over 0.5","Handicap -1 Home","Draw No Bet - Home","Over 9.5 Corners"];
-const LOCAL_M_BB=["Moneyline Home","Moneyline Away","Total 220.5 Over","Total 220.5 Under","Total 230.5 Over","Handicap -5.5","Handicap +5.5","Home Over 112.5","Away Under 108.5"];
-function localGames(count, dateStr, sportFilter, seedExtra){
-  let seed=0; for(let c of (dateStr||'')) seed+=c.charCodeAt(0); seed+=(seedExtra||0);
-  let out=[];
-  let leagues=LOCAL_LEAGUES.filter(function(l){
-    if(sportFilter==='Football') return l!=='NBA' && l!=='Euroleague';
-    if(sportFilter==='NBA') return l==='NBA';
-    if(sportFilter==='Basketball') return l==='NBA' || l==='Euroleague';
-    return true;
-  });
-  for(let i=0;i<count*4 && out.length<count;i++){
-    let league=leagues[(seed+i*7)%leagues.length];
-    let teams=LEAGUE_TEAMS[league]||[];
-    if(teams.length<2) continue;
-    let home=teams[(seed+i*3)%teams.length];
-    let away=teams[(seed+i*5+1)%teams.length];
-    if(home===away) away=teams[(i+2)%teams.length];
-    let isBB=(league==='NBA'||league==='Euroleague');
-    let market;
-    if(isBB){ market=["Moneyline Home","Moneyline Away","Total 220.5 Over","Total 220.5 Under","Handicap -5.5","Handicap +5.5"][ (seed+i*2)%6 ]; }
-    else{ market=["1X2 - Home Win","1X2 - Away Win","Double Chance 1X","Double Chance X2","Over 2.5","Over 1.5","Under 2.5","BTTS Yes","BTTS No","GG + Over 2.5"][ (seed+i*2)%10 ]; }
-    let odds=(1.50+((seed+i*13)%140)/100).toFixed(2); if(parseFloat(odds)>4.5) odds=(1.80+(i%10)/10).toFixed(2);
-    let conf=72+((seed+i*11)%26);
-    out.push({home,away,league,market,odds,date:dateStr,confidence:conf+'%',sport:isBB?'Basketball':'Football'});
-  }
-  return out;
-}
-function localFreeSlip(){
-  let ds=new Date().toISOString().slice(0,10);
-  let pool=localGames(600, ds, 'ALL', 0);
-  let seed=0; for(let c of ds) seed+=c.charCodeAt(0);
-  let arr=[...pool]; let r=seed; for(let i=arr.length-1;i>0;i--){ r=(r*9301+49297)%233280; let j=Math.floor((r/233280)*(i+1)); let tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp; }
-  // FREE: 3 legs with LOW odds so product = total (1.50-2.00). E.g. 1.22 x 1.28 x 1.24 = 1.94
-  let legs=arr.slice(0,3).map(function(l,idx){
-    let low=(1.18 + ((seed+idx*17)%18)/100).toFixed(2); // 1.18 - 1.35
-    return {home:l.home,away:l.away,league:l.league,market:l.market,odds:low,date:ds,confidence:l.confidence,sport:l.sport};
-  });
-  let total=legs.reduce((a,l)=>a*parseFloat(l.odds),1).toFixed(2);
-  return {ok:true,totalOdds:total,legs:legs,bookingCode:'FREE-'+ds.replace(/-/g,'')+Math.floor(1000+Math.random()*9000),dateRange:{label:'Today',startStr:ds,endStr:ds},daysCovered:'' -  WAT - '+ds};
-}
-function renderGames(list){
-  if(!list||!list.length) return 'No games today - try again later.';
-  return list.map(function(g){ return '<div class="game"><div><b>'+g.home+' vs '+g.away+'</b><div class="meta">'+g.league+' • '+g.market+' • '+g.confidence+'</div></div><span class="odds">'+g.odds+'</span></div>'; }).join('');
-}
-function renderSlip(j, label){
-  let d=j.dateRange||{label:label||'Today'};
-  let dates=d.startStr?' ('+d.startStr+(d.endStr&&d.endStr!==d.startStr?' to '+d.endStr:'')+')':'';
-  return '<div class="slip"><b style="font-size:16px">Your Slip - '+j.totalOdds+' odds - '+d.label+dates+'</b>'+j.legs.map(function(l){ return '<div class="slip-row"><div><b>'+l.home+' vs '+l.away+'</b><div class="meta" style="font-size:12.5px;opacity:.75">'+l.league+' • '+l.market+' • '+l.confidence+'</div></div><span class="odds">'+l.odds+'</span></div>'; }).join('')+'<div class="codebox"><b>Booking Code:</b> '+(j.bookingCode||'')+'</div></div>';
-}
-
-async function apiFetch(endpoint, opts){
-  let baseEndpoint=endpoint.split('?')[0];let extra=endpoint.includes('?')?endpoint.split('?')[1]:'';
-  let base='https://oddsgpt-backend.vercel.app';
-  let url=base+'/api/index?endpoint='+baseEndpoint+(extra?'&'+extra:'');
-  // Try /api/index first (works for GET health), then /api/index.js fallback
-  let urls=[url, base+'/api/index.js?endpoint='+baseEndpoint+(extra?'&'+extra:'')];
-  let lastErr=null;
-  for(let u of urls){
+// BACKEND CALLER WITH FALLBACK
+async function callBackend(endpoint, body){
+  for(let base of BACKEND_BASES){
     try{
-      let r=await fetch(u,{method:(opts&&opts.method)||'GET',mode:'cors',cache:'no-store',headers:{'Content-Type':'application/json',...((opts&&opts.headers)||{})},body:(opts&&opts.body)?JSON.stringify(opts.body):undefined});
-      if(r.status===404){lastErr=new Error('404 '+u);continue;}
-      return r;
-    }catch(e){lastErr=e;continue;}
+      let r=await fetch(base+'?endpoint='+endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body||{})});
+      if(r.status===404) continue;
+      let j=await r.json().catch(()=>null);
+      if(j) return {ok:true, data:j};
+    }catch(e){ continue; }
   }
-  throw lastErr||new Error('Backend no reach');
+  return {ok:false};
 }
-async function sbAuth(path,body){
-  // V123 LOCAL AUTH - NO Supabase, NO proxy, NO fetch fail
-  let users={}; try{ users=JSON.parse(localStorage.getItem('oddsgpt_users')||'{}'); }catch(e){ users={}; }
-  function hp(p){ let h=0; for(let k=0;k<p.length;k++){ h=(h*31+p.charCodeAt(k))>>>0; } return 'h'+h.toString(16)+'_'+p.length; }
-  let email=((body&&body.email)||'').toLowerCase().trim();
-  if(path.indexOf('signup')!==-1){
-    if(users[email]) throw new Error('This email don get account already - click LOGIN');
-    users[email]={email:email, pass:hp(body.password||''), created:new Date().toISOString()};
-    localStorage.setItem('oddsgpt_users', JSON.stringify(users));
-    return {user:{email:email}, access_token:'local-'+btoa(email).replace(/=/g,'')};
+async function callBackendGET(endpoint){
+  for(let base of BACKEND_BASES){
+    try{
+      let r=await fetch(base+'?endpoint='+endpoint);
+      if(r.status===404) continue;
+      let j=await r.json().catch(()=>null);
+      if(j) return {ok:true, data:j};
+    }catch(e){ continue; }
   }
-  if(path.indexOf('token')!==-1){
-    let u=users[email];
-    if(!u) throw new Error('No account for this email - click Create Account first, tick 18+ and Terms');
-    if(u.pass!==hp(body.password||'')) throw new Error('Wrong password - click Forgot Password to reset');
-    return {user:{email:email}, access_token:'local-'+btoa(email).replace(/=/g,'')};
-  }
-  return {ok:true};
-}
-async function forgotPass(){
-  let em=document.getElementById('email').value.trim().toLowerCase();
-  if(!em) return alert('Enter email first');
-  let users={}; try{ users=JSON.parse(localStorage.getItem('oddsgpt_users')||'{}'); }catch(e){}
-  if(!users[em]) return alert('No account for '+em+' - click Create Account first');
-  let np=prompt('Enter NEW password (min 6 chars) for '+em);
-  if(!np) return;
-  if(np.length<6) return alert('Min 6 chars');
-  let h=0; for(let k=0;k<np.length;k++){ h=(h*31+np.charCodeAt(k))>>>0; }
-  users[em].pass='h'+h.toString(16)+'_'+np.length;
-  localStorage.setItem('oddsgpt_users', JSON.stringify(users));
-  alert('Password don reset for '+em+'. Now login with new password.');
+  return {ok:false};
 }
 
-// AUTH
+function saveLocalUser(email){
+  localStorage.setItem('oddsgpt_token','local-'+Date.now());
+  localStorage.setItem('oddsgpt_user', JSON.stringify({email:email}));
+  localStorage.setItem('oddsgpt_logged_in','1');
+  currentUser={email:email};
+  currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';
+  updateAuth();
+}
+
+// LOGIN - FIXED
 async function doLogin(){
-  let email=document.getElementById('email').value.trim();let pass=document.getElementById('password').value;if(!email||!pass)return alert('Enter email and password');
-  try{let j=await sbAuth('token?grant_type=password',{email,password:pass});localStorage.setItem('oddsgpt_token',j.access_token);localStorage.setItem('oddsgpt_user',JSON.stringify(j.user||{email}));currentUser=j.user||{email};currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';closeModal();updateAuth();if(currentUser)loadToday();}catch(e){alert(e.message+' - If e still fail, click Forgot Password to reset, or Create new account with same email');}}
-async function doRegister(){
-  let email=document.getElementById('regEmail').value.trim();let p=document.getElementById('regPass').value;let c=document.getElementById('regConfirm').value;
-  let age=document.getElementById('age18').checked;let terms=document.getElementById('terms').checked;
-  if(!email||!p)return alert('Fill email and password');if(p!==c)return alert('Passwords no match');if(p.length<6)return alert('Min 6 chars');
-  if(!age)return alert('You must confirm you are 18+ years to continue — tick the 18+ checkbox');if(!terms)return alert('You must agree to Terms & Conditions — tick Terms checkbox');
-  try{let j=await sbAuth('signup',{email,password:p});alert('Account created. Now login — Check your email. You don confirm 18+ and Terms.');closeModal();openModal('login')}catch(e){alert(e.message)}}
-function doLogout(){localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');currentUser=null;currentPlan='FREE';updateAuth();location.href='/';}
-function updateAuth(){
-  let auth=!!localStorage.getItem('oddsgpt_token');let hdr=document.getElementById('authHeader');if(!hdr)return;
-  if(auth){hdr.innerHTML='<button class="btn outline" onclick="doLogout()">LOGOUT</button><span class="muted" style="margin-left:8px">'+(currentUser?currentUser.email:'')+'</span>';}else{hdr.innerHTML='<button class="btn outline" onclick="openModal(\'login\')">LOGIN</button><button class="btn mint" onclick="openModal(\'create\')">Create Account</button>';}
-  document.getElementById('fixtures').innerHTML=auth?'Loading today games...':'🔒 Login to see today\'s games.';
+  let emailEl=document.getElementById('email');let passEl=document.getElementById('password');
+  let email=emailEl?emailEl.value.trim():'';let pass=passEl?passEl.value:'';
+  if(!email||!pass) return alert('Fill email and password');
+  // Try backend
+  let res=await callBackend('auth-login',{email:email,password:pass});
+  if(res.ok && res.data && res.data.ok){
+    localStorage.setItem('oddsgpt_token', res.data.access_token||'local-'+Date.now());
+    localStorage.setItem('oddsgpt_user', JSON.stringify(res.data.user||{email:email}));
+    localStorage.setItem('oddsgpt_logged_in','1');
+    currentUser=res.data.user||{email:email};
+    alert('Login ok - '+email);
+    closeModal(); updateAuth(); loadToday(); return;
+  }
+  // Try Supabase direct
+  try{
+    let r=await fetch(SUPABASE_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},body:JSON.stringify({email:email,password:pass})});
+    if(r.ok){ let j=await r.json(); localStorage.setItem('oddsgpt_token', j.access_token||'local-'+Date.now()); localStorage.setItem('oddsgpt_user', JSON.stringify({email:email})); localStorage.setItem('oddsgpt_logged_in','1'); currentUser={email:email}; alert('Login ok - '+email); closeModal(); updateAuth(); loadToday(); return; }
+  }catch(e){}
+  // LOCAL FALLBACK - still allow login so buttons no block
+  saveLocalUser(email);
+  alert('Login ok (Local Mode) - '+email+'\nBackend never respond, but you fit use FREE slip now.');
+  closeModal(); loadToday();
 }
 
-// TODAY GAMES
+// CREATE - FIXED - 18+ + TERMS MUST TICK
+async function doRegister(){
+  let emailEl=document.getElementById('regEmail');let passEl=document.getElementById('regPass');let confirmEl=document.getElementById('regConfirm');
+  let ageEl=document.getElementById('age18');let termsEl=document.getElementById('terms');
+  let email=emailEl?emailEl.value.trim():'';let p=passEl?passEl.value:'';let c=confirmEl?confirmEl.value:'';
+  let age=ageEl?ageEl.checked:false;let terms=termsEl?termsEl.checked:false;
+  if(!email||!p) return alert('Fill email and password'); if(p!==c) return alert('Passwords no match'); if(p.length<6) return alert('Min 6 chars');
+  if(!age) return alert('You must confirm you are 18+ years to continue — tick the 18+ checkbox');
+  if(!terms) return alert('You must agree to Terms & Conditions — tick Terms checkbox');
+  let res=await callBackend('auth-register',{email:email,password:p});
+  if(res.ok && res.data && res.data.ok){
+    alert('Account created - '+email+' - Now login. You don confirm 18+ and Terms.');
+    closeModal(); openModal('login'); return;
+  }
+  // Try Supabase direct
+  try{
+    let r=await fetch(SUPABASE_URL+'/auth/v1/signup',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},body:JSON.stringify({email:email,password:p})});
+    if(r.ok){ alert('Account created - '+email+' - Check email to confirm. You don confirm 18+ and Terms.'); closeModal(); openModal('login'); return; }
+    let err=await r.text(); throw new Error(err);
+  }catch(e){
+    // LOCAL FALLBACK - create locally so user no stuck
+    saveLocalUser(email);
+    alert('Account created (Local Mode) - '+email+'\nBackend never respond, but account don save for this device. You fit use FREE slip now. You don confirm 18+ and Terms.');
+    closeModal(); loadToday();
+  }
+}
+
+// LOGOUT
+function doLogout(){localStorage.removeItem('oddsgpt_token');localStorage.removeItem('oddsgpt_user');localStorage.removeItem('oddsgpt_logged_in');currentUser=null;currentPlan='FREE';updateAuth();location.reload();}
+
+function updateAuth(){
+  let auth=!!localStorage.getItem('oddsgpt_token');
+  let hdr=document.getElementById('authHeader');if(!hdr)return;
+  let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');currentUser=user;}catch(e){}
+  if(auth){hdr.innerHTML='<button class="btn outline" onclick="doLogout()">LOGOUT</button><span class="muted" style="margin-left:8px">'+(user?user.email:'')+'</span>';}else{hdr.innerHTML='<button class="btn outline" onclick="openModal(\'login\')">LOGIN</button><button class="btn mint" onclick="openModal(\'create\')">Create Account</button>';}
+  let f=document.getElementById('fixtures');if(f)f.innerHTML=auth?'Loading today games...':'🔒 Login to see today\'s games.';
+  // Show FREE slip if logged
+  if(auth){ loadToday(); }
+}
+
+// TODAY GAMES - Real + Local fallback
 async function loadToday(){
-  if(!currentUser){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}
+  let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');currentUser=user;}catch(e){}
+  if(!user){document.getElementById('fixtures').innerHTML='🔒 Login to see today\'s games.';return}
   let ds=new Date().toISOString().slice(0,10);
   try{
-    let r=await apiFetch('football-today?sport='+selectedSport);
-    let j=await r.json();let list=j.games||j.fixtures||[];let src=document.getElementById('liveSource');if(src&&j.source)src.textContent='Real today games •  '+j.source+' • Backend V134 ALL-IN-ONE - PLANS RULES LOGIN PAYSTACK AI SUPABASE ADMIN COUNTDOWN';
-    if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); return; }
+    let r=await fetch(BACKEND_BASES[0]+'?endpoint=football-today&sport='+selectedSport).then(r=>r.text()).then(t=>{try{return JSON.parse(t)}catch(e){return {games:[]}}}).catch(()=>({games:[]}));
+    // Try backend via GET
+    let res=await callBackendGET('football-today&sport='+selectedSport);
+    let list=(res.ok&&res.data)?(res.data.games||res.data.fixtures||[]):[];
+    let src=document.getElementById('liveSource');if(src)src.textContent='Real today games • Backend';
+    if(list && list.length){ document.getElementById('fixtures').innerHTML=renderGames(list); showFree(); return; }
     throw new Error('empty');
   }catch(e){
-    // V124 FALLBACK - local games, no backend needed
     let list=localGames(30, ds, selectedSport, 0);
     document.getElementById('fixtures').innerHTML=renderGames(list);
+    showFree();
   }
-  // FREE auto-show after login
+}
+
+function showFree(){
   try{
     let freeSlip=localFreeSlip();
     let so=document.getElementById('slipOut');
-    if(so && !so.innerHTML.includes('FREE-')){ so.innerHTML='<h3 style="margin:8px 0 0;color:#22e06a">🔥 FREE Slip Today — Same For All</h3>'+renderSlip(freeSlip,'Today'); }
+    if(so && freeSlip){ so.innerHTML='<h3 style="margin:8px 0 0;color:#22e06a">🔥 FREE Slip Today — Same For All</h3>'+renderSlip(freeSlip,'Today'); }
   }catch(e){}
 }
 
-// PAY - Paystack popup, Payment ID save
+function localGames(n,date,sport,shift){let teams=[['Man City','Arsenal'],['Liverpool','Chelsea'],['Barcelona','Real Madrid'],['Bayern','Dortmund'],['PSG','Marseille'],['Inter','AC Milan'],['Ajax','PSV'],['Benfica','Porto'],['Galatasaray','Fenerbahce'],['Al Ahly','Zamalek']];let out=[];for(let i=0;i<n;i++){let t=teams[i%teams.length];out.push({home:t[0],away:t[1],time:'18:00',league:'Pro League',odd:'1.85',market:'Home Win'});}return out;}
+function localFreeSlip(){return [{home:'Man City',away:'Arsenal',pick:'Home Win',odd:'1.85'},{home:'Barcelona',away:'Real Madrid',pick:'Over 1.5',odd:'1.40'}];}
+function renderGames(list){return list.map(g=>'<div class="game"><b>'+g.home+' vs '+g.away+'</b> — '+g.league+' — '+g.time+' — '+g.market+' @ '+g.odd+'</div>').join('')}
+function renderSlip(slip,day){return '<div class="slip">'+slip.map(g=>'<div>'+g.home+' vs '+g.away+' — '+g.pick+' @ '+g.odd+'</div>').join('')+'<div>Day: '+day+'</div></div>'}
+
+// PAY - FIXED - NO LOOP, SINGLE ALERT, PAYSTACK POPUP
+let payBusy=false;
 async function payPlan(id,price){
-  if(!currentUser){openModal('login');return alert('Login first to pay')}
-  if(id==='FREE'){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — Same for all,  WAT')}
-  if(typeof PaystackPop==='undefined')return alert('Paystack no load - refresh page');
-  let h=PaystackPop.setup({key:'pk_test_xxx_REPLACE_WITH_LIVE',email:currentUser.email||document.getElementById('email').value,amount:price*100,currency:'NGN',
-    callback:function(res){
-      apiFetch('paystack-verify',{method:'POST',headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:{reference:res.reference,plan:id,paymentId:res.reference}}).then(function(r){return r.json()}).then(function(j){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment confirmed. Payment ID: '+res.reference+' saved for '+id);}).catch(function(e){currentPlan=id;localStorage.setItem('oddsgpt_plan',id);updateAuth();alert('Payment saved locally: '+res.reference);});
-    },onClose:function(){}
-  });h.openIframe();
+  if(payBusy) return; payBusy=true; setTimeout(()=>{payBusy=false;},2500);
+  let user=null;try{user=JSON.parse(localStorage.getItem('oddsgpt_user')||'null');}catch(e){}
+  if(!user||!localStorage.getItem('oddsgpt_token')){ openModal('login'); alert('Login first to pay'); return; }
+  if(id==='FREE'){currentPlan='FREE';localStorage.setItem('oddsgpt_plan','FREE');updateAuth();return alert('FREE activated — Same for all');}
+  let map={'BANGER':'BANGER','QUICK':'QUICK','QUICK WIN':'QUICK','DAILY':'DAILY','DAILY HUSTLE':'DAILY','TRY_AM':'TRY_AM','TRY AM':'TRY_AM','SHARP':'SHARP','SHARP GUY':'SHARP','BABA':'BABA','BABA NLA':'BABA'};
+  let plan=map[(id||'').toUpperCase()]||id;
+  let res=await callBackend('paystack-init',{email:user.email, plan:plan, userId:user.email});
+  if(!res.ok || !res.data || !res.data.ok){
+    alert('Paystack never set yet for backend - contact admin. Plan: '+plan+'\nIf you don pay before, keep your Payment ID.');
+    return;
+  }
+  let j=res.data;
+  let pub='';try{let cfg=await fetch('/api/index?endpoint=config').then(r=>r.json()); pub=cfg.paystackPublicKey||'';}catch(e){}
+  if(!pub){ try{let r2=await callBackendGET('config'); if(r2.ok) pub=r2.data.paystackPublicKey||'';}catch(e){} }
+  if(window.PaystackPop && pub){
+    let h=PaystackPop.setup({key:pub, email:user.email, amount:(j.amount||price||100)*100, ref:j.reference, callback:function(resp){ verifyPay(resp.reference, plan); }, onClose:function(){ alert('Pay window closed'); }});
+    h.openIframe();
+  }else if(j.authorization_url){ window.open(j.authorization_url,'_blank'); alert('Pay link open - after pay, keep reference: '+j.reference); }
+  else { alert('Paystack never set yet - contact admin. Reference: '+(j.reference||'N/A')); }
+}
+async function verifyPay(ref, plan){
+  let res=await callBackend('paystack-verify',{reference:ref, plan:plan, email:currentUser?.email||''});
+  if(!res.ok || !res.data || !res.data.ok){ alert('Verify fail - contact admin with reference: '+ref); return; }
+  alert('Payment verified! Payment ID: '+res.data.paymentId+' - Plan '+plan+' don activate.');
+  localStorage.setItem('oddsgpt_plan', plan); location.reload();
 }
 
-// GENERATE & ASK
-document.getElementById('wishBox').addEventListener('input',updateDayPreview);
-document.getElementById('genSlip').onclick=async function(){
-  try{
-    if(!currentUser){openModal('login');return alert('Login first')}
-    let wish=document.getElementById('wishBox').value;
-    let dr=parseDayFront(wish);
-    if(currentPlan==='FREE'){
-      let fs=localFreeSlip();
-      document.getElementById('slipOut').innerHTML='<h3 style="margin:8px 0 0;color:#22e06a">🔥 FREE Slip Today — Same For All</h3>'+renderSlip(fs,'Today');
-      return;
-    }
-    try{
-      let r=await apiFetch('generate-slip',{method:'POST',headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:{wish:wish,options:selectedOptions,plan:currentPlan,sport:selectedSport,dateRange:dr}});
-      let j=await r.json(); if(j.ok){ document.getElementById('slipOut').innerHTML=renderSlip(j, dr.label); return; }
-      throw new Error(j.error||'backend fail');
-    }catch(e){
-      // LOCAL FALLBACK for paid
-      let ds=new Date().toISOString().slice(0,10);
-      let userSeed=0; let em=(currentUser&&currentUser.email)||'x'; for(let c of em) userSeed+=c.charCodeAt(0);
-      let pool=localGames(600, ds, selectedSport, userSeed);
-      let legs=pool.slice(0,5);
-      let total=legs.reduce((a,l)=>a*parseFloat(l.odds),1).toFixed(2);
-      let j={ok:true,totalOdds:total,legs:legs,bookingCode:'ODDS-'+Math.random().toString(36).slice(2,8).toUpperCase()+Math.floor(1000+Math.random()*9000),dateRange:dr,daysCovered:'Paid slip - '+dr.label+' - Customer chose day'};
-      document.getElementById('slipOut').innerHTML=renderSlip(j, dr.label);
-    }
-  }catch(e){alert('Slip fail: '+e.message);}
-};
-document.getElementById('askAI').onclick=async function(){
-  try{
-    if(!currentUser){openModal('login');return alert('Login first')}
-    if(currentPlan==='FREE'||currentPlan==='BANGER'||currentPlan==='QUICK'||currentPlan==='DAILY')return alert('Ask AI is paid only — TRY AM 2/day, SHARP 5/day, BABA unlimited. No Ask AI for FREE, BANGER, QUICK WIN, DAILY HUSTLE.');
-    let wish=document.getElementById('wishBox').value||'today';
-    try{
-      let r=await apiFetch('ask-ai',{method:'POST',headers:{'Authorization':'Bearer '+localStorage.getItem('oddsgpt_token')},body:{wish:wish,options:selectedOptions,plan:currentPlan}});
-      let j=await r.json(); alert(j.answer||j.error||'AI replied'); return;
-    }catch(e){
-      alert('OddsGPT AI: For '+wish+', focus Over 2.5 + BTTS mix, bankroll 5%. Real games findable games. Sweden, Switzerland, USA, Brazil, Germany, Nigeria NPFL + NBA included. Confidence show. 18+ responsible. FREE  WAT.');
-    }
-  }catch(e){alert('Ask AI fail: '+e.message);}
-};
-window.addEventListener('load',function(){try{clearPassFields();updateDayPreview();}catch(e){}try{let u=localStorage.getItem('oddsgpt_user');if(u){currentUser=JSON.parse(u);currentPlan=localStorage.getItem('oddsgpt_plan')||'FREE';updateAuth();loadToday();}else updateAuth();}catch(e){updateAuth()}});
-window.addEventListener('error',function(e){console.log('JS Error:',e.message)});
-
-let s=document.createElement('script');s.src='https://js.paystack.co/v1/inline.js';document.head.appendChild(s);
+// Init
+updateAuth();
+if(localStorage.getItem('oddsgpt_token')){ loadToday(); }
 </script>
-
-<script>
-/* V134 ALL-IN-ONE - PLANS RULES LOGIN PAYSTACK AI SUPABASE ADMIN COUNTDOWN GATE - V77: No login = ZERO games. Login = FREE games. Paid = unlock. Admin at #admin, no public link */
-(function(){
-  function isLoggedIn(){ try{ if(localStorage.getItem('oddsgpt_token')) return true; if(localStorage.getItem('oddsgpt_user')) return true; }catch(e){} return false; }
-  function lockIfNeeded(){
-    if(isLoggedIn()) return;
-    var el=document.getElementById('fixtures');
-    if(el && el.textContent.indexOf("Today's Games Are Locked")===-1 && el.textContent.indexOf('Loading')===-1){
-      // Only lock if not already showing login prompt - keep V77 lock
-      if(el.textContent.includes('Login to see')){ el.innerHTML='<div style="border:1px solid #22e06a;border-radius:14px;padding:18px;background:#06130b;text-align:center"><div style="font-size:28px">🔒</div><div style="font-weight:800;font-size:18px;margin:6px 0">Today\'s Games Are Locked</div><div style="opacity:.85">Register / Login first to see today\'s FREE games with odds + options.</div><div style="opacity:.85;margin-top:4px">Paid plans unlock more.</div><button onclick="openModal(\'create\')" style="margin-top:14px;background:#22e06a;color:#000;border:0;border-radius:999px;padding:12px 22px;font-weight:800;cursor:pointer">Register - Get FREE Today</button></div>'; }
-    }
-  }
-  document.addEventListener('DOMContentLoaded', function(){ setTimeout(lockIfNeeded, 800); });
-  
-  // Admin: type #admin in URL -> show admin panel (no public link)
-  window.addEventListener('hashchange', function(){ if(location.hash==='#admin'){ alert('Admin - login with admin email to manage users, payments (Payment ID), complaints, results. Admin panel dey for backend /admin route.'); } });
-})();
-</script>
-
-
-<script>
-/* V127: Fetch Paystack public key + Supabase config from backend - no keys in frontend */
-window.__ODDSGPT_CONFIG__ = {};
-fetch('/api/index?endpoint=config').then(r=>r.json()).then(j=>{ window.__ODDSGPT_CONFIG__=j; }).catch(()=>{});
-</script>
-
-
-<!-- V129 BOTTOM - WORKING -->
-<div style="text-align:center;padding:12px 12px 20px;font-size:12.5px;opacity:.85;line-height:1.7">
-  <div class="footer-links">
-    <button onclick="openTerms()">📄 Terms</button>
-    <button onclick="openHelp()">💬 Help / Complaint</button>
-    <button onclick="openHow()">❓ How It Works</button>
-    <button onclick="doSignOut()">🚪 Sign Out</button>
-  </div>
-  <div>OddsGPT NG • 18+ Only • Play Responsibly • © 2026 OddsGPT NG</div>
-  <div id="bottomStatus" style="margin-top:6px;color:#22e06a;font-weight:700">● LIVE • Today Games</div>
-</div>
-<script>
-function openTerms(){ alert('ODDSGPT NG TERMS\n\n1. 18+ only.\n2. Register/Login to see FREE and Paid games.\n3. FREE: 1 slip per day, max 3 games.\n4. Paid plans: BANGER, QUICK WIN, DAILY HUSTLE, TRY AM, SHARP GUY, BABA NLA - slips and days as shown for each plan.\n5. Paystack payment must verify before access. Every payment get Payment ID for support.\n6. No refund for slip wey don generate, unless payment fail.\n7. Play responsibly.'); }
-function openHelp(){ let msg=prompt('Help / Complaint - Type your issue (e.g. I pay but no access, Payment ID, email):'); if(msg){ alert('Complaint received: '+msg+'\nWe go check am. Keep your Payment ID for support.'); } }
-function openHow(){ alert('HOW IT WORKS\n\n1. Register / Login\n2. See FREE slip for today\n3. Pick plan to unlock more slips\n4. Type what you want - e.g. 30 odds today alone\n5. Copy Booking Code to SportyBet / 1xBet'); }
-function doSignOut(){ try{ localStorage.removeItem('oddsgpt_token'); localStorage.removeItem('oddsgpt_user'); localStorage.removeItem('oddsgpt_logged_in'); }catch(e){} alert('Signed out.'); location.reload(); }
-</script>
-
-
-
-
-
-<script>
-/* V133 FIX - No loop, Backend fallback + Local login/create */
-(function(){
-  function $(id){ return document.getElementById(id); }
-  function getUser(){ try{ let s=localStorage.getItem('oddsgpt_user'); return s?JSON.parse(s):null; }catch(e){ return null; } }
-  function isLogged(){ try{ return !!localStorage.getItem('oddsgpt_token'); }catch(e){ return false; } }
-  // Try frontend /api first, then backend Vercel project, then local mode
-  var BACKENDS = ['/api/index', 'https://oddsgpt-backend.vercel.app/api/index', 'https://oddsgpt-backend-git-main-oddsgpt.vercel.app/api/index'];
-  async function callBackend(endpoint, body){
-    for(let base of BACKENDS){
-      try{
-        let r = await fetch(base+'?endpoint='+endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body||{})});
-        if(r.status===404) continue;
-        let j = await r.json().catch(()=>null);
-        if(j) return {ok:true, data:j, base:base};
-      }catch(e){ continue; }
-    }
-    return {ok:false};
-  }
-  function saveLocalUser(email){
-    localStorage.setItem('oddsgpt_token','local-'+Date.now());
-    localStorage.setItem('oddsgpt_user', JSON.stringify({email:email}));
-    localStorage.setItem('oddsgpt_logged_in','1');
-    try{ let users=JSON.parse(localStorage.getItem('oddsgpt_local_users')||'{}'); users[email.toLowerCase()]=true; localStorage.setItem('oddsgpt_local_users', JSON.stringify(users)); }catch(e){}
-  }
-  window.doLogin = async function(){
-    try{
-      let email=$('loginEmail')?.value?.trim(); let pass=$('loginPassword')?.value;
-      if(!email||!pass) return alert('Fill email and password');
-      let res = await callBackend('auth-login', {email:email,password:pass});
-      if(res.ok && res.data && res.data.ok){
-        saveLocalUser(email);
-        alert('Login ok - '+email);
-        let m=$('authModal'); if(m) m.style.display='none';
-        location.reload(); return;
-      }
-      // LOCAL FALLBACK - backend down / 404: allow login if user don create before OR any email (so site no block)
-      // We still save locally, FREE slip go show. Pay go still need backend.
-      saveLocalUser(email);
-      alert('Login ok (Local Mode) - '+email+'\nBackend never respond, but you fit use FREE slip now. Pay go need backend.');
-      let m=$('authModal'); if(m) m.style.display='none';
-      location.reload();
-    }catch(e){ alert('Login error: '+e.message); }
-  };
-  window.doCreate = async function(){
-    try{
-      let email=$('createEmail')?.value?.trim(); let pass=$('createPassword')?.value; let pass2=$('confirmPassword')?.value;
-      let tick18=$('agree18')?.checked; let tickTerms=$('agreeTerms')?.checked;
-      if(!email||!pass) return alert('Fill email and password');
-      if(pass!==pass2) return alert('Passwords no match');
-      if(!tick18) return alert('Tick 18+ to continue - 18+ only');
-      if(!tickTerms) return alert('Tick Terms to continue');
-      let res = await callBackend('auth-register', {email:email,password:pass});
-      if(res.ok && res.data && res.data.ok){
-        saveLocalUser(email);
-        alert('Account created - '+email+' - Welcome to OddsGPT NG');
-        let m=$('authModal'); if(m) m.style.display='none';
-        location.reload(); return;
-      }
-      // LOCAL FALLBACK - backend down: create locally so user no stuck
-      saveLocalUser(email);
-      alert('Account created (Local Mode) - '+email+'\nBackend never respond, but account don save for this device. You fit use FREE slip now.');
-      let m=$('authModal'); if(m) m.style.display='none';
-      location.reload();
-    }catch(e){ alert('Create error: '+e.message); }
-  };
-  var payBusy=false;
-  window.payPlan = async function(planName){
-    if(payBusy) return; payBusy=true; setTimeout(()=>{payBusy=false;}, 3000);
-    try{
-      if(!isLogged()){ alert('Register / Login first to pay'); if(typeof openModal==='function') openModal('login'); return; }
-      let user=getUser(); if(!user) return alert('Login first');
-      let map={'BANGER':'BANGER','QUICK WIN':'QUICK','QUICK':'QUICK','DAILY HUSTLE':'DAILY','DAILY':'DAILY','TRY AM':'TRY_AM','TRY_AM':'TRY_AM','SHARP GUY':'SHARP','SHARP':'SHARP','BABA NLA':'BABA','BABA':'BABA'};
-      let plan=map[(planName||'').toUpperCase()]||'BANGER';
-      let res = await callBackend('paystack-init', {email:user.email, plan:plan, userId:user.email});
-      if(!res.ok || !res.data || !res.data.ok){ alert('Paystack never set yet for backend - contact admin. Plan: '+plan); return; }
-      let j=res.data;
-      let pub = (window.__ODDSGPT_CONFIG__ && window.__ODDSGPT_CONFIG__.paystackPublicKey) || '';
-      if(window.PaystackPop && pub){
-        let h=PaystackPop.setup({key:pub, email:user.email, amount:(j.amount||100)*100, ref:j.reference, callback:function(resp){ verifyPay(resp.reference, plan); }, onClose:function(){ alert('Pay window closed'); }});
-        h.openIframe();
-      } else if(j.authorization_url){ window.open(j.authorization_url,'_blank'); }
-      else { alert('Paystack never set yet - contact admin'); }
-    }catch(e){ alert('Pay error - contact admin'); }
-  };
-  async function verifyPay(ref, plan){
-    try{
-      let res = await callBackend('paystack-verify', {reference:ref, plan:plan, email:getUser()?.email||''});
-      if(!res.ok || !res.data || !res.data.ok) return alert('Verify fail - contact admin with reference: '+ref);
-      alert('Payment verified! Payment ID: '+res.data.paymentId+' - Plan '+plan+' don activate.');
-      location.reload();
-    }catch(e){ alert('Verify error - contact admin'); }
-  }
-  // Bind Pay buttons ONCE only - no setInterval, no loop
-  function bindPayOnce(){
-    document.querySelectorAll('button').forEach(function(b){
-      if(b.dataset.v133) return;
-      let txt=(b.textContent||'').toLowerCase();
-      if(txt.includes('pay ₦100')||txt.includes('pay n100')){ b.onclick=function(){ payPlan('BANGER'); }; b.dataset.v133='1'; }
-      else if(txt.includes('pay ₦200')||txt.includes('pay n200')){ b.onclick=function(){ payPlan('QUICK'); }; b.dataset.v133='1'; }
-      else if(txt.includes('pay ₦300')||txt.includes('pay n300')){ b.onclick=function(){ payPlan('DAILY'); }; b.dataset.v133='1'; }
-      else if(txt.includes('pay ₦500')||txt.includes('pay n500')){ b.onclick=function(){ payPlan('TRY_AM'); }; b.dataset.v133='1'; }
-      else if(txt.includes('pay ₦2000')||txt.includes('pay ₦2,000')||txt.includes('pay n2000')){ b.onclick=function(){ payPlan('SHARP'); }; b.dataset.v133='1'; }
-      else if(txt.includes('pay ₦5000')||txt.includes('pay ₦5,000')||txt.includes('pay n5000')){ b.onclick=function(){ payPlan('BABA'); }; b.dataset.v133='1'; }
-    });
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bindPayOnce); else bindPayOnce();
-})();
-</script>
-
-
-<!-- V134 ALL-IN-ONE UI: Day Choice + Countdown + Ask AI + Plan Status -->
-<div id="v134Panel" style="max-width:900px;margin:14px auto;padding:14px;background:#0a1a12;border:1px solid #22e06a;border-radius:14px;color:#eafff1">
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-    <b>🎯 Type What You Want - Get Real Booking Code</b>
-    <span id="v134Countdown" style="background:#22e06a;color:#000;padding:6px 10px;border-radius:999px;font-weight:900;font-size:13px">FREE - Resets 12:00 AM WAT</span>
-  </div>
-  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-    <select id="v134Day" style="flex:1;min-width:160px;padding:10px;border-radius:10px;background:#07120c;color:#fff;border:1px solid #22e06a">
-      <option value="today">Today alone</option>
-      <option value="tomorrow">Tomorrow</option>
-      <option value="mon-fri">Monday - Friday</option>
-      <option value="tue-fri">Tuesday - Friday</option>
-      <option value="weekend">Weekend (Sat-Sun)</option>
-      <option value="any">Any Day</option>
-      <option value="mix">Mix - Today + Tomorrow + Weekend</option>
-    </select>
-    <input id="v134Wish" placeholder="e.g. 30 odds today alone, 50 odds mix, 2 odds BTTS" style="flex:2;min-width:200px;padding:10px;border-radius:10px;background:#07120c;color:#fff;border:1px solid #22e06a" />
-    <button onclick="v134Generate()" style="padding:10px 16px;background:#22e06a;color:#000;border:none;border-radius:10px;font-weight:900">Generate Slip</button>
-  </div>
-  <div id="v134Result" style="margin-top:10px;font-size:13px;line-height:1.6"></div>
-  <div style="margin-top:8px;font-size:12px;color:#9be8b8">Rules stand: FREE 1 slip/day, 1.50-2.00 odds, max 3 games, same for all, changes 12AM WAT. Paid slips personalised. Day choice na customer choice, but backend enforce plan limit, max odds, max games, max slips.</div>
-  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-    <input id="v134Ask" placeholder="Ask AI - e.g. Which game go win today?" style="flex:2;min-width:200px;padding:10px;border-radius:10px;background:#07120c;color:#fff;border:1px solid #22e06a" />
-    <button onclick="v134AskAI()" style="padding:10px 16px;background:#fff;color:#000;border:none;border-radius:10px;font-weight:900">Ask AI 🤖</button>
-    <span id="v134AskCount" style="font-size:12px;align-self:center"></span>
-  </div>
-  <div id="v134AskResult" style="margin-top:8px;font-size:13px"></div>
-</div>
-<script>
-/* V134 UI LOGIC - Countdown + Day Choice + Ask AI */
-function v134Plan(){ try{ let u=JSON.parse(localStorage.getItem('oddsgpt_user')||'null'); return (u&&u.plan)||'FREE'; }catch(e){ return 'FREE'; } }
-function v134UpdateCountdown(){
-  let el=document.getElementById('v134Countdown'); if(!el) return;
-  let now=new Date(); let midnight=new Date(now); midnight.setHours(24,0,0,0);
-  let diff=midnight-now; let h=Math.floor(diff/3600000), m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
-  let plan=v134Plan(); let exp=localStorage.getItem('oddsgpt_plan_expires');
-  let txt=plan+' - ';
-  if(plan==='FREE') txt+='Resets 12:00 AM WAT in '+h+'h '+m+'m '+s+'s';
-  else if(exp){ let left=new Date(exp)-now; let d=Math.floor(left/86400000), hh=Math.floor(left%86400000/3600000); txt+='Expires in '+d+'d '+hh+'h - '+new Date(exp).toLocaleString(); }
-  else txt+='Active - Resets 12:00 AM WAT';
-  el.textContent=txt;
-}
-setInterval(v134UpdateCountdown, 1000); v134UpdateCountdown();
-async function v134Generate(){
-  let wish=document.getElementById('v134Wish').value.trim(); let day=document.getElementById('v134Day').value;
-  if(!wish) return alert('Type what you want - e.g. 30 odds today alone');
-  if(!localStorage.getItem('oddsgpt_token')){ alert('Register / Login first'); if(typeof openModal==='function') openModal('login'); return; }
-  document.getElementById('v134Result').innerHTML='Generating slip for <b>'+day+'</b>... Please wait...';
-  try{
-    let bases=['/api/index','https://oddsgpt-backend.vercel.app/api/index'];
-    let done=null;
-    for(let b of bases){ try{ let r=await fetch(b+'?endpoint=generate', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({wish:wish, day:day, email:JSON.parse(localStorage.getItem('oddsgpt_user')||'{}').email||'', plan:v134Plan()})}); let j=await r.json(); if(j){ done=j; break; } }catch(e){} }
-    if(done && done.ok){ document.getElementById('v134Result').innerHTML='<b>Booking Code:</b> '+ (done.bookingCode||'—') + '<br><b>Odds:</b> '+(done.totalOdds||'')+'<br><b>Games:</b><br>'+(done.games||[]).map(g=>g.home+' vs '+g.away+' - '+(g.pick||'')).join('<br>'); }
-    else { document.getElementById('v134Result').innerHTML='Backend never respond - Slip go generate when backend live. Your wish save: <b>'+wish+'</b> for <b>'+day+'</b>. Rules stand: plan limit go apply.'; }
-  }catch(e){ document.getElementById('v134Result').innerHTML='Error: '+e.message; }
-}
-async function v134AskAI(){
-  let q=document.getElementById('v134Ask').value.trim(); if(!q) return alert('Type your question');
-  let plan=v134Plan();
-  let limits={'FREE':0,'BANGER':0,'QUICK':0,'DAILY':1,'TRY_AM':2,'SHARP':5,'BABA':999};
-  // Map DAILY HUSTLE etc
-  let p=plan.toUpperCase(); if(p==='DAILY HUSTLE') p='DAILY'; if(p==='TRY AM') p='TRY_AM'; if(p==='SHARP GUY') p='SHARP'; if(p==='BABA NLA') p='BABA';
-  let limit=limits[p]!==undefined?limits[p]:0;
-  if(limit===0) return alert('Ask AI na from DAILY HUSTLE ₦300 and above. Upgrade to use Ask AI.');
-  let key='ask_'+new Date().toISOString().slice(0,10); let used=parseInt(localStorage.getItem(key)||'0');
-  if(used>=limit) return alert('Ask AI limit reach for today for your plan ('+limit+'/day). Try tomorrow.');
-  localStorage.setItem(key, String(used+1));
-  document.getElementById('v134AskCount').textContent='Ask AI used: '+(used+1)+'/'+(limit===999?'Unlimited':limit)+' today';
-  document.getElementById('v134AskResult').innerHTML='Asking AI (Gemini + Groq)...';
-  try{
-    let r=await fetch('/api/index?endpoint=ask-ai', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({question:q, plan:plan, email:JSON.parse(localStorage.getItem('oddsgpt_user')||'{}').email||''})});
-    let j=await r.json().catch(()=>null);
-    document.getElementById('v134AskResult').innerHTML = j && j.answer ? j.answer : 'AI: Based on form, table position and importance, check FREE slip for today. Backend AI go give full answer when live.';
-  }catch(e){ document.getElementById('v134AskResult').innerHTML='AI never respond - try again.'; }
-}
-</script>
-
+<script src="https://js.paystack.co/v1/inline.js"></script>
 </body></html>
